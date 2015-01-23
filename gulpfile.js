@@ -23,9 +23,7 @@ var autoprefix = new autoprefixPlugin({
  
 var paths = {
   appCSS: ['./src/css/app.less'],
-  appJS: ['./src/js/app.jsx'],
-  js: ['./src/js/**/*.*'],
-  css: ['./src/css/**/*.*']
+  appJS: ['./src/js/app.jsx']
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
