@@ -1,15 +1,16 @@
 /* gulpfile.js */
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var browserify = require('browserify');
 var del = require('del');
-var source = require('vinyl-source-stream');
+var gulp = require('gulp');
 var to5ify = require("6to5ify");
+var gutil = require('gulp-util');
 var watchify = require('watchify');
-var sourcemaps = require('gulp-sourcemaps');
+var exec = require('child_process').exec;
 var buffer = require('vinyl-buffer');
+var browserify = require('browserify');
 var browserSync = require("browser-sync");
+var source = require('vinyl-source-stream');
+var sourcemaps = require('gulp-sourcemaps');
  
 var less = require('gulp-less');
 var cleancssPlugin = require("less-plugin-clean-css");
@@ -23,7 +24,7 @@ var autoprefix = new autoprefixPlugin({
  
 var paths = {
   appCSS: ['./src/css/*.less'],
-  appJS: ['./src/js/app.jsx']
+  appJS: ['./src/js/app.js']
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
@@ -57,9 +58,17 @@ gulp.task('css', ['clean-css'], function() {
     }))
     .pipe(gulp.dest('./public/dist/css'))
     .pipe(browserSync.reload({stream:true}));
+});
+
+gulp.task('riot', function (cb) {
+  exec('riot ./src', function (err, stdout, stderr) {
+    console.log(stdout);
+    console.log(stderr);
+    cb(err);
+  });
 })
 
-gulp.task('js', ['clean-js'], bundle);
+gulp.task('js', ['clean-js', 'riot'], bundle);
 
 gulp.task('bs-reload', function () {
     browserSync.reload();
@@ -67,6 +76,7 @@ gulp.task('bs-reload', function () {
 
 gulp.task('watch', ['css', 'js'], function() {
   gulp.watch(['./src/css/**/*.less'], ['css']);
+  gulp.watch(['./src/js/**/*.tag'], ['riot']);
   gulp.watch(['./public/**/*.html'], ['bs-reload']);
   browserSync({
       server: {
