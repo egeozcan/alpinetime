@@ -22,7 +22,7 @@ var autoprefix = new autoprefixPlugin({
 });
  
 var paths = {
-  appCSS: ['./src/css/app.less'],
+  appCSS: ['./src/css/*.less'],
   appJS: ['./src/js/app.jsx']
 };
  
@@ -66,7 +66,7 @@ gulp.task('bs-reload', function () {
 });
 
 gulp.task('watch', ['css', 'js'], function() {
-  gulp.watch(paths.css, ['css']);
+  gulp.watch(['./src/css/**/*.less'], ['css']);
   gulp.watch(['./public/**/*.html'], ['bs-reload']);
   browserSync({
       server: {
