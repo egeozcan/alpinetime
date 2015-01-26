@@ -4,7 +4,7 @@ var ProjectSummary = React.createClass({
         var tags = tagList.map(tag => <li class="tag"><span>{tag}</span></li>)
         return (
             <h3>{this.props.name}</h3>
-            <ul>{tags}</ul>
+            Tags: <ul>{tags}</ul>
         );
     }
 });
