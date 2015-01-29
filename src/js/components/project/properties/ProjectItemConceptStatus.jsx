@@ -1,11 +1,14 @@
+var React = require('react');
 var Label = require('react-bootstrap/Label');
+var Tooltip = require('react-bootstrap/Tooltip');
+var OverlayTrigger = require('react-bootstrap/OverlayTrigger');
 
-var ProjectItemOfferStatus = React.createClass({
+export default React.createClass({
     render() {
     	var statuses = {
-    		"concept" : {
+    		"progress" : {
     			style: "info",
-    			text: "Concept",
+    			text: "Progress",
     			description: "The item is yet in the concept phase."
     			 + " Description and estimation can still change." },
     		"offered" : { 
@@ -28,10 +31,10 @@ var ProjectItemOfferStatus = React.createClass({
     	var status = statuses[this.props.statusKey];
     	if (!!status) {
     		var tooltip = (
-    			<Tooltip><strong>{status.text}</strong>{status.description}</Tooltip>
+    			<Tooltip><strong>{status.text}</strong>: {status.description}</Tooltip>
     		);
     		return (
-    			<OverlayTrigger placement="top" overlay={tooltip}>
+    			<OverlayTrigger placement="right" overlay={tooltip}>
     				<Label bsStyle={status.style}>{status.text}</Label>
     			</OverlayTrigger>
 	        );
@@ -41,4 +44,3 @@ var ProjectItemOfferStatus = React.createClass({
     	);
     }
 });
-

@@ -1,4 +1,7 @@
 var React = require('react');
+var Table = require('react-bootstrap/Table');
+var ProjectItemConceptStatus = require("./components/project/properties/ProjectItemConceptStatus.jsx")
+var ProjectItemTechnicalStatus = require("./components/project/properties/ProjectItemTechnicalStatus.jsx")
 
 var projects = [
   {
@@ -37,16 +40,44 @@ var projects = [
 
 var HelloMessage = React.createClass({
   render() {
-  	var styles = {
-  		color: this.props.color
-  	}
   	return (
-	  	<div style={styles}>
-	  		Time is {this.props.name}
-	  	</div>
+	  	<div>
+        <h3>Estimation for ACME - Blah</h3>
+        <Table responsive condensed>
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Technical</th>
+              <th>BugId</th>
+              <th>Description</th>
+              <th>Estimation</th>
+              <th>Responsible</th>
+              <th>Standard?</th>
+              <th>Package</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <ProjectItemConceptStatus statusKey="rejected" />
+              </td>
+              <td>
+                <ProjectItemTechnicalStatus statusKey="experimental" />
+              </td>
+              <td>13356</td>
+              <td>Besuch: Ausdruckbar und möglicherweise mehr Infos für Topics</td>
+              <td>8</td>
+              <td>Ege Özcan</td>
+              <td>No</td>
+              <td>Package 1</td>
+              <td>Add a details and a print view to the visits. (Standard, do in a fb)</td>
+            </tr>
+          </tbody>
+        </Table>
+      </div>
   	)
   }
 });
 
-var d = new Date();
-React.render(<HelloMessage color="blue" name={(+d).toString()} />, document.getElementById("main"));
+React.render(<HelloMessage color="blue" />, document.getElementById("main"));
