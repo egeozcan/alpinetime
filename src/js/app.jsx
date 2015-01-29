@@ -7,7 +7,7 @@ var projects = [
     Deadline: new Date(),
     Packages: [
       {
-        Name: "Package1"
+        Name: "Package1",
         Start: new Date(),
         Category: "Cat1",
         Tasks: [
