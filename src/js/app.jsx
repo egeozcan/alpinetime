@@ -48,6 +48,7 @@ var HelloMessage = React.createClass({
             <tr>
               <th>Concept</th>
               <th>Technical</th>
+              <th>Blocked By</th>
               <th>BugId</th>
               <th>Description</th>
               <th>Estimation</th>
@@ -60,17 +61,34 @@ var HelloMessage = React.createClass({
           <tbody>
             <tr>
               <td>
-                <ProjectItemConceptStatus statusKey="rejected" />
+                <ProjectItemConceptStatus statusKey="accepted" />
               </td>
               <td>
-                <ProjectItemTechnicalStatus statusKey="experimental" />
+                <ProjectItemTechnicalStatus statusKey="trivial" />
               </td>
+              <td>-</td>
               <td>13356</td>
               <td>Besuch: Ausdruckbar und möglicherweise mehr Infos für Topics</td>
               <td>8</td>
               <td>Ege Özcan</td>
               <td>No</td>
-              <td>Package 1</td>
+              <td>1</td>
+              <td>Add a details and a print view to the visits. (Standard, do in a fb)</td>
+            </tr>
+            <tr>
+              <td>
+                <ProjectItemConceptStatus statusKey="rejected" />
+              </td>
+              <td>
+                <ProjectItemTechnicalStatus statusKey="trivial" />
+              </td>
+              <td>-</td>
+              <td>13356</td>
+              <td>Besuch: Ausdruckbar und möglicherweise mehr Infos für Topics</td>
+              <td>8</td>
+              <td>Ege Özcan</td>
+              <td>No</td>
+              <td>1</td>
               <td>Add a details and a print view to the visits. (Standard, do in a fb)</td>
             </tr>
           </tbody>
@@ -80,4 +98,4 @@ var HelloMessage = React.createClass({
   }
 });
 
-React.render(<HelloMessage color="blue" />, document.getElementById("main"));
+React.render(<HelloMessage />, document.getElementById("main"));
