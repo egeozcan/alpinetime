@@ -14,7 +14,7 @@ export default React.createClass({
     		"blocked" : { 
     			style: "danger",
     			text: "Blocked",
-    			description: "The implementation isn't possible because of blocking issues in the system." + 
+    			description: "The implementation isn't possible because of blocking issues in the standard." + 
                     " An estimation can't be done."
     		},
             "experimental" : {
