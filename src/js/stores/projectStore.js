@@ -18,4 +18,4 @@ export default Marty.createStore({
     create(text) {
         text = text.trim();
     }
-})
+});
