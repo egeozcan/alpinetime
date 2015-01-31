@@ -2,7 +2,7 @@ var Marty = require('marty');
 var extend = require('lodash-node/modern/objects/assign');
 var ProjectConstants = require('../constants/ProjectConstants');
 
-export default Marty.createStore({
+var ProjectStore = Marty.createStore({
     displayName: 'Projects',
     handlers: {
         create: ProjectConstants.PROJECT_CREATE,
@@ -16,6 +16,27 @@ export default Marty.createStore({
         return {};
     },
     create(text) {
-        text = text.trim();
+        text = text ? text.trim() : text;
+        if (!text) {
+            return;
+        }
+        var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
+        this.state[id] = {
+            id: id,
+            complete: false,
+            text: text
+        };
+        this.hasChanged();
+    },
+    complete(id) {
+        if (!id) {
+            return;
+        }
+        this.update(id, {complete: true})
+    },
+    update(id, props) {
+        this.state[id] = extend({}, this.state[id], props);
+        this.hasChanged();
     }
 });
+export default ProjectStore;
