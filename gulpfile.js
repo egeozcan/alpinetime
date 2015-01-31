@@ -57,7 +57,7 @@ gulp.task('css', ['clean-css'], function() {
     }))
     .pipe(gulp.dest('./public/dist/css'))
     .pipe(browserSync.reload({stream:true}));
-})
+});
 
 gulp.task('js', ['clean-js'], bundle);
 

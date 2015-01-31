@@ -53,7 +53,7 @@ var HelloMessage = React.createClass({
               <th>Description</th>
               <th>Estimation</th>
               <th>Responsible</th>
-              <th>Standard?</th>
+              <th>Is Standard</th>
               <th>Package</th>
               <th>Notes</th>
             </tr>
