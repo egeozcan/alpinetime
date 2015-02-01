@@ -1,9 +1,7 @@
-/* gulpfile.js */
-
+var del = require('del');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var browserify = require('browserify');
-var del = require('del');
 var source = require('vinyl-source-stream');
 var to5ify = require("6to5ify");
 var watchify = require('watchify');
@@ -23,7 +21,7 @@ var autoprefix = new autoprefixPlugin({
  
 var paths = {
   appCSS: ['./src/css/*.less'],
-  appJS: ['./src/js/app.jsx']
+  appJS: ['./src/js/client.jsx']
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
@@ -39,15 +37,15 @@ function bundle() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./public/dist/js'));
+    .pipe(gulp.dest('./public/js'));
 }
 
 gulp.task('clean-js', function(done) {
-  del(['public/dist/js'], done);
+  del(['public/js'], done);
 });
 
 gulp.task('clean-css', function(done) {
-  del(['public/dist/css'], done);
+  del(['public/css'], done);
 });
  
 gulp.task('css', ['clean-css'], function() {
@@ -55,7 +53,7 @@ gulp.task('css', ['clean-css'], function() {
     .pipe(less({
       plugins: [autoprefix, cleancss]
     }))
-    .pipe(gulp.dest('./public/dist/css'))
+    .pipe(gulp.dest('./public/css'))
     .pipe(browserSync.reload({stream:true}));
 });
 
