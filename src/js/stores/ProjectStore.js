@@ -1,17 +1,9 @@
-var Marty = require('marty');
+var Reflux = require('reflux');
 var extend = require('lodash-node/modern/objects/assign');
-var ProjectConstants = require('../constants/ProjectConstants');
+var ProjectActions = require('./ProjectActions');
 
-var ProjectStore = Marty.createStore({
-    displayName: 'Projects',
-    handlers: {
-        create: ProjectConstants.PROJECT_CREATE,
-        complete: ProjectConstants.PROJECT_COMPLETE,
-        destroy: ProjectConstants.PROJECT_DESTROY,
-        destroyCompleted: ProjectConstants.PROJECT_DESTROY_COMPLETED,
-        undoComplete: ProjectConstants.PROJECT_UNDO_COMPLETE,
-        updateText: ProjectConstants.PROJECT_UPDATE_TEXT
-    },
+var ProjectStore = Reflux.createStore({
+    listenables: [ProjectActions],
     getInitialState() {
         return {};
     },

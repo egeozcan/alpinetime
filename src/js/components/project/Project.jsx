@@ -1,4 +1,3 @@
-var ProjectSummary = require('./project-summary.jsx');
 
 var Project = React.createClass({
     render() {
