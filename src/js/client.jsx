@@ -1,7 +1,7 @@
 var React = require('react');
 var Table = require('react-bootstrap/Table');
-var ProjectItemConceptStatus = require("././project/properties/ProjectItemConceptStatus.jsx")
-var ProjectItemTechnicalStatus = require("././project/properties/ProjectItemTechnicalStatus.jsx")
+var ProjectItemConceptStatus = require("./components/project/properties/ProjectItemConceptStatus.jsx");
+var ProjectItemTechnicalStatus = require("./components/project/properties/ProjectItemTechnicalStatus.jsx");
 
 var projects = [
   {
