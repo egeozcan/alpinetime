@@ -6,11 +6,10 @@ module.exports = function *(next){
     try {
         yield next;
     } catch (err) {
-        if (401 == err.status) {
+        if (err.status === 401) {
             this.status = 401;
-            this.body = 'Protected resource, use Authorization header to get access\n';
+            this.body = 'You don\'t have permission to access this resource.';
         } else {
-            //not something we can deal with
             throw err;
         }
     }
