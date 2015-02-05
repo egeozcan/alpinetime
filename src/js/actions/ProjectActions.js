@@ -2,8 +2,8 @@ var Reflux = require('reflux');
 
 export default Reflux.createActions([
     'addProject',
-    'setProjectStatus',
-    'removeProject',
+    'getProject',
+    'getProjectSummaries',
     'updateProject',
     'addTaskToProject'
 ]);

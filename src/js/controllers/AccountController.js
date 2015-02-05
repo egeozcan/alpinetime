@@ -27,7 +27,7 @@ module.exports.signup = function *signup() {
     this.redirect(config.app.afterSignInRedirect);
 };
 
-function exists () {
+function exists() {
     [].forEach.call(arguments, function(str) {
         if(str === null || str === undefined || str.trim().length === 0) {
             return false;
