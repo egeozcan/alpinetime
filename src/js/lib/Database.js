@@ -1,5 +1,5 @@
 module.exports = require('rethinkdbdash')({
-    host: '192.168.0.9',
+    host: '172.20.1.27',
     port: 28015,
     db: 'alpinetime'
 });
