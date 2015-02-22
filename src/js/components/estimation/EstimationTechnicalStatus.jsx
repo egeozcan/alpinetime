@@ -21,7 +21,7 @@ export default React.createClass({
                 style: "warning",
                 text: "Experimental",
                 description: "Something like this is never done before." + 
-                    " There may be yet unknown problems when developing this.",
+                    " There may be yet unknown problems when developing this."
             },
             "trivial" : {
                 style: "info",
@@ -34,7 +34,7 @@ export default React.createClass({
                 text: "Done",
                 description: "Feature already exists. It just needs to be enabled."
             }
-    	}
+    	};
     	var status = statuses[this.props.statusKey];
     	if (!!status) {
     		var tooltip = (
