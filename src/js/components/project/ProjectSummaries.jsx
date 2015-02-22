@@ -9,6 +9,6 @@ var ProjectSummary = React.createClass({
                 <h3>{this.props.name}</h3>
                 Tags: <ul>{tags}</ul>
             </div>
-        )
+        );
     }
 });

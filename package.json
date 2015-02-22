@@ -37,6 +37,8 @@
     "rethinkdbdash": "^1.15.3",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
-    "watchify": "^2.2.1"
+    "watchify": "^2.2.1",
+    "flummox": "^2.5.0",
+    "6to5-runtime": "^3.5.3"
   }
 }

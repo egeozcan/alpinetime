@@ -25,7 +25,10 @@ var paths = {
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
-bundler.transform(to5ify);
+bundler.transform(to5ify.configure({
+    experimental: true,
+    selfContained: true
+}));
 bundler.transform('brfs');
 bundler.on('update', bundle);
 bundler.on('bytes', browserSync.reload);
