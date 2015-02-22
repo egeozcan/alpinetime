@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "6to5": "^3.3.1",
-    "6to5ify": "^3.1.2",
+    "babel": "^3.3.1",
+    "babelify": "^3.1.2",
     "bootstrap": "^3.3.2",
     "brfs": "^1.2.0",
     "browser-sync": "^1.9.0",

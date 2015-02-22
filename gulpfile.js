@@ -3,7 +3,7 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
-var to5ify = require("6to5ify");
+var babelify = require("babelify");
 var watchify = require('watchify');
 var sourcemaps = require('gulp-sourcemaps');
 var buffer = require('vinyl-buffer');
@@ -25,7 +25,7 @@ var paths = {
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
-bundler.transform(to5ify.configure({
+bundler.transform(babelify.configure({
     experimental: true,
     selfContained: true
 }));
