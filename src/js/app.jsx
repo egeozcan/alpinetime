@@ -1,5 +1,5 @@
 var React = require('react');
-var Table = require('react-bootstrap/Table');
+var Table = require('react-bootstrap/lib/Table');
 var ProjectItemConceptStatus = require("./components/project/properties/ProjectItemConceptStatus.jsx");
 var ProjectItemTechnicalStatus = require("./components/estimation/EstimationTechnicalStatus.jsx");
 
