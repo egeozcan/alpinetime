@@ -1,7 +1,7 @@
 var React = require('react');
-var Label = require('react-bootstrap/Label');
-var Tooltip = require('react-bootstrap/Tooltip');
-var OverlayTrigger = require('react-bootstrap/OverlayTrigger');
+var Label = require('react-bootstrap/lib/Label');
+var Tooltip = require('react-bootstrap/lib/Tooltip');
+var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 
 export default React.createClass({
     render() {
