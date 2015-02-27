@@ -19,7 +19,7 @@ var cleancss = new cleancssPlugin({
 });
 var autoprefixPlugin = require('less-plugin-autoprefix');
 var autoprefix = new autoprefixPlugin({
-  browsers: ["last 2 versions"]
+  browsers: ["> 5%"]
 });
  
 var paths = {
@@ -68,7 +68,8 @@ gulp.task('html', ['clean-html'], function () {
     nunjucksRender.nunjucks.configure(['client/views/']);
     return gulp.src('client/views/*.html')
         .pipe(nunjucksRender())
-        .pipe(gulp.dest('./public/'));
+        .pipe(gulp.dest('./public/'))
+        .pipe(browserSync.reload({stream:true}));
 });
 
 gulp.task('js', ['clean-js'], bundle);
@@ -80,9 +81,10 @@ gulp.task('bs-reload', function () {
 
 gulp.task('run-server', buildAndRunServer);
 
-gulp.task('watch', ['css', 'js'], function() {
+gulp.task('watch', ['css', 'js', 'html'], function() {
   gulp.watch(['./client/css/**/*.less'], ['css']);
-  gulp.watch(['./public/*.html'], ['bs-reload']);
+  gulp.watch(['./client/views/**/*.html'], ['html']);
+  gulp.watch(['./public/*.html'], ['html']);
   gulp.watch(['./**/*.go', '!./data/**/*.go'], ['run-server']);
   buildAndRunServer();
   loadBrowserSync();
@@ -121,7 +123,7 @@ function buildAndRunServer() {
   });
   proc = cp.spawn('./alpinetime');
   proc.stdout.on('data', function (data) {
-    gutil.log('stdout: ' + data.toString().replace("\n",""));
+    gutil.log('stdout: ' + data.toString());
     if(data.toString().indexOf('-- Started --') >= 0) {
       browserSync.reload();
     }
