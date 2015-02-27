@@ -11,6 +11,7 @@ var watchify = require('watchify');
 var browserify = require('browserify');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require("browser-sync");
+var nunjucksRender = require('gulp-nunjucks-render');
 var cleancssPlugin = require("less-plugin-clean-css");
 
 var cleancss = new cleancssPlugin({
@@ -22,8 +23,8 @@ var autoprefix = new autoprefixPlugin({
 });
  
 var paths = {
-  appCSS: ['./src/css/*.less'],
-  appJS: ['./src/js/app.jsx']
+  appCSS: ['./client/css/*.less'],
+  appJS: ['./client/js/app.jsx']
 };
  
 var bundler = watchify(browserify(paths.appJS, watchify.args));
@@ -57,6 +58,13 @@ gulp.task('css', ['clean'], function() {
     .pipe(browserSync.reload({stream:true}));
 });
 
+gulp.task('html', ['clean'], function () {
+    nunjucksRender.nunjucks.configure(['client/views/']);
+    return gulp.src('client/views/*.html')
+        .pipe(nunjucksRender())
+        .pipe(gulp.dest('./public/'));
+});
+
 gulp.task('js', ['clean'], bundle);
 
 gulp.task('bs-reload', function () {
@@ -67,7 +75,7 @@ gulp.task('bs-reload', function () {
 gulp.task('run-server', buildAndRunServer);
 
 gulp.task('watch', ['css', 'js'], function() {
-  gulp.watch(['./src/css/**/*.less'], ['css']);
+  gulp.watch(['./client/css/**/*.less'], ['css']);
   gulp.watch(['./public/*.html'], ['bs-reload']);
   gulp.watch(['./public/**/*.*', './**/*.go', '!./data/**/*.go'], ['run-server']);
   buildAndRunServer();
@@ -88,7 +96,10 @@ function loadBrowserSync() {
         middeware: function (req, res, next) {
             gutil.log(req.url);
             next();
-        }
+        },
+				ui: {
+					port: 3001
+				}
       }
   });
 }
@@ -104,7 +115,7 @@ function buildAndRunServer() {
   });
   proc = cp.spawn('./alpinetime');
   proc.stdout.on('data', function (data) {
-    gutil.log('stdout: ' + data);
+    gutil.log('stdout: ' + data.toString().replace("\n",""));
     if(data.toString().indexOf('-- Started --') >= 0) {
       browserSync.reload();
     }
