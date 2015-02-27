@@ -1,6 +1,8 @@
+var cp = require('child_process');
 var del = require('del');
 var gulp = require('gulp');
 var less = require('gulp-less');
+var spawn = require('child_process').spawn;
 var gutil = require('gulp-util');
 var buffer = require('vinyl-buffer');
 var source = require('vinyl-source-stream');
@@ -10,7 +12,7 @@ var browserify = require('browserify');
 var sourcemaps = require('gulp-sourcemaps');
 var browserSync = require("browser-sync");
 var cleancssPlugin = require("less-plugin-clean-css");
- 
+
 var cleancss = new cleancssPlugin({
   advanced: true
 });
@@ -43,7 +45,7 @@ function bundle() {
 }
 
 gulp.task('clean', function(done) {
-  del(['public'], done);
+  del(['public/**/*.*'], done);
 });
  
 gulp.task('css', ['clean'], function() {
@@ -58,21 +60,53 @@ gulp.task('css', ['clean'], function() {
 gulp.task('js', ['clean'], bundle);
 
 gulp.task('bs-reload', function () {
-    browserSync.reload();
+  browserSync.reload();
 });
+
+
+gulp.task('run-server', buildAndRunServer);
 
 gulp.task('watch', ['css', 'js'], function() {
   gulp.watch(['./src/css/**/*.less'], ['css']);
-  gulp.watch(['./public/**/*.html'], ['bs-reload']);
+  gulp.watch(['./public/*.html'], ['bs-reload']);
+  gulp.watch(['./public/**/*.*', './**/*.go', '!./data/**/*.go'], ['run-server']);
+  buildAndRunServer();
+  loadBrowserSync();
+});
+
+gulp.task('default', ['css', 'js']);
+
+function loadBrowserSync() {
+  if (!proc) {
+    gutil.log("server not loaded yet");
+    setTimeout(loadBrowserSync, 1000);
+    return;
+  };
   browserSync({
       proxy: {
         target: "localhost:8080",
         middeware: function (req, res, next) {
-            console.log(req.url);
+            gutil.log(req.url);
             next();
         }
       }
   });
-});
- 
-gulp.task('default', ['css', 'js']);
+}
+
+var proc;
+function buildAndRunServer() {
+  if(proc) {
+    proc.kill('SIGINT');
+  }
+  ["go-bindata -pkg data -o ./data/bindata.go ./public/...", "go build"].forEach(function (command) {
+    gutil.log("running: ", command);
+    cp.execSync(command, {cwd: process.cwd()});
+  });
+  proc = cp.spawn('./alpinetime');
+  proc.stdout.on('data', function (data) {
+    gutil.log('stdout: ' + data);
+    if(data.toString().indexOf('-- Started --') >= 0) {
+      browserSync.reload();
+    }
+  });
+}
