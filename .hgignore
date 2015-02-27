@@ -3,3 +3,4 @@ public/*
 syntax: glob
 alpinetime.exe
 data/bindata.go
+.idea/*
