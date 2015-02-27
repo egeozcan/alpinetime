@@ -45,11 +45,17 @@ function bundle() {
     .pipe(gulp.dest('./public/js'));
 }
 
-gulp.task('clean', function(done) {
-  del(['public/**/*.*'], done);
+gulp.task('clean-css', function(done) {
+  del(['public/css/*.*'], done);
+});
+gulp.task('clean-html', function(done) {
+  del(['public/*.*'], done);
+});
+gulp.task('clean-js', function(done) {
+  del(['public/js/*.*'], done);
 });
  
-gulp.task('css', ['clean'], function() {
+gulp.task('css', ['clean-css'], function() {
   return gulp.src(paths.appCSS)
     .pipe(less({
       plugins: [autoprefix, cleancss]
@@ -58,14 +64,14 @@ gulp.task('css', ['clean'], function() {
     .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('html', ['clean'], function () {
+gulp.task('html', ['clean-html'], function () {
     nunjucksRender.nunjucks.configure(['client/views/']);
     return gulp.src('client/views/*.html')
         .pipe(nunjucksRender())
         .pipe(gulp.dest('./public/'));
 });
 
-gulp.task('js', ['clean'], bundle);
+gulp.task('js', ['clean-js'], bundle);
 
 gulp.task('bs-reload', function () {
   browserSync.reload();
@@ -77,7 +83,7 @@ gulp.task('run-server', buildAndRunServer);
 gulp.task('watch', ['css', 'js'], function() {
   gulp.watch(['./client/css/**/*.less'], ['css']);
   gulp.watch(['./public/*.html'], ['bs-reload']);
-  gulp.watch(['./public/**/*.*', './**/*.go', '!./data/**/*.go'], ['run-server']);
+  gulp.watch(['./**/*.go', '!./data/**/*.go'], ['run-server']);
   buildAndRunServer();
   loadBrowserSync();
 });
@@ -92,7 +98,7 @@ function loadBrowserSync() {
   };
   browserSync({
       proxy: {
-        target: "localhost:8080",
+        target: "localhost:8081",
         middeware: function (req, res, next) {
             gutil.log(req.url);
             next();
@@ -109,7 +115,7 @@ function buildAndRunServer() {
   if(proc) {
     proc.kill('SIGINT');
   }
-  ["go-bindata -pkg data -o ./data/bindata.go ./public/...", "go build"].forEach(function (command) {
+  ["go-bindata -debug -pkg data -o ./data/bindata.go ./public/...", "go build"].forEach(function (command) {
     gutil.log("running: ", command);
     cp.execSync(command, {cwd: process.cwd()});
   });
