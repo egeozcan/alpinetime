@@ -7,8 +7,10 @@ import (
 )
 
 func CheckAsset(c *gin.Context) {
-	var path = strings.Trim(c.Request.URL.Path, "/")
-	asset, err := data.Asset(path)
+	if !strings.HasPrefix(c.Request.URL.Path, "/public") {
+		return
+	}
+	asset, err := data.Asset(strings.TrimPrefix(c.Request.URL.Path, "/"))
 	if err == nil {
 		c.Writer.Write(asset)
 		c.AbortWithStatus(200)
