@@ -23,25 +23,26 @@ type User struct {
 
 type Project struct {
 	Record
+	Name    string `sql:"size:254"`
 	Manager User
 	Users   []User
 }
 
 type Category struct {
 	Record
-	Name
+	Name string `sql:"size:254"`
 }
 
 type ConceptStatus struct {
 	Record
-	Name
-	Description
+	Name        string `sql:"size:254"`
+	Description string `sql:"size:254"`
 }
 
 type TechnicalStatus struct {
 	Record
-	Name
-	Description
+	Name        string `sql:"size:254"`
+	Description string `sql:"size:254"`
 }
 
 type Package struct {

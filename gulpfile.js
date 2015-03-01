@@ -33,6 +33,7 @@ bundler.transform(babelify.configure({
 }));
 bundler.transform('brfs');
 bundler.on('update', bundle);
+bundler.on('update', gutil.log.bind(gutil, "Updated js files"));
 bundler.on('bytes', browserSync.reload);
 
 function bundle() {
