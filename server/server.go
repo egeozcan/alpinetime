@@ -16,12 +16,12 @@ func Create() *gin.Engine {
 	server.Use(sessions.Sessions("alpinetime", store))
 
 	server.GET("/", routes.LoginPage)
-	server.POST("/login", routes.Login("/list"))
+	server.POST("/login", routes.Login("/app"))
 
 	authorized := server.Group("/", middleware.CheckLogin())
 
-	authorized.GET("/list", routes.ProtectedArea)
 	authorized.GET("/logout", routes.Logout)
+	authorized.GET("/app/*catchAll", routes.ProtectedArea)
 
 	return server
 }
