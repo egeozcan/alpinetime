@@ -84,7 +84,6 @@ gulp.task('run-server', buildAndRunServer);
 gulp.task('watch', ['css', 'js', 'html'], function() {
   gulp.watch(['./client/css/**/*.less'], ['css']);
   gulp.watch(['./client/views/**/*.html'], ['html']);
-  gulp.watch(['./public/*.html'], ['html']);
   gulp.watch(['./**/*.go', '!./data/**/*.go'], ['run-server']);
   buildAndRunServer();
   loadBrowserSync();
@@ -123,7 +122,7 @@ function buildAndRunServer() {
   });
   proc = cp.spawn('./alpinetime');
   proc.stdout.on('data', function (data) {
-    gutil.log('stdout: ' + data.toString());
+    console.log(data.toString().replace(/\n+?$/m, ""));
     if(data.toString().indexOf('-- Started --') >= 0) {
       browserSync.reload();
     }
