@@ -25,7 +25,4 @@ Flux implementation?
  
 ### Backend
 
-Do I need to make something "isomorphic"? Not sure.
-<del>I want to use Nim-lang on the back-end.</del>
-
 Back-end done with some go-lang love. AD integration easiness helped.
