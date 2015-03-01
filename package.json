@@ -30,6 +30,7 @@
     "react": "^0.12.2",
     "react-bootstrap": "^0.15.1",
     "rethinkdbdash": "^1.16.10",
+    "superagent": "^0.21.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.4.0"

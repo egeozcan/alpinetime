@@ -9,8 +9,8 @@ import (
 
 func Create() *gin.Engine {
 	server := gin.Default()
-	secret := RandSeq(30)
-	store := sessions.NewCookieStore([]byte(secret))
+	//secret := RandSeq(30)
+	store := sessions.NewCookieStore([]byte("secret"))
 
 	server.Use(middleware.CheckAsset)
 	server.Use(sessions.Sessions("alpinetime", store))
