@@ -20,6 +20,7 @@ var ProjectListItem = React.createClass({
     return (
       <div>
         <h2>{this.props.project.Name}</h2>
+        <p>{this.props.project.Description}</p>
       </div>
     )
   }

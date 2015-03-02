@@ -7,6 +7,7 @@ export default new Baobab({
       UpdatedAt: new Date(),
       DeletedAt: null,
       Name: "Test project 1",
+      Description: "",
       Customer: {
         Name: "Test customer 1",
         LegacyId: "1112"
@@ -17,6 +18,7 @@ export default new Baobab({
       UpdatedAt: new Date(),
       DeletedAt: null,
       Name: "Test project 2",
+      Description: "Project 2 desc.",
       Customer: {
         Name: "Test customer 1",
         LegacyId: "1112"
