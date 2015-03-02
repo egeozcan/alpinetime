@@ -2,41 +2,27 @@ var React = require('react');
 var stateTree = require("./stateTree.js");
 window.stateTree = stateTree;
 
-var projects = [{
-  Name: "Test1",
-  Start: new Date(),
-  Deadline: new Date(),
-  Packages: [{
-    Name: "Package1",
-    Start: new Date(),
-    Category: "Cat1",
-    Tasks: [{
-        Description: "do stuff",
-        Category: "TaskCat1",
-        Estimation: 8,
-        AssignedTo: "ege.ozcan",
-        EstimatedBy: "ege.ozcan",
-        Tags: ["testTag", "testTag2"],
-        Status: "Released"
-    },
-    {
-      Description: "do other stuff",
-      Category: "TaskCat2",
-      Estimation: 8,
-      AssignedTo: "ege.ozcan",
-      EstimatedBy: "ege.ozcan",
-      Tags: ["testTag", "testTag2"],
-      Status: "Released"
-    }]
-  }]
-}]
+var projectsCursor = stateTree.select("stores", "projects");
 
-var HelloMessage = React.createClass({
+var ProjectList = React.createClass({
+  mixins: [projectsCursor.mixin],
   render() {
   	return (
-	  	<span>Hello World</span>
+	  	<div>
+        {this.state.cursor.map(p => <ProjectListItem key={p.ID} project={p} />)}
+      </div>
   	)
   }
 });
 
-React.render(<HelloMessage />, document.getElementById("main"));
+var ProjectListItem = React.createClass({
+  render() {
+    return (
+      <div>
+        <h2>{this.props.project.Name}</h2>
+      </div>
+    )
+  }
+});
+
+React.render(<ProjectList />, document.getElementById("main"));
