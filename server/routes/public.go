@@ -12,7 +12,7 @@ func LoginPage(c *gin.Context) {
 	session := sessions.Default(c)
 	user := session.Get("username")
 	if user != nil && user != "" {
-		c.Redirect(301, "/list")
+		c.Redirect(301, "/app/projects")
 		return
 	}
 	helpers.WriteHeader(c.Writer, 200, "text/html")
