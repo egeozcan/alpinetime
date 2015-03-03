@@ -2,9 +2,23 @@ require("babelify/polyfill");
 
 var React = require('react');
 var Router = require('react-router');
+var Route = Router.Route;
+var Link = Router.Link;
+var RouteHandler = Router.RouteHandler;
+
 var stateTree = require("./stateTree.js");
 
 var projectsCursor = stateTree.select("stores", "projects");
+
+var App = React.createClass({
+  render() {
+    return (
+      <div>
+        <RouteHandler/>
+      </div>
+    )
+  }
+})
 
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin],
@@ -33,4 +47,18 @@ var ProjectListItem = React.createClass({
   }
 });
 
-React.render(<ProjectList />, document.getElementById("main"));
+var routes = (
+  <Route name="app" path="/app" handler={App}>
+    <Route name="projects" handler={ProjectList}/>
+  </Route>
+)
+
+Router.run(routes, Router.HistoryLocation, Handler => {
+  React.render(<Handler/>, document.getElementById("main"))
+});
+
+
+
+
+
+
