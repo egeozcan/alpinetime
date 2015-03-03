@@ -1,5 +1,6 @@
 var React = require('react');
 var stateTree = require("./stateTree.js");
+require("babelify/polyfill");
 window.stateTree = stateTree;
 
 var projectsCursor = stateTree.select("stores", "projects");
