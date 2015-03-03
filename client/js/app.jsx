@@ -10,7 +10,9 @@ var ProjectList = React.createClass({
   render() {
   	return (
 	  	<div>
-        {this.state.cursor.map(p => <ProjectListItem key={p.ID} project={p} />)}
+        {this.state.cursor
+          .filter(p => !!p.ID)
+          .map(p => <ProjectListItem key={p.ID} project={p} />)}
       </div>
   	)
   }
@@ -21,6 +23,7 @@ var ProjectListItem = React.createClass({
     return (
       <div>
         <h2>{this.props.project.Name}</h2>
+        <p>{this.props.project.Description}</p>
       </div>
     )
   }

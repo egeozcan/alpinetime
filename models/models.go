@@ -23,11 +23,12 @@ type User struct {
 
 type Project struct {
 	Record
-	Name    string `sql:"size:254"`
-	Manager User
-	Users   []User
-	Customer Customer
-	Packages []Package
+	Name        string `sql:"size:254"`
+	Description string `sql:"size:254"`
+	Manager     User
+	Users       []User
+	Customer    Customer
+	Packages    []Package
 }
 
 type Category struct {
@@ -76,6 +77,6 @@ type Estimation struct {
 
 type Customer struct {
 	Record
-	Name string `sql:"size:255"`
+	Name     string `sql:"size:255"`
 	LegacyId int
 }
