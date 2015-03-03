@@ -1,7 +1,8 @@
-var React = require('react');
-var stateTree = require("./stateTree.js");
 require("babelify/polyfill");
-window.stateTree = stateTree;
+
+var React = require('react');
+var Router = require('react-router');
+var stateTree = require("./stateTree.js");
 
 var projectsCursor = stateTree.select("stores", "projects");
 
@@ -10,9 +11,12 @@ var ProjectList = React.createClass({
   render() {
   	return (
 	  	<div>
-        {this.state.cursor
-          .filter(p => !!p.ID)
-          .map(p => <ProjectListItem key={p.ID} project={p} />)}
+        {
+          this.state.cursor
+            .filter(p => !!p.ID)
+            .sort((p1, p2) => p1.ID - p2.ID)
+            .map(p => <ProjectListItem key={p.ID} project={p} />)
+        }
       </div>
   	)
   }
