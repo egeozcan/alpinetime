@@ -16,7 +16,7 @@ func Create() *gin.Engine {
 	server.Use(sessions.Sessions("alpinetime", store))
 
 	server.GET("/", routes.LoginPage)
-	server.POST("/login", routes.Login("/app"))
+	server.POST("/login", routes.Login("/app/projects"))
 
 	authorized := server.Group("/", middleware.CheckLogin())
 
