@@ -21,7 +21,7 @@ func Create() *gin.Engine {
 	authorized := server.Group("/", middleware.CheckLogin())
 
 	authorized.GET("/logout", routes.Logout)
-	authorized.GET("/app/*catchAll", routes.ProtectedArea)
+	authorized.GET("/app/projects", routes.ProtectedArea)
 
 	return server
 }
