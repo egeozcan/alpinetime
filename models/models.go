@@ -54,6 +54,7 @@ type TechnicalStatus struct {
 type Package struct {
 	Record
 	ProjectID   int64
+	Name        string `sql:"size:254"`
 	Description string `sql:"size:255"`
 	StartsAt    time.Time
 	Category    Category
@@ -63,6 +64,8 @@ type Package struct {
 
 type Task struct {
 	Record
+	PackageID         int64
+	Name              string `sql:"size:254"`
 	Description       string `sql:"size:255"`
 	AssignedTo        User
 	AssignedToID      sql.NullInt64
@@ -81,6 +84,7 @@ type Tag struct {
 
 type Estimation struct {
 	Record
+	TaskID           sql.NullInt64
 	Comment          string `sql:"size:255"`
 	EstimatedMinutes int
 	Owner            User
