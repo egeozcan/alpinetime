@@ -32,6 +32,7 @@ type Project struct {
 	Customer    Customer
 	CustomerID  sql.NullInt64
 	Packages    []Package
+	Tasks       []Task
 }
 
 type Category struct {
@@ -65,21 +66,16 @@ type Package struct {
 type Task struct {
 	Record
 	PackageID         int64
+	ProjectID         int64
 	Name              string `sql:"size:254"`
 	Description       string `sql:"size:255"`
 	AssignedTo        User
 	AssignedToID      sql.NullInt64
-	Tags              []Tag `gorm:"many2many:task_tags;"`
 	Estimations       []Estimation
 	TechnicalStatus   TechnicalStatus
 	TechnicalStatusID sql.NullInt64
 	ConceptStatus     ConceptStatus
 	ConceptStatusID   sql.NullInt64
-}
-
-type Tag struct {
-	Record
-	Name string `sql:"size:255"`
 }
 
 type Estimation struct {
@@ -110,7 +106,6 @@ func InitDatabases(path string) (gorm.DB, error) {
 		&TechnicalStatus{},
 		&Package{},
 		&Task{},
-		&Tag{},
 		&Estimation{},
 		&Customer{})
 	return db, nil

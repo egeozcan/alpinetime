@@ -28,6 +28,7 @@ func init() {
 	// if err != nil {
 	// 	panic(fmt.Sprintf("No error should happen when migrating database, but got %+v", err))
 	// }
+	//db.LogMode(true)
 }
 
 func TestCreateUser(t *testing.T) {
@@ -74,12 +75,10 @@ func TestCreatePackage(t *testing.T) {
 		Owner:            *dbUser,
 	}
 	packageTask := models.Task{
+		ProjectID:   dbProject.ID,
 		Name:        "Test Task1",
 		Description: "Test description",
 		AssignedTo:  *dbUser,
-		Tags: []models.Tag{
-			models.Tag{Name: "Test"},
-		},
 		Estimations: []models.Estimation{
 			taskEstimation,
 		},
@@ -112,13 +111,31 @@ func TestCreatePackage(t *testing.T) {
 
 func TestReadProject(t *testing.T) {
 	queryProject := models.Project{
-		Record: models.Record{
-			ID: int64(1),
-		},
+		Record: models.Record{ID: int64(1)},
 	}
-	db.LogMode(true)
-	dbResult := db.Preload("Packages").First(&queryProject)
+	dbResult := db.
+		Preload("Packages").
+		Preload("Customer").
+		Preload("Manager").
+		First(&queryProject)
 	jsonResult, err := json.MarshalIndent(dbResult.Value, "", "  ")
+	assert.Nil(t, err)
+	t.Log(string(jsonResult))
+}
+
+func TestReadTasks(t *testing.T) {
+	var tasks []models.Task
+	queryTask := models.Task{
+		ProjectID: int64(1),
+	}
+	dbTaskResult := db.
+		Where(&queryTask).
+		Preload("AssignedTo").
+		Preload("Estimations").
+		Preload("TechnicalStatus").
+		Preload("ConceptStatus").
+		Find(&tasks)
+	jsonResult, err := json.MarshalIndent(dbTaskResult.Value, "", "  ")
 	assert.Nil(t, err)
 	t.Log(string(jsonResult))
 }
