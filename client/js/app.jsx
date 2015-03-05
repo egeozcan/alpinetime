@@ -7,6 +7,7 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var stateTree = require("./stateTree.js");
+window.sa = require('superagent');
 
 var projectsCursor = stateTree.select("stores", "projects");
 
