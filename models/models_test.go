@@ -2,9 +2,11 @@ package models_test
 
 import (
 	"alpinetime/models"
-	"fmt"
+	"encoding/json"
+	//"fmt"
 	"github.com/jinzhu/gorm"
-	"os"
+	//"os"
+	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 )
@@ -17,15 +19,15 @@ var (
 )
 
 func init() {
-	var err error
-	if _, statError := os.Stat(dbPath); statError == nil {
-		db, err = gorm.Open("sqlite3", dbPath)
-	} else {
-		db, err = models.InitDatabases(dbPath)
-	}
-	if err != nil {
-		panic(fmt.Sprintf("No error should happen when migrating database, but got %+v", err))
-	}
+	//var err error
+	db, _ = models.InitDatabases(dbPath)
+	// if _, statError := os.Stat(dbPath); statError == nil {
+	// 	db, err = gorm.Open("sqlite3", dbPath)
+	// } else {
+	// }
+	// if err != nil {
+	// 	panic(fmt.Sprintf("No error should happen when migrating database, but got %+v", err))
+	// }
 }
 
 func TestCreateUser(t *testing.T) {
@@ -37,10 +39,9 @@ func TestCreateUser(t *testing.T) {
 	}
 	db.Create(&user)
 	dbResult := db.First(&user)
-	if dbResult.Value == nil {
-		panic("User should be saved to the database, but got nil")
-	}
-	t.Logf("Saved and retrieved user successfully: %#v", dbResult.Value)
+	jsonResult, err := json.MarshalIndent(dbResult.Value, "", "  ")
+	assert.Nil(t, err)
+	t.Log(string(jsonResult))
 	dbUser = dbResult.Value.(*models.User)
 }
 
@@ -58,21 +59,30 @@ func TestCreateProject(t *testing.T) {
 	}
 	db.Create(&project)
 	dbResult := db.First(&project)
-	if dbResult.Value == nil {
-		panic("Project should be saved to the database, but got nil")
-	}
-	t.Log("Saved and retrieved user successfully.")
+	assert.NotNil(t, dbResult.Value)
+	jsonResult, err := json.MarshalIndent(dbResult.Value, "", "  ")
+	assert.Nil(t, err)
+	t.Log(string(jsonResult))
 	dbProject = dbResult.Value.(*models.Project)
+	assert.NotNil(t, dbProject)
 }
 
 func TestCreatePackage(t *testing.T) {
+	taskEstimation := models.Estimation{
+		Comment:          "Test estimation",
+		EstimatedMinutes: 365,
+		Owner:            *dbUser,
+	}
 	packageTask := models.Task{
+		Name:        "Test Task1",
 		Description: "Test description",
 		AssignedTo:  *dbUser,
 		Tags: []models.Tag{
 			models.Tag{Name: "Test"},
 		},
-		Estimations: []models.Estimation{},
+		Estimations: []models.Estimation{
+			taskEstimation,
+		},
 		TechnicalStatus: models.TechnicalStatus{
 			Name:        "Test t.status",
 			Description: "Test t.descr",
@@ -82,19 +92,33 @@ func TestCreatePackage(t *testing.T) {
 			Description: "Test c.descr",
 		},
 	}
+	packageCategory := models.Category{
+		Name: "Test category",
+	}
 	projectPackage := models.Package{
+		Name:        "TestPackage",
 		Description: "This is a test package",
 		StartsAt:    time.Now(),
-		Category: models.Category{
-			Name: "Test category",
-		},
+		Category:    packageCategory,
 		Tasks: []models.Task{
 			packageTask,
 		},
 	}
-	db.Create(&packageTask)
 	db.Create(&projectPackage)
 	dbProject.Packages = append(dbProject.Packages, projectPackage)
 	db.Save(dbProject)
 	t.Log("Saved package")
+}
+
+func TestReadProject(t *testing.T) {
+	queryProject := models.Project{
+		Record: models.Record{
+			ID: int64(1),
+		},
+	}
+	db.LogMode(true)
+	dbResult := db.Preload("Packages").First(&queryProject)
+	jsonResult, err := json.MarshalIndent(dbResult.Value, "", "  ")
+	assert.Nil(t, err)
+	t.Log(string(jsonResult))
 }
