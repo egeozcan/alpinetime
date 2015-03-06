@@ -1,9 +1,11 @@
 package routes
 
 import (
+	"alpinetime"
 	"alpinetime/data"
 	"alpinetime/forms"
 	"alpinetime/helpers"
+	"alpinetime/models"
 	"fmt"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -19,6 +21,14 @@ func Login(redirectTo string) func(*gin.Context) {
 			c.Redirect(301, "/?guessWhat=passwordiswrong")
 			return
 		}
+
+		user := models.User{
+			Domain:   "L-MOBILE",
+			Name:     form.User,
+			Email:    "",
+			Projects: []models.Project{},
+		}
+		alpinetime.Db.Save(&user)
 		session.Set("username", form.User)
 		session.Save()
 		c.Redirect(301, redirectTo)

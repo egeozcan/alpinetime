@@ -20,6 +20,7 @@ type User struct {
 	Name     string    `sql:"size:255"`
 	Email    string    `sql:"size:254"`
 	Projects []Project `gorm:"many2many:user_projects;"`
+	LastLogin time.Time
 }
 
 type Project struct {
@@ -91,6 +92,13 @@ type Customer struct {
 	Record
 	Name     string `sql:"size:255"`
 	LegacyId string `sql:"size:255"`
+}
+
+type SiteSetting struct {
+	Record
+	Tenant int
+	Name string
+	Value string
 }
 
 func InitDatabases(path string) (gorm.DB, error) {

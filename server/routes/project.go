@@ -15,5 +15,5 @@ func Projects(c *gin.Context) {
 		panic("omg")
 	}
 	var user models.User
-	c.JSON(200, db.First(&user).Value)
+	c.JSON(200, db.Model(&user).F().Value)
 }
