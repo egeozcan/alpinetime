@@ -7,6 +7,9 @@ import (
 	"time"
 )
 
+var Db *gorm.DB
+var LastError error
+
 type Record struct {
 	ID        int64
 	CreatedAt time.Time `json:"createdAt"`
@@ -16,10 +19,10 @@ type Record struct {
 
 type User struct {
 	Record
-	Domain   string    `sql:"size:255"`
-	Name     string    `sql:"size:255"`
-	Email    string    `sql:"size:254"`
-	Projects []Project `gorm:"many2many:user_projects;"`
+	Domain    string    `sql:"size:255"`
+	Name      string    `sql:"size:255"`
+	Email     string    `sql:"size:254"`
+	Projects  []Project `gorm:"many2many:user_projects;"`
 	LastLogin time.Time
 }
 
@@ -97,14 +100,18 @@ type Customer struct {
 type SiteSetting struct {
 	Record
 	Tenant int
-	Name string
-	Value string
+	Name   string
+	Value  string
 }
 
-func InitDatabases(path string) (gorm.DB, error) {
-	db, err := gorm.Open("sqlite3", path)
+func init() {
+	if Db != nil {
+		return
+	}
+	db, err := gorm.Open("sqlite3", "./alpinetime.sqlite")
 	if err != nil {
-		return db, err
+		LastError = err
+		return
 	}
 	db.AutoMigrate(
 		&User{},
@@ -115,6 +122,7 @@ func InitDatabases(path string) (gorm.DB, error) {
 		&Package{},
 		&Task{},
 		&Estimation{},
-		&Customer{})
-	return db, nil
+		&Customer{},
+		&SiteSetting{})
+	Db = &db
 }
