@@ -26,3 +26,7 @@ Flux implementation?
 ### Backend
 
 Back-end done with some go-lang love. AD integration easiness helped.
+
+## TODO
+
+ - Figure out a way to make the category distinction between 
