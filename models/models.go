@@ -98,13 +98,6 @@ type Customer struct {
 	LegacyId string `sql:"size:255"`
 }
 
-type SiteSetting struct {
-	Record
-	Tenant int
-	Name   string
-	Value  string
-}
-
 func init() {
 	if Db != nil {
 		return
@@ -123,7 +116,6 @@ func init() {
 		&Package{},
 		&Task{},
 		&Estimation{},
-		&Customer{},
-		&SiteSetting{})
+		&Customer{})
 	Db = &db
 }
