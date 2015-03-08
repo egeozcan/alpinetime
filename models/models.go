@@ -29,13 +29,13 @@ type User struct {
 
 type Project struct {
 	Record
-	Name        string `sql:"size:254" form:"Name"`
-	Description string `sql:"size:254" form:"Description"`
+	Name              string `sql:"size:254" form:"Name"`
+	Description       string `sql:"size:254" form:"Description"`
 	Manager           User
-	ManagerID   sql.NullInt64 `form:"ManagerID"`
-	Users             []User `gorm:"many2many:user_projects;"`
+	ManagerID         sql.NullInt64 `form:"ManagerID"`
+	Users             []User        `gorm:"many2many:user_projects;"`
 	Customer          Customer
-	CustomerID  sql.NullInt64 `form:"CustomerID"`
+	CustomerID        sql.NullInt64 `form:"CustomerID"`
 	Packages          []Package
 	Tasks             []Task
 	Category          ProjectCategory
