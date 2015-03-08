@@ -17,16 +17,7 @@ var (
 )
 
 func init() {
-	//var err error
 	db = models.Db
-	// if _, statError := os.Stat(dbPath); statError == nil {
-	// 	db, err = gorm.Open("sqlite3", dbPath)
-	// } else {
-	// }
-	// if err != nil {
-	// 	panic(fmt.Sprintf("No error should happen when migrating database, but got %+v", err))
-	// }
-	//db.LogMode(true)
 }
 
 func TestCreateUser(t *testing.T) {
