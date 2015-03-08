@@ -28,18 +28,25 @@ type User struct {
 
 type Project struct {
 	Record
-	Name        string `sql:"size:254"`
-	Description string `sql:"size:254"`
-	Manager     User
-	ManagerID   sql.NullInt64
-	Users       []User `gorm:"many2many:user_projects;"`
-	Customer    Customer
-	CustomerID  sql.NullInt64
-	Packages    []Package
-	Tasks       []Task
+	Name              string `sql:"size:254"`
+	Description       string `sql:"size:254"`
+	Manager           User
+	ManagerID         sql.NullInt64
+	Users             []User `gorm:"many2many:user_projects;"`
+	Customer          Customer
+	CustomerID        sql.NullInt64
+	Packages          []Package
+	Tasks             []Task
+	Category          ProjectCategory
+	ProjectCategoryID int64
 }
 
 type Category struct {
+	Record
+	Name string `sql:"size:254"`
+}
+
+type ProjectCategory struct {
 	Record
 	Name string `sql:"size:254"`
 }

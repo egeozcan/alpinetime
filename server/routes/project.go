@@ -13,3 +13,7 @@ func Projects(c *gin.Context) {
 	dbResults := models.Db.Find(&models.Project{})
 	c.JSON(200, dbResults.Value)
 }
+
+func AddProject(c *gin.Context) {
+
+}

@@ -117,7 +117,7 @@ function buildAndRunServer() {
   if(proc) {
     proc.kill('SIGINT');
   }
-  ["go-bindata -debug -pkg data -o ./data/bindata.go ./public/...", "go build"].forEach(function (command) {
+  ["go-bindata -debug -pkg data -o ./data/bindata.go ./public/...", "go build -tags debug"].forEach(function (command) {
     gutil.log("running: ", command);
     cp.execSync(command, {cwd: process.cwd()});
   });
