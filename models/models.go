@@ -20,28 +20,29 @@ type Record struct {
 type User struct {
 	Record
 	Domain    string    `sql:"size:255"`
-	Name      string    `sql:"size:255"`
-	Email     string    `sql:"size:254"`
+	Name      string    `sql:"size:255" form:"username" binding:"required"`
+	Email     string    `sql:"size:254" form:"email"`
+	Password  string    `sql:"-" form:"password"`
 	Projects  []Project `gorm:"many2many:user_projects;"`
 	LastLogin time.Time
 }
 
 type Project struct {
 	Record
-	Name        string `sql:"size:254"`
-	Description string `sql:"size:254"`
+	Name        string `sql:"size:254" form:"Name"`
+	Description string `sql:"size:254" form:"Description"`
 	Manager     User
-	ManagerID   sql.NullInt64
-	Users       []User `gorm:"many2many:user_projects;"`
+	ManagerID   sql.NullInt64 `form:"ManagerID"`
+	Users       []User        `gorm:"many2many:user_projects;"`
 	Customer    Customer
-	CustomerID  sql.NullInt64
+	CustomerID  sql.NullInt64 `form:"CustomerID"`
 	Packages    []Package
 	Tasks       []Task
 }
 
 type Category struct {
 	Record
-	Name string `sql:"size:254"`
+	Name string `sql:"size:254" form:"Name"`
 }
 
 type ConceptStatus struct {
