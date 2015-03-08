@@ -10,10 +10,6 @@ func Projects(c *gin.Context) {
 		ProtectedArea(c)
 		return
 	}
-	db, err := models.InitDatabases("./alpinetime.sqlite")
-	if err != nil {
-		panic("omg")
-	}
-	var user models.User
-	c.JSON(200, db.Model(&user).F().Value)
+	dbResults := models.Db.Find(&models.Project{})
+	c.JSON(200, dbResults.Value)
 }

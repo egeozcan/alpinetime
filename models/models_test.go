@@ -3,9 +3,7 @@ package models_test
 import (
 	"alpinetime/models"
 	"encoding/json"
-	//"fmt"
 	"github.com/jinzhu/gorm"
-	//"os"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -13,14 +11,14 @@ import (
 
 var (
 	dbPath    = "./alpinetime_test.sqlite"
-	db        gorm.DB
+	db        *gorm.DB
 	dbUser    *models.User
 	dbProject *models.Project
 )
 
 func init() {
 	//var err error
-	db, _ = models.InitDatabases(dbPath)
+	db = models.Db
 	// if _, statError := os.Stat(dbPath); statError == nil {
 	// 	db, err = gorm.Open("sqlite3", dbPath)
 	// } else {
