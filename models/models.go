@@ -20,21 +20,22 @@ type Record struct {
 type User struct {
 	Record
 	Domain    string    `sql:"size:255"`
-	Name      string    `sql:"size:255"`
-	Email     string    `sql:"size:254"`
+	Name      string    `sql:"size:255" form:"username" binding:"required"`
+	Email     string    `sql:"size:254" form:"email"`
+	Password  string    `sql:"-" form:"password"`
 	Projects  []Project `gorm:"many2many:user_projects;"`
 	LastLogin time.Time
 }
 
 type Project struct {
 	Record
-	Name              string `sql:"size:254"`
-	Description       string `sql:"size:254"`
+	Name        string `sql:"size:254" form:"Name"`
+	Description string `sql:"size:254" form:"Description"`
 	Manager           User
-	ManagerID         sql.NullInt64
+	ManagerID   sql.NullInt64 `form:"ManagerID"`
 	Users             []User `gorm:"many2many:user_projects;"`
 	Customer          Customer
-	CustomerID        sql.NullInt64
+	CustomerID  sql.NullInt64 `form:"CustomerID"`
 	Packages          []Package
 	Tasks             []Task
 	Category          ProjectCategory
@@ -48,7 +49,7 @@ type Category struct {
 
 type ProjectCategory struct {
 	Record
-	Name string `sql:"size:254"`
+	Name string `sql:"size:254" form:"Name"`
 }
 
 type ConceptStatus struct {
@@ -104,13 +105,6 @@ type Customer struct {
 	LegacyId string `sql:"size:255"`
 }
 
-type SiteSetting struct {
-	Record
-	Tenant int
-	Name   string
-	Value  string
-}
-
 func init() {
 	if Db != nil {
 		return
@@ -129,7 +123,6 @@ func init() {
 		&Package{},
 		&Task{},
 		&Estimation{},
-		&Customer{},
-		&SiteSetting{})
+		&Customer{})
 	Db = &db
 }
