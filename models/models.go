@@ -29,8 +29,8 @@ type User struct {
 
 type Project struct {
 	Record
-	Name              string `sql:"size:254" form:"Name"`
-	Description       string `sql:"size:254" form:"Description"`
+	Name              string `sql:"size:255" form:"Name"`
+	Description       string `sql:"size:255" form:"Description"`
 	Manager           User
 	ManagerID         sql.NullInt64 `form:"ManagerID"`
 	Users             []User        `gorm:"many2many:user_projects;"`
@@ -54,20 +54,20 @@ type ProjectCategory struct {
 
 type ConceptStatus struct {
 	Record
-	Name        string `sql:"size:254"`
-	Description string `sql:"size:254"`
+	Name        string `sql:"size:255"`
+	Description string `sql:"size:255"`
 }
 
 type TechnicalStatus struct {
 	Record
-	Name        string `sql:"size:254"`
-	Description string `sql:"size:254"`
+	Name        string `sql:"size:255"`
+	Description string `sql:"size:255"`
 }
 
 type Package struct {
 	Record
 	ProjectID   int64
-	Name        string `sql:"size:254"`
+	Name        string `sql:"size:255"`
 	Description string `sql:"size:255"`
 	StartsAt    time.Time
 	Category    Category
@@ -79,7 +79,7 @@ type Task struct {
 	Record
 	PackageID         int64
 	ProjectID         int64
-	Name              string `sql:"size:254"`
+	Name              string `sql:"size:255"`
 	Description       string `sql:"size:255"`
 	AssignedTo        User
 	AssignedToID      sql.NullInt64
