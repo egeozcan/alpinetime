@@ -88,10 +88,9 @@ func init() {
 			Tasks:           []models.Task{},
 		}
 		db.Create(&project)
-		//for y := 0; y < randomdata.Number(2, 5); y++ {
-		for y := 0; y < 2; y++ {
-			taskAmount := 5
-			//taskAmount := randomdata.Number(5, 10)
+		fmt.Printf("Created project %v\n", project.ID)
+		for y := 0; y < randomdata.Number(2, 5); y++ {
+			taskAmount := randomdata.Number(5, 10)
 			tasks := make([]models.Task, taskAmount)
 			for z := 0; z < taskAmount; z++ {
 				task := models.Task{
@@ -100,6 +99,7 @@ func init() {
 					AssignedTo:      user,
 					TechnicalStatus: *randomFrom(technicalStatuses).(*models.TechnicalStatus),
 					ConceptStatus:   *randomFrom(conceptStatuses).(*models.ConceptStatus),
+					ProjectID:       project.ID,
 				}
 				tasks[z] = task
 			}
@@ -111,8 +111,12 @@ func init() {
 				Tasks:       tasks,
 			}
 			db.Create(&projectPackage)
+			fmt.Printf("Created package %v\n", projectPackage.ID)
 			project.Packages = append(project.Packages, projectPackage)
 			project.Tasks = append(project.Tasks, tasks...)
+		}
+		for index, el := range project.Tasks {
+			fmt.Printf("%v_ Project %v Task.ProjectID %v \n", index, project.ID, el.ProjectID)
 		}
 		db.Save(&project)
 	}
