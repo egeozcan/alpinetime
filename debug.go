@@ -17,7 +17,7 @@ var (
 
 func init() {
 	db = models.Db
-	db.LogMode(true)
+	//db.LogMode(true)
 	dbproject := db.First(&models.Project{}).Value.(*models.Project)
 	if dbproject.ID != 0 {
 		fmt.Printf(
@@ -56,7 +56,8 @@ func init() {
 	projectCategories := make([]interface{}, 5)
 	for i := 0; i < 5; i++ {
 		projectCategory := models.ProjectCategory{
-			Name: randomdata.SillyName(),
+			Name:        randomdata.SillyName(),
+			Description: randomdata.Paragraph(),
 		}
 		db.Create(&projectCategory)
 		projectCategories[i] = &projectCategory
@@ -64,7 +65,8 @@ func init() {
 	categories := make([]interface{}, 5)
 	for i := 0; i < 5; i++ {
 		category := models.Category{
-			Name: randomdata.SillyName(),
+			Name:        randomdata.SillyName(),
+			Description: randomdata.Paragraph(),
 		}
 		db.Create(&category)
 		categories[i] = &category
@@ -84,8 +86,8 @@ func init() {
 			Description:     randomdata.Paragraph(),
 			Manager:         &user,
 			Users:           []models.User{user},
-			Customer:        *randomFrom(customers).(*models.Customer),
-			ProjectCategory: *randomFrom(projectCategories).(*models.ProjectCategory),
+			Customer:        randomFrom(customers).(*models.Customer),
+			ProjectCategory: randomFrom(projectCategories).(*models.ProjectCategory),
 			Tasks:           []models.Task{},
 		}
 		db.Create(&project)
@@ -97,9 +99,9 @@ func init() {
 				task := models.Task{
 					Name:            fmt.Sprintf("Package %v", z),
 					Description:     randomdata.Paragraph(),
-					AssignedTo:      user,
-					TechnicalStatus: *randomFrom(technicalStatuses).(*models.TechnicalStatus),
-					ConceptStatus:   *randomFrom(conceptStatuses).(*models.ConceptStatus),
+					AssignedTo:      &user,
+					TechnicalStatus: randomFrom(technicalStatuses).(*models.TechnicalStatus),
+					ConceptStatus:   randomFrom(conceptStatuses).(*models.ConceptStatus),
 					ProjectID:       project.ID,
 				}
 				tasks[z] = task
@@ -108,7 +110,7 @@ func init() {
 				Name:        fmt.Sprintf("Package %v", y),
 				Description: randomdata.Paragraph(),
 				StartsAt:    time.Now(),
-				Category:    *randomFrom(categories).(*models.Category),
+				Category:    randomFrom(categories).(*models.Category),
 				Tasks:       tasks,
 			}
 			db.Create(&projectPackage)

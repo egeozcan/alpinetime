@@ -42,9 +42,13 @@ func TestCreateProject(t *testing.T) {
 	project := models.Project{
 		Name:        "Test project1",
 		Description: "test descr1",
-		Manager:     *dbUser,
+		Manager:     dbUser,
 		Users:       []models.User{*dbUser},
-		Customer:    customer,
+		Customer:    &customer,
+		ProjectCategory: &models.ProjectCategory{
+			Name:        "TestProjectCategory1",
+			Description: "test descr1",
+		},
 	}
 	db.Create(&project)
 	dbResult := db.First(&project)
@@ -60,33 +64,34 @@ func TestCreatePackage(t *testing.T) {
 	taskEstimation := models.Estimation{
 		Comment:          "Test estimation",
 		EstimatedMinutes: 365,
-		Owner:            *dbUser,
+		Owner:            dbUser,
 	}
 	packageTask := models.Task{
 		ProjectID:   dbProject.ID,
 		Name:        "Test Task1",
 		Description: "Test description",
-		AssignedTo:  *dbUser,
+		AssignedTo:  dbUser,
 		Estimations: []models.Estimation{
 			taskEstimation,
 		},
-		TechnicalStatus: models.TechnicalStatus{
+		TechnicalStatus: &models.TechnicalStatus{
 			Name:        "Test t.status",
 			Description: "Test t.descr",
 		},
-		ConceptStatus: models.ConceptStatus{
+		ConceptStatus: &models.ConceptStatus{
 			Name:        "Test c.status",
 			Description: "Test c.descr",
 		},
 	}
 	packageCategory := models.Category{
-		Name: "Test category",
+		Name:        "Test category",
+		Description: "Test category descr",
 	}
 	projectPackage := models.Package{
 		Name:        "TestPackage",
 		Description: "This is a test package",
 		StartsAt:    time.Now(),
-		Category:    packageCategory,
+		Category:    &packageCategory,
 		Tasks: []models.Task{
 			packageTask,
 		},
@@ -98,8 +103,9 @@ func TestCreatePackage(t *testing.T) {
 }
 
 func TestReadProject(t *testing.T) {
+	id := int64(1)
 	queryProject := models.Project{
-		Record: models.Record{ID: int64(1)},
+		Record: models.Record{ID: id},
 	}
 	dbResult := db.
 		Preload("Packages").
@@ -112,9 +118,10 @@ func TestReadProject(t *testing.T) {
 }
 
 func TestReadTasks(t *testing.T) {
+	id := int64(1)
 	var tasks []models.Task
 	queryTask := models.Task{
-		ProjectID: int64(1),
+		ProjectID: id,
 	}
 	dbTaskResult := db.
 		Where(&queryTask).
