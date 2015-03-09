@@ -10,11 +10,13 @@ import (
 var Db *gorm.DB
 var LastError error
 
+type ID sql.NullInt64
+
 type Record struct {
 	ID        int64     `json:",string"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt time.Time `json:"deletedAt,omitempty"`
+	DeletedAt time.Time `json:"deletedAt"`
 }
 
 type User struct {
@@ -24,32 +26,34 @@ type User struct {
 	Email     string    `sql:"size:254" form:"email"`
 	Password  string    `sql:"-" form:"password"`
 	Projects  []Project `gorm:"many2many:user_projects;"`
-	LastLogin time.Time
+	LastLogin time.Time `json:"-"`
 }
 
 type Project struct {
 	Record
-	Name              string        `sql:"size:255" form:"Name"`
-	Description       string        `sql:"size:255" form:"Description"`
-	Manager           *User         `json:",omitempty"`
-	ManagerID         sql.NullInt64 `json:",string" form:"ManagerID"`
-	Users             []User        `gorm:"many2many:user_projects;"`
-	Customer          Customer
-	CustomerID        sql.NullInt64   `form:"CustomerID"`
-	Packages          []Package       `json:",omitempty"`
-	Tasks             []Task          `json:",omitempty"`
-	ProjectCategory   ProjectCategory `json:",omitempty"`
-	ProjectCategoryID int64           `json:",string"`
+	Name              string `sql:"size:255" form:"Name"`
+	Description       string `sql:"size:255" form:"Description"`
+	Manager           *User  `json:",omitempty"`
+	ManagerID         int64  `json:",string" form:"ManagerID"`
+	Users             []User `gorm:"many2many:user_projects;"`
+	Customer          *Customer
+	CustomerID        int64 `json:",string" form:"CustomerID"`
+	Packages          []Package
+	Tasks             []Task
+	ProjectCategory   *ProjectCategory
+	ProjectCategoryID int64 `json:",string"`
 }
 
 type Category struct {
 	Record
-	Name string `sql:"size:254"`
+	Name        string `sql:"size:254"`
+	Description string `sql:"size:255"`
 }
 
 type ProjectCategory struct {
 	Record
-	Name string `sql:"size:254" form:"Name"`
+	Name        string `sql:"size:254" form:"Name"`
+	Description string `sql:"size:255"`
 }
 
 type ConceptStatus struct {
@@ -70,8 +74,8 @@ type Package struct {
 	Name        string `sql:"size:255"`
 	Description string `sql:"size:255"`
 	StartsAt    time.Time
-	Category    Category
-	CategoryID  sql.NullInt64
+	Category    *Category
+	CategoryID  int64
 	Tasks       []Task
 }
 
@@ -81,22 +85,22 @@ type Task struct {
 	ProjectID         int64  `json:",string"`
 	Name              string `sql:"size:255"`
 	Description       string `sql:"size:255"`
-	AssignedTo        User
-	AssignedToID      sql.NullInt64
+	AssignedTo        *User
+	AssignedToID      int64 `json:",string"`
 	Estimations       []Estimation
-	TechnicalStatus   TechnicalStatus
-	TechnicalStatusID sql.NullInt64
-	ConceptStatus     ConceptStatus
-	ConceptStatusID   sql.NullInt64
+	TechnicalStatus   *TechnicalStatus
+	TechnicalStatusID int64 `json:",string"`
+	ConceptStatus     *ConceptStatus
+	ConceptStatusID   int64 `json:",string"`
 }
 
 type Estimation struct {
 	Record
-	TaskID           sql.NullInt64
+	TaskID           int64  `json:",string"`
 	Comment          string `sql:"size:255"`
 	EstimatedMinutes int
-	Owner            User
-	OwnerID          sql.NullInt64
+	Owner            *User
+	OwnerID          int64 `json:",string"`
 }
 
 type Customer struct {
