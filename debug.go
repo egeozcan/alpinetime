@@ -17,6 +17,7 @@ var (
 
 func init() {
 	db = models.Db
+	db.LogMode(true)
 	dbproject := db.First(&models.Project{}).Value.(*models.Project)
 	if dbproject.ID != 0 {
 		fmt.Printf(
