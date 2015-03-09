@@ -11,10 +11,10 @@ var Db *gorm.DB
 var LastError error
 
 type Record struct {
-	ID        int64
+	ID        int64     `json:",string"`
 	CreatedAt time.Time `json:"createdAt"`
 	UpdatedAt time.Time `json:"updatedAt"`
-	DeletedAt time.Time `json:"deletedAt"`
+	DeletedAt time.Time `json:"deletedAt,omitempty"`
 }
 
 type User struct {
@@ -29,17 +29,17 @@ type User struct {
 
 type Project struct {
 	Record
-	Name              string `sql:"size:255" form:"Name"`
-	Description       string `sql:"size:255" form:"Description"`
-	Manager           User
-	ManagerID         sql.NullInt64 `form:"ManagerID"`
+	Name              string        `sql:"size:255" form:"Name"`
+	Description       string        `sql:"size:255" form:"Description"`
+	Manager           *User         `json:",omitempty"`
+	ManagerID         sql.NullInt64 `json:",string" form:"ManagerID"`
 	Users             []User        `gorm:"many2many:user_projects;"`
 	Customer          Customer
-	CustomerID        sql.NullInt64 `form:"CustomerID"`
-	Packages          []Package
-	Tasks             []Task
-	ProjectCategory   ProjectCategory
-	ProjectCategoryID int64
+	CustomerID        sql.NullInt64   `form:"CustomerID"`
+	Packages          []Package       `json:",omitempty"`
+	Tasks             []Task          `json:",omitempty"`
+	ProjectCategory   ProjectCategory `json:",omitempty"`
+	ProjectCategoryID int64           `json:",string"`
 }
 
 type Category struct {
@@ -66,7 +66,7 @@ type TechnicalStatus struct {
 
 type Package struct {
 	Record
-	ProjectID   int64
+	ProjectID   int64  `json:",string"`
 	Name        string `sql:"size:255"`
 	Description string `sql:"size:255"`
 	StartsAt    time.Time
@@ -77,8 +77,8 @@ type Package struct {
 
 type Task struct {
 	Record
-	PackageID         int64
-	ProjectID         int64
+	PackageID         int64  `json:",string"`
+	ProjectID         int64  `json:",string"`
 	Name              string `sql:"size:255"`
 	Description       string `sql:"size:255"`
 	AssignedTo        User

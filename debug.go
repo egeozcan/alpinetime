@@ -82,7 +82,7 @@ func init() {
 		project := models.Project{
 			Name:            randomdata.SillyName(),
 			Description:     randomdata.Paragraph(),
-			Manager:         user,
+			Manager:         &user,
 			Users:           []models.User{user},
 			Customer:        *randomFrom(customers).(*models.Customer),
 			ProjectCategory: *randomFrom(projectCategories).(*models.ProjectCategory),
