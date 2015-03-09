@@ -2,6 +2,7 @@ package routes
 
 import (
 	"alpinetime/models"
+	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,7 +11,9 @@ func Projects(c *gin.Context) {
 		ProtectedArea(c)
 		return
 	}
-	dbResults := models.Db.Find(&models.Project{})
+	models.Db.LogMode(true)
+	dbResults := models.Db.Limit(10).Find(&[]models.Project{})
+	fmt.Printf("Affected: %v Rows", dbResults.RowsAffected)
 	c.JSON(200, dbResults.Value)
 }
 

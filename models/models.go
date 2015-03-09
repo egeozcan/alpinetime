@@ -38,7 +38,7 @@ type Project struct {
 	CustomerID        sql.NullInt64 `form:"CustomerID"`
 	Packages          []Package
 	Tasks             []Task
-	Category          ProjectCategory
+	ProjectCategory   ProjectCategory
 	ProjectCategoryID int64
 }
 
@@ -118,6 +118,7 @@ func init() {
 		&User{},
 		&Project{},
 		&Category{},
+		&ProjectCategory{},
 		&ConceptStatus{},
 		&TechnicalStatus{},
 		&Package{},
