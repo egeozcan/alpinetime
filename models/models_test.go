@@ -10,7 +10,6 @@ import (
 )
 
 var (
-	dbPath    = "./alpinetime_test.sqlite"
 	db        *gorm.DB
 	dbUser    *models.User
 	dbProject *models.Project

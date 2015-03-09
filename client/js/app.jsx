@@ -9,7 +9,11 @@ var RouteHandler = Router.RouteHandler;
 var stateTree = require("./stateTree.js");
 window.sa = require('superagent');
 
-var projectsCursor = stateTree.select("stores", "projects");
+window.projectsCursor = stateTree.select("stores", "projects");
+
+sa.get(location.href, function(res) {
+  projectsCursor.edit(JSON.parse(res.text));
+});
 
 var App = React.createClass({
   render() {
