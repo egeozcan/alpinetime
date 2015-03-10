@@ -7,12 +7,14 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 var stateTree = require("./stateTree.js");
-window.sa = require('superagent');
+var request = require('superagent');
+var projectsCursor = stateTree.select("stores", "projects");
+Router.HistoryLocation.addChangeListener(console.log.bind(console))
 
-window.projectsCursor = stateTree.select("stores", "projects");
-
-sa.get(location.href, function(res) {
+request.get(location.href, function(res) {
   projectsCursor.edit(JSON.parse(res.text));
+  window.pc = projectsCursor;
+  window.request = request;
 });
 
 var App = React.createClass({
@@ -29,32 +31,34 @@ var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin],
   render() {
   	return (
-	  	<div>
+	  	<ul>
         {
           this.state.cursor
             .filter(p => !!p.ID)
             .sort((p1, p2) => p1.ID - p2.ID)
             .map(p => <ProjectListItem key={p.ID} project={p} />)
         }
-      </div>
+      </ul>
   	)
   }
 });
 
 var ProjectListItem = React.createClass({
+  mixins: [Router.State],
   render() {
     return (
-      <div>
+      <li>
         <h2>{this.props.project.Name}</h2>
         <p>{this.props.project.Description}</p>
-      </div>
+      </li>
     )
   }
 });
 
 var routes = (
   <Route name="app" path="/app" handler={App}>
-    <Route name="projects" handler={ProjectList}/>
+    <Route name="projects" path="/app/projects" handler={ProjectList}/>
+    <Route name="project" path="/app/project/:projectID" handler={ProjectList}/>
   </Route>
 )
 

@@ -23,6 +23,7 @@ func Create() *gin.Engine {
 
 	authorized.GET("/logout", routes.Logout)
 	authorized.GET("/app/projects", routes.Projects)
+	authorized.GET("/app/project/:projectID", routes.Project)
 
 	return server
 }
