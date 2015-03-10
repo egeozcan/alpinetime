@@ -21,25 +21,25 @@ type Record struct {
 
 type User struct {
 	Record
-	Domain    string    `sql:"size:255"`
-	Name      string    `sql:"size:255" form:"username" binding:"required"`
-	Email     string    `sql:"size:254" form:"email"`
-	Password  string    `sql:"-" form:"password"`
-	Projects  []Project `gorm:"many2many:user_projects;"`
-	LastLogin time.Time `json:"-"`
+	Domain    string     `sql:"size:255"`
+	Name      string     `sql:"size:255" form:"username" binding:"required"`
+	Email     string     `sql:"size:254" form:"email"`
+	Password  string     `sql:"-" form:"password"`
+	Projects  []*Project `gorm:"many2many:user_projects;"`
+	LastLogin time.Time  `json:"-"`
 }
 
 type Project struct {
 	Record
-	Name              string `sql:"size:255" form:"Name"`
-	Description       string `sql:"size:255" form:"Description"`
-	Manager           *User  `json:",omitempty"`
-	ManagerID         int64  `json:",string" form:"ManagerID"`
-	Users             []User `gorm:"many2many:user_projects;"`
+	Name              string  `sql:"size:255" form:"Name"`
+	Description       string  `sql:"size:255" form:"Description"`
+	Manager           *User   `json:",omitempty"`
+	ManagerID         int64   `json:",string" form:"ManagerID"`
+	Users             []*User `gorm:"many2many:user_projects;"`
 	Customer          *Customer
 	CustomerID        int64 `json:",string" form:"CustomerID"`
-	Packages          []Package
-	Tasks             []Task
+	Packages          []*Package
+	Tasks             []*Task
 	ProjectCategory   *ProjectCategory
 	ProjectCategoryID int64 `json:",string"`
 }
@@ -76,7 +76,7 @@ type Package struct {
 	StartsAt    time.Time
 	Category    *Category
 	CategoryID  int64
-	Tasks       []Task
+	Tasks       []*Task
 }
 
 type Task struct {
@@ -87,7 +87,7 @@ type Task struct {
 	Description       string `sql:"size:255"`
 	AssignedTo        *User
 	AssignedToID      int64 `json:",string"`
-	Estimations       []Estimation
+	Estimations       []*Estimation
 	TechnicalStatus   *TechnicalStatus
 	TechnicalStatusID int64 `json:",string"`
 	ConceptStatus     *ConceptStatus
@@ -109,6 +109,22 @@ type Customer struct {
 	LegacyId string `sql:"size:255"`
 }
 
+func ResetDB() {
+	Db.Exec(`
+    DROP TABLE IF EXISTS categories;
+    DROP TABLE IF EXISTS concept_status;
+    DROP TABLE IF EXISTS customers;
+    DROP TABLE IF EXISTS estimations;
+    DROP TABLE IF EXISTS packages;
+    DROP TABLE IF EXISTS project_categories;
+    DROP TABLE IF EXISTS projects;
+    DROP TABLE IF EXISTS tasks;
+    DROP TABLE IF EXISTS technical_status;
+    DROP TABLE IF EXISTS user_projects;
+    DROP TABLE IF EXISTS users;`)
+	migrate()
+}
+
 func init() {
 	if Db != nil {
 		return
@@ -118,7 +134,12 @@ func init() {
 		LastError = err
 		return
 	}
-	db.AutoMigrate(
+	Db = &db
+	migrate()
+}
+
+func migrate() {
+	Db.AutoMigrate(
 		&User{},
 		&Project{},
 		&Category{},
@@ -129,5 +150,4 @@ func init() {
 		&Task{},
 		&Estimation{},
 		&Customer{})
-	Db = &db
 }
