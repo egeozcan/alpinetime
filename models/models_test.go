@@ -16,6 +16,7 @@ var (
 )
 
 func init() {
+	models.ResetDB()
 	db = models.Db
 }
 
@@ -24,7 +25,7 @@ func TestCreateUser(t *testing.T) {
 		Domain:   "TestDomain",
 		Name:     "jinzhu",
 		Email:    "test@example.com",
-		Projects: []models.Project{},
+		Projects: []*models.Project{},
 	}
 	db.Create(&user)
 	dbResult := db.First(&user)
@@ -43,7 +44,7 @@ func TestCreateProject(t *testing.T) {
 		Name:        "Test project1",
 		Description: "test descr1",
 		Manager:     dbUser,
-		Users:       []models.User{*dbUser},
+		Users:       []*models.User{dbUser},
 		Customer:    &customer,
 		ProjectCategory: &models.ProjectCategory{
 			Name:        "TestProjectCategory1",
@@ -71,8 +72,8 @@ func TestCreatePackage(t *testing.T) {
 		Name:        "Test Task1",
 		Description: "Test description",
 		AssignedTo:  dbUser,
-		Estimations: []models.Estimation{
-			taskEstimation,
+		Estimations: []*models.Estimation{
+			&taskEstimation,
 		},
 		TechnicalStatus: &models.TechnicalStatus{
 			Name:        "Test t.status",
@@ -92,12 +93,12 @@ func TestCreatePackage(t *testing.T) {
 		Description: "This is a test package",
 		StartsAt:    time.Now(),
 		Category:    &packageCategory,
-		Tasks: []models.Task{
-			packageTask,
+		Tasks: []*models.Task{
+			&packageTask,
 		},
 	}
 	db.Create(&projectPackage)
-	dbProject.Packages = append(dbProject.Packages, projectPackage)
+	dbProject.Packages = append(dbProject.Packages, &projectPackage)
 	db.Save(dbProject)
 	t.Log("Saved package")
 }

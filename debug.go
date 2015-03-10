@@ -32,7 +32,7 @@ func init() {
 		Domain:   "TestDomain",
 		Name:     randomdata.FullName(randomdata.RandomGender),
 		Email:    randomdata.Email(),
-		Projects: []models.Project{},
+		Projects: []*models.Project{},
 	}
 	db.Create(&user)
 	technicalStatuses := make([]interface{}, 5)
@@ -85,16 +85,16 @@ func init() {
 			Name:            randomdata.SillyName(),
 			Description:     randomdata.Paragraph(),
 			Manager:         &user,
-			Users:           []models.User{user},
+			Users:           []*models.User{&user},
 			Customer:        randomFrom(customers).(*models.Customer),
 			ProjectCategory: randomFrom(projectCategories).(*models.ProjectCategory),
-			Tasks:           []models.Task{},
+			Tasks:           []*models.Task{},
 		}
 		db.Create(&project)
 		fmt.Printf("Created project %v\n", project.ID)
 		for y := 0; y < randomdata.Number(2, 5); y++ {
 			taskAmount := randomdata.Number(5, 10)
-			tasks := make([]models.Task, taskAmount)
+			tasks := make([]*models.Task, taskAmount)
 			for z := 0; z < taskAmount; z++ {
 				task := models.Task{
 					Name:            fmt.Sprintf("Package %v", z),
@@ -104,9 +104,9 @@ func init() {
 					ConceptStatus:   randomFrom(conceptStatuses).(*models.ConceptStatus),
 					ProjectID:       project.ID,
 				}
-				tasks[z] = task
+				tasks[z] = &task
 			}
-			projectPackage := models.Package{
+			projectPackage := &models.Package{
 				Name:        fmt.Sprintf("Package %v", y),
 				Description: randomdata.Paragraph(),
 				StartsAt:    time.Now(),
