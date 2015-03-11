@@ -10,6 +10,19 @@ import (
 var Db *gorm.DB
 var LastError error
 
+func init() {
+	if Db != nil {
+		return
+	}
+	db, err := gorm.Open("sqlite3", "./alpinetime.sqlite")
+	if err != nil {
+		LastError = err
+		return
+	}
+	Db = &db
+	migrate()
+}
+
 type ID sql.NullInt64
 
 type Record struct {
@@ -122,19 +135,6 @@ func ResetDB() {
     DROP TABLE IF EXISTS technical_status;
     DROP TABLE IF EXISTS user_projects;
     DROP TABLE IF EXISTS users;`)
-	migrate()
-}
-
-func init() {
-	if Db != nil {
-		return
-	}
-	db, err := gorm.Open("sqlite3", "./alpinetime.sqlite")
-	if err != nil {
-		LastError = err
-		return
-	}
-	Db = &db
 	migrate()
 }
 
