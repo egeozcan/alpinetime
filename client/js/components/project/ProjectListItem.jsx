@@ -1,3 +1,5 @@
+var React = require('react');
+
 var ProjectListItem = React.createClass({
   render() {
     return (

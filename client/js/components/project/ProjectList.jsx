@@ -1,12 +1,13 @@
-var projectsCursor = require("./stateTree.js")
+var projectsCursor = require("../../stateTree.js")
   .select("stores", "projects");
 var StateMixin = require('react-router').State;
-var ProjectListItem = require("./ProjectListItem");
-var LinkedStateMixin = require('React').addons.LinkedStateMixin;
+var ProjectListItem = require("./ProjectListItem.jsx");
+var React = require('react');
 
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin, StateMixin],
   getInitialState() {
+    console.log("test");
     return {
       page: 1
       
@@ -20,9 +21,10 @@ var ProjectList = React.createClass({
   },
   render() {
     return (
-      <div id="ProjectList">
-        <
-        {this.getList()}
+      <div id="Projects">
+        <ul id="ProjectList">
+          {this.getList()}
+        </ul>
       </div>
     )
   }
