@@ -7,10 +7,8 @@ var React = require('react');
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin, StateMixin],
   getInitialState() {
-    console.log("test");
     return {
       page: 1
-      
     }
   },
   getList() {

@@ -9,12 +9,12 @@ var RouteHandler = Router.RouteHandler;
 /** Components **/
 var ProjectList = require("./components/project/ProjectList.jsx");
 
-var stateTree = require("./stateTree.js");
+window.stateTree = require("./stateTree.js");
 var request = require('superagent');
 var projectsCursor = stateTree.select("stores", "projects");
 Router.HistoryLocation.addChangeListener(console.log.bind(console))
 
-request.get(location.href, function(res) {
+request.get("/app/projects", function(res) {
   projectsCursor.edit(JSON.parse(res.text));
   window.pc = projectsCursor;
   window.request = request;
@@ -22,19 +22,16 @@ request.get(location.href, function(res) {
 
 var App = React.createClass({
   render() {
+    var param = { projectID : 2 }
     return (
       <div>
+        <Link to="projects">Projects</Link>
+        <Link to="project" params={param}>Projects</Link>
         <RouteHandler/>
       </div>
     )
   }
 });
-
-var Nav = React.createClass({
-  render() {
-    return (<Link to="projects">Projects</Link>)
-  }
-})
 
 var routes = (
   <Route name="app" path="/app" handler={App}>
@@ -45,5 +42,4 @@ var routes = (
 
 Router.run(routes, Router.HistoryLocation, Handler => {
   React.render(<Handler/>, document.getElementById("main"))
-  React.render(<Nav/>, document.querySelector(".navbar-nav"))
 });
