@@ -7,7 +7,8 @@ var Link = Router.Link;
 var RouteHandler = Router.RouteHandler;
 
 /** Components **/
-var ProjectList = require("./components/project/ProjectList.jsx");
+var ProjectListComponent = require("./components/project/ProjectList.jsx");
+var ProjectComponent = require("./components/project/Project.jsx");
 
 window.stateTree = require("./stateTree.js");
 var request = require('superagent');
@@ -35,8 +36,8 @@ var App = React.createClass({
 
 var routes = (
   <Route name="app" path="/app" handler={App}>
-    <Route name="projects" path="/app/projects" handler={ProjectList}/>
-    <Route name="project" path="/app/project/:ID" handler={ProjectList}/>
+    <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
+    <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
   </Route>
 )
 
