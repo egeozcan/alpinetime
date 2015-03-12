@@ -28,6 +28,7 @@ var ProjectList = React.createClass({
           <tr>
             <th>Name</th>
             <th>Customer</th>
+            <th>Manager</th>
             <th>Description</th>
           </tr>
         </thead>

@@ -14,11 +14,8 @@ func Projects(c *gin.Context) {
 	projects := &[]models.Project{}
 	models.Db.
 		Preload("Customer").
-		Preload("Tasks").
 		Preload("Manager").
 		Preload("ProjectCategory").
-		Preload("Packages").
-		Omit("Name").
 		Find(projects)
 	c.JSON(200, projects)
 }
