@@ -13,15 +13,8 @@ var ProjectComponent = require("./components/project/Project.jsx");
 window.stateTree = require("./stateTree.js");
 var request = require('superagent');
 var projectsCursor = stateTree.select("stores", "projects");
-Router.HistoryLocation.addChangeListener(console.log.bind(console))
+//Router.HistoryLocation.addChangeListener(console.log.bind(console))
 
-request.get("/app/projects", function(res) {
-  projectsCursor.edit(JSON.parse(res.text));
-  window.pc = projectsCursor;
-  window.request = request;
-});
-//todo: add a single project view with componentwillreceiveprops thing
-//var id = this.getParams().id; to get id
 var App = React.createClass({
   render() {
     //var param = { projectID : 2 }
