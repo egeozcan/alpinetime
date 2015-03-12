@@ -19,7 +19,8 @@ request.get("/app/projects", function(res) {
   window.pc = projectsCursor;
   window.request = request;
 });
-
+//todo: add a single project view with componentwillreceiveprops thing
+//var id = this.getParams().id; to get id
 var App = React.createClass({
   render() {
     //var param = { projectID : 2 }
