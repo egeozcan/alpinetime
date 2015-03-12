@@ -39,5 +39,12 @@ export default {
         p.merge(res)
         p.set("_isLoading", false);
       });
+  },
+  loadList() {
+    request.get("/app/projects", function(res) {
+      projectStore.edit(JSON.parse(res.text));
+      window.pc = projectStore;
+      window.request = request;
+    });
   }
 }

@@ -3,6 +3,7 @@ var projectsCursor = require("../../stateTree.js")
 var ProjectListItem = require("./ProjectListItem.jsx");
 var React = require('react');
 var Table = require('react-bootstrap/lib/table');
+var projectActions = require("../../actions/projectActions.js");
 
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin],
@@ -10,6 +11,9 @@ var ProjectList = React.createClass({
     return {
       page: 1
     }
+  },
+  componentWillMount() {
+    projectActions.loadList();
   },
   getList() {
     var projects = this.state.cursor
