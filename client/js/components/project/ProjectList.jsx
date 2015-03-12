@@ -3,6 +3,7 @@ var projectsCursor = require("../../stateTree.js")
 var StateMixin = require('react-router').State;
 var ProjectListItem = require("./ProjectListItem.jsx");
 var React = require('react');
+var Table = require('react-bootstrap/lib/table');
 
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin, StateMixin],
@@ -12,18 +13,28 @@ var ProjectList = React.createClass({
     }
   },
   getList() {
-    return this.state.cursor
+    var projects = this.state.cursor
       .filter(p => !!p.ID)
-      .sort((p1, p2) => p1.ID - p2.ID)
-      .map(p => <ProjectListItem key={p.ID} project={p} />)
+      .sort((p1, p2) => p1.ID - p2.ID);
+    return projects.map(p => <ProjectListItem key={p.ID} project={p} />)
+  },
+  componentWillReceiveProps() {
+    
   },
   render() {
     return (
-      <div id="Projects">
-        <ul id="ProjectList">
+      <Table id="Projects">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Customer</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
           {this.getList()}
-        </ul>
-      </div>
+        </tbody>
+      </Table>
     )
   }
 });
