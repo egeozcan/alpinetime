@@ -4,7 +4,7 @@ var Link = require('react-router').Link;
 var ProjectListItem = React.createClass({
   render() {
     var project = this.props.project;
-    var customer = project.Customer === null ? "-" : "some customer";
+    var customer = project.Customer === null ? "-" : project.Customer.Name;
     return (
       <tr>
         <td>
