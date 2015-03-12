@@ -1,9 +1,9 @@
-var projectsCursor = require("../../stateTree.js")
-  .select("stores", "projects");
+var React           = require('react');
+var Table           = require('react-bootstrap/lib/table');
+var PageHeader      = require('react-bootstrap/lib/PageHeader');
+var projectsCursor  = require("../../stateTree.js").select("stores", "projects");
 var ProjectListItem = require("./ProjectListItem.jsx");
-var React = require('react');
-var Table = require('react-bootstrap/lib/table');
-var projectActions = require("../../actions/projectActions.js");
+var ProjectActions  = require("../../actions/projectActions.js");
 
 var ProjectList = React.createClass({
   mixins: [projectsCursor.mixin],
@@ -13,8 +13,9 @@ var ProjectList = React.createClass({
     }
   },
   componentWillMount() {
-    projectActions.loadList();
+    ProjectActions.loadList();
   },
+  titles: ["Name", "Customer", "Manager", "Description"].map(t => (<th>{t}</th>)),
   getList() {
     var projects = this.state.cursor
       .filter(p => !!p.ID)
@@ -23,23 +24,24 @@ var ProjectList = React.createClass({
   },
   render() {
     var list = this.getList();
+    var header = (<PageHeader>Projects</PageHeader>);
     if (list.length === 0) {
-      return (<div>Nope.</div>)
+      return (<div>{header}<p>Loading...</p></div>)
     }
     return (
-      <Table id="Projects">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Customer</th>
-            <th>Manager</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {list}
-        </tbody>
-      </Table>
+      <div>
+        {header}
+        <Table responsive hover>
+          <thead>
+            <tr>
+              {this.titles}
+            </tr>
+          </thead>
+          <tbody>
+            {list}
+          </tbody>
+        </Table>
+      </div>
     )
   }
 });

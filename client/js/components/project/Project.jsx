@@ -3,6 +3,7 @@ var ReactPivot = require('react-pivot');
 var Router = require('react-router');
 var Tree = require("../../stateTree.js");
 var React = require('react');
+var PageHeader = require('react-bootstrap/lib/PageHeader');
 
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
@@ -15,23 +16,23 @@ export default React.createClass({
     },
     render() {
         var project = this.cursors.projects.select(p => p.ID === this.getParams().ID).get();
-        if (!project) {
+        if (!project || project._isLoading) {
             return (<span>Loading...</span>);
         };
+        var header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
         var tasks = "";
-        /*var dimensions = {
+        var dimensions = [
             {value:"Package.Name", title: "Package"}
-        };
-        if (project.Tasks.length > 0) {
-            tasks = "" (<ReactPivot rows={project.Tasks} dimensions={dimensions} />)
-        };*/
+        ];
+        var reduce = (row, memo) => {
+            
+        }
+        if (!!project.Tasks && project.Tasks.length > 0) {
+            tasks = "" /*(<ReactPivot rows={project.Tasks} dimensions={dimensions} />)*/
+        }
         return (
             <div>
-                <h2>{project.Name}</h2>
-                <hr />
-                <strong>For customer:</strong>
-                <span>{!!project.Customer ? project.Customer.Name : "-"}</span>
-                <hr />
+                {header}
                 <h3>Tasks</h3>
                 {tasks}
             </div>
