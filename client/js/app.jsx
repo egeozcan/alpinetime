@@ -22,21 +22,20 @@ request.get("/app/projects", function(res) {
 
 var App = React.createClass({
   render() {
-    var param = { projectID : 2 }
+    //var param = { projectID : 2 }
     return (
       <div>
-        <Link to="projects">Projects</Link>
-        <Link to="project" params={param}>Projects</Link>
         <RouteHandler/>
       </div>
     )
   }
+  /*<Link to="project" params={param}>Projects</Link>*/
 });
 
 var routes = (
   <Route name="app" path="/app" handler={App}>
     <Route name="projects" path="/app/projects" handler={ProjectList}/>
-    <Route name="project" path="/app/project/:projectID" handler={ProjectList}/>
+    <Route name="project" path="/app/project/:ID" handler={ProjectList}/>
   </Route>
 )
 
