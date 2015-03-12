@@ -12,7 +12,6 @@ var ProjectComponent = require("./components/project/Project.jsx");
 
 window.stateTree = require("./stateTree.js");
 var request = require('superagent');
-var projectsCursor = stateTree.select("stores", "projects");
 //Router.HistoryLocation.addChangeListener(console.log.bind(console))
 
 var App = React.createClass({
