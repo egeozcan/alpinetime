@@ -4,7 +4,6 @@ var Link = require('react-router').Link;
 var ProjectListItem = React.createClass({
   render() {
     var project = this.props.project;
-    var customer = project.Customer === null ? "-" : project.Customer.Name;
     return (
       <tr>
         <td>
@@ -12,7 +11,8 @@ var ProjectListItem = React.createClass({
             {project.Name}
           </Link>
         </td>
-        <td>{customer}</td>
+        <td>{project.Customer.Name}</td>
+        <td>{project.Manager.Name}</td>
         <td>{project.Description}</td>
       </tr>
     )
