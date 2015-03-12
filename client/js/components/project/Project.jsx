@@ -14,7 +14,6 @@ export default React.createClass({
         projectActions.load(this.getParams().ID);
     },
     render() {
-        console.log(this.cursors.projects.get());
         var project = this.cursors.projects.select(p => p.ID === this.getParams().ID).get();
         if (!project) {
             return (<span>Loading...</span>);
