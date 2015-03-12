@@ -37,6 +37,14 @@ func Project(c *gin.Context) {
 		Preload("ProjectCategory").
 		Preload("Packages").
 		Find(project, id)
+	for i := 0; i < len(project.Packages); i++ {
+		project.Packages[i].Tasks = []*models.Task{}
+		for y := 0; y < len(project.Tasks); y++ {
+			if task := project.Tasks[y]; task.PackageID == project.Packages[i].ID {
+				project.Packages[i].Tasks = append(project.Packages[i].Tasks, task)
+			}
+		}
+	}
 	c.JSON(200, project)
 }
 
