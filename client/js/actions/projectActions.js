@@ -35,9 +35,9 @@ export default {
           });
           return;
         }
-        loadProject(id)
-          .merge(res)
-          .set(_isLoading: false);
+        var p = loadProject(id);
+        p.merge(res)
+        p.set("_isLoading", false);
       });
   }
 }
