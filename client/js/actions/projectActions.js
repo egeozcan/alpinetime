@@ -35,16 +35,15 @@ export default {
           });
           return;
         }
-        var p = loadProject(id);
-        p.merge(res)
-        p.set("_isLoading", false);
+        let p = loadProject(id);
+        let loadedProject = JSON.parse(res.text); 
+        loadedProject._isLoading = false;
+        p.merge(loadedProject);
       });
   },
   loadList() {
     request.get("/app/projects", function(res) {
       projectStore.edit(JSON.parse(res.text));
-      window.pc = projectStore;
-      window.request = request;
     });
   }
 }

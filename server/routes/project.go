@@ -30,8 +30,14 @@ func Project(c *gin.Context) {
 		c.Error(err, "Id is required")
 		return
 	}
-	dbResults := models.Db.First(&models.Project{}, id)
-	c.JSON(200, dbResults.Value)
+	project := &models.Project{}
+	models.Db.
+		Preload("Customer").
+		Preload("Manager").
+		Preload("ProjectCategory").
+		Preload("Packages").
+		Find(project, id)
+	c.JSON(200, project)
 }
 
 func AddProject(c *gin.Context) {
