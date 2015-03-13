@@ -41,7 +41,10 @@ export default {
         p.merge(loadedProject);
       });
   },
-  loadList() {
+  loadList(params) {
+    if (!params && projectStore.get().length > 0) {
+      return;
+    }
     request.get("/app/projects", function(res) {
       projectStore.edit(JSON.parse(res.text));
     });
