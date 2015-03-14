@@ -14,7 +14,7 @@ func init() {
 	if Db != nil {
 		return
 	}
-	db, err := gorm.Open("sqlite3", "./alpinetime.sqlite")
+	db, err := gorm.Open("sqlite3", "C:\\Users\\ege\\Desktop\\alpinetime.sqlite")
 	if err != nil {
 		LastError = err
 		return

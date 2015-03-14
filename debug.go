@@ -71,8 +71,8 @@ func init() {
 		db.Create(&category)
 		categories[i] = &category
 	}
-	customers := make([]interface{}, 5)
-	for i := 0; i < 5; i++ {
+	customers := make([]interface{}, 500)
+	for i := 0; i < 500; i++ {
 		customer := models.Customer{
 			Name:     randomdata.SillyName(),
 			LegacyId: fmt.Sprintf("LEGACY%v", randomdata.Number(1, 2000)),
@@ -80,7 +80,7 @@ func init() {
 		db.Create(&customer)
 		customers[i] = &customer
 	}
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 1000; i++ {
 		project := models.Project{
 			Name:            randomdata.SillyName(),
 			Description:     randomdata.Paragraph(),
