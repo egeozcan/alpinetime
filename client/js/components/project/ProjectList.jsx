@@ -15,12 +15,13 @@ var ProjectList = React.createClass({
   componentWillMount() {
     ProjectActions.loadList();
   },
-  titles: ["Name", "Customer", "Manager", "Description"].map(t => (<th>{t}</th>)),
+  titles: ["Name", "Customer", "Manager", "Description"].map((t,i) => (<th key={i}>{t}</th>)),
   getList() {
     var projects = this.state.cursor
-      .filter(p => !!p.ID)
-      .sort((p1, p2) => p1.ID - p2.ID);
-    return projects.map(p => <ProjectListItem key={p.ID} project={p} />)
+      .filter(p => !!p.ID);
+    return projects.map(p => {
+      return (<ProjectListItem key={p.ID} project={p} />)
+    })
   },
   render() {
     var list = this.getList();

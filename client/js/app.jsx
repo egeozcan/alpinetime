@@ -34,7 +34,7 @@ var Navigation = React.createClass({
       </Navbar>
     )
   }
-})
+});
 
 var App = React.createClass({
   render() {
