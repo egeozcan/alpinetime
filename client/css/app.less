@@ -13,3 +13,31 @@ body {
   border-bottom: 4px solid rgba(0, 216, 255, 0.3);
 }
 
+#loading-screen {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  
+  .message {
+    width: 30px;
+    height: 30px;
+    background-color: #00d8ff;
+    margin: 100px auto;
+    animation: rotateplane 1s infinite ease-in-out;
+  }
+}
+
+@keyframes rotateplane {
+  0%   { transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
+  50%  { transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
+  100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
+  
+  50.1%  { background-color: #333; }
+}

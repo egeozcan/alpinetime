@@ -13,7 +13,6 @@ func Projects(c *gin.Context) {
 	}
 	projects := &[]models.Project{}
 	models.Db.
-		Preload("Tasks").
 		Preload("Customer").
 		Preload("Manager").
 		Preload("ProjectCategory").
@@ -47,6 +46,7 @@ func Project(c *gin.Context) {
 			}
 		}
 	}
+	project.Tasks = []*models.Task{}
 	c.JSON(200, project)
 }
 

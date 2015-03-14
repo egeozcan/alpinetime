@@ -18,7 +18,8 @@ var ProjectList = React.createClass({
   titles: ["Name", "Customer", "Manager", "Description"].map((t,i) => (<th key={i}>{t}</th>)),
   getList() {
     var projects = this.state.cursor
-      .filter(p => !!p.ID);
+      .filter(p => !!p.ID)
+      .slice(0, 10);
     return projects.map(p => {
       return (<ProjectListItem key={p.ID} project={p} />)
     })

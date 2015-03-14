@@ -8,8 +8,7 @@ export default new Baobab({
   },
   //this is the app state, never the component state
   state: {
-    activeView: "projects.list",
-    isLoading: true,
+    numInProgress: 0,
     views: {
       projects: {
         list: {
