@@ -10,7 +10,6 @@ var Navigation = require("./components/main/Navigation.jsx");
 var LoadingScreen = require("./components/main/LoadingScreen.jsx");
 
 window.stateTree = require("./stateTree.js");
-Router.HistoryLocation.addChangeListener(console.log.bind(console))
 
 var App = React.createClass({
   render() {

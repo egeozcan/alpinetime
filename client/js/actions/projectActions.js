@@ -48,7 +48,7 @@ export default {
   },
   loadList(params) {
     let numProjects = projectStore.get().length;
-    if ((!params && numProjects >= 10) || (params && params.page && numProjects >= params.page * pageSize)) {
+    if (numProjects > 1) {
       return;
     }
     stateActions.numInProgress.inc();
