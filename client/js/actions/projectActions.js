@@ -1,32 +1,36 @@
 var request = require("superagent"); 
-var state = require("../stateTree.js");
-var projectStore = state.select("stores", "projects");
+var stateTree = require("../stateTree.js");
+var projectStore = stateTree.select("stores", "projects");
+var stateActions = require("./stateActions.js")
+
 
 function loadProject(id) {
   id = id.toString();
   return projectStore.select(p => p.ID === id);
 }
 
+const pageSize = 10;
+
 export default {
   add(project) {
-    // var id = project.ID;
-    // var availableIds = stateTree
-    //   .select("models", "projects")
-    //   .map(p => p.ID);
-    
   },
   load(id) {
     var project = loadProject(id).get();
     if (project !== undefined) {
-      return;
+      if (project._detailsLoaded) {
+        return;
+      }
+    } else {
+      projectStore.push({
+        ID: id,
+        _isLoading: true
+      });
     }
-    projectStore.push({
-      ID: id,
-      _isLoading: true
-    });
+    stateActions.numInProgress.inc();
     request
       .get("/app/project/" + id)
       .end(function (err, res) {
+        stateActions.numInProgress.dec();
         if (!!err) {
           loadProject(id).merge({
             _isLoading: false,
@@ -35,18 +39,23 @@ export default {
           });
           return;
         }
-        let p = loadProject(id);
+        var projectCursor = loadProject(id);
         let loadedProject = JSON.parse(res.text); 
         loadedProject._isLoading = false;
-        p.merge(loadedProject);
+        loadedProject._detailsLoaded = true;
+        projectCursor.merge(loadedProject);
       });
   },
   loadList(params) {
-    if (!params && projectStore.get().length > 0) {
+    let numProjects = projectStore.get().length;
+    if ((!params && numProjects >= 10) || (params && params.page && numProjects >= params.page * pageSize)) {
       return;
     }
-    request.get("/app/projects", function(res) {
-      projectStore.edit(JSON.parse(res.text));
-    });
+    stateActions.numInProgress.inc();
+    request.get("/app/projects")
+      .end(function(err, res) {
+        projectStore.edit(JSON.parse(res.text));
+        stateActions.numInProgress.dec();
+      });
   }
 }

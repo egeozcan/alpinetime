@@ -1,4 +1,5 @@
 var projectActions = require("../../actions/projectActions.js");
+var stateActions = require("../../actions/stateActions.js");
 var ReactPivot = require('react-pivot');
 var Router = require('react-router');
 var Tree = require("../../stateTree.js");
@@ -15,8 +16,9 @@ export default React.createClass({
         projectActions.load(this.getParams().ID);
     },
     render() {
-        var project = this.cursors.projects.select(p => p.ID === this.getParams().ID).get();
-        if (!project || project._isLoading) {
+        var projectCursor = this.cursors.projects.select(p => p.ID === this.getParams().ID);
+        var project = projectCursor.get();
+        if (!project || project._isLoading === true) {
             return (<span>Loading...</span>);
         };
         var header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
