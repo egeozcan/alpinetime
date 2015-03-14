@@ -13,6 +13,7 @@ func Projects(c *gin.Context) {
 	}
 	projects := &[]models.Project{}
 	models.Db.
+		Preload("Tasks").
 		Preload("Customer").
 		Preload("Manager").
 		Preload("ProjectCategory").
@@ -36,6 +37,7 @@ func Project(c *gin.Context) {
 		Preload("Manager").
 		Preload("ProjectCategory").
 		Preload("Packages").
+		Preload("Tasks").
 		Find(project, id)
 	for i := 0; i < len(project.Packages); i++ {
 		project.Packages[i].Tasks = []*models.Task{}
