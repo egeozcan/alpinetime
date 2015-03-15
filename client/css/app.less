@@ -1,7 +1,7 @@
 @import "../../node_modules/bootstrap/less/bootstrap.less";
 
 body {
-  padding-top: 35px;
+  padding-top: 15px;
   padding-bottom: 30px;
 }
 
@@ -10,7 +10,23 @@ body {
 }
 
 .navbar {
-  border-bottom: 4px solid rgba(0, 216, 255, 0.3);
+  border-bottom: 4px solid rgba(0, 216, 255, 0.9);
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+  background-color: #03C5E9;
+}
+
+nav.navbar.navbar-default.navbar-inverse:after {
+  content: " ";
+  display: block;
+  width: calc(~"41% + 2px");
+  height: 4px;
+  position: absolute;
+  top: -1px;
+  background: rgba(173, 255, 47, 0.6);
+  left: -1px;
+  border-radius: 10px;
 }
 
 #loading-screen {
@@ -40,4 +56,15 @@ body {
   100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
   
   50.1%  { background-color: #333; }
+}
+
+.pager li>a, .pager li>span {
+  min-width: 87px;
+  margin: 5px;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 25px 0 20px;
+  border-bottom: 1px solid #eee;
 }

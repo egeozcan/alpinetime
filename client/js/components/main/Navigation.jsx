@@ -8,7 +8,7 @@ var NavItemLink = ReactRouterBootstrap.NavItemLink;
 export default React.createClass({
   render() {
     return (
-      <Navbar fixedTop fluid inverse brand="Alpinetime">
+      <Navbar fluid inverse brand="Alpinetime">
         <Nav>
           <NavItemLink eventKey={1} to="projects">Projects</NavItemLink>
           <NavItemLink eventKey={1} query={{showAge: true}} to="customers">Customers</NavItemLink>
