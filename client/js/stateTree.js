@@ -9,17 +9,17 @@ var stateTree = new Baobab({
     packages: [],
     users: []
   },
-  //this is the app state, never the component state
   state: {
     query: {},
     numInProgress: 0,
   }
 });
 
-function updateQuery() {
-  stateTree.select(["state", "query"]).edit(URI.parseQuery(location.search));
+var queryCursor = stateTree.select(["state", "query"]);
+function updateQuery(uri) {
+  queryCursor.edit(URI.parseQuery(location.search));
 }
-Router.HistoryLocation.addChangeListener(updateQuery);
 updateQuery();
+Router.HistoryLocation.addChangeListener(updateQuery);
 
 module.exports = stateTree;
