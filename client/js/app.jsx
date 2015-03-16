@@ -28,7 +28,7 @@ var App = React.createClass({
 var routes = (
   <Router.Route name="app" path="/app" handler={App}>
     <Router.Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
-    <Router.Route name="customer" path="/app/project/:ID" handler={CustomerComponent}/>
+    <Router.Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
     <Router.Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
     <Router.Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
   </Router.Route>
