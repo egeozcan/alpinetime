@@ -80,7 +80,7 @@ func init() {
 		db.Create(&customer)
 		customers[i] = &customer
 	}
-	for i := 0; i < 1000; i++ {
+	for i := 0; i < 100; i++ {
 		project := models.Project{
 			Name:            randomdata.SillyName(),
 			Description:     randomdata.Paragraph(),
