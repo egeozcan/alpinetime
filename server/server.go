@@ -13,7 +13,6 @@ func Create() *gin.Engine {
 	store := sessions.NewCookieStore([]byte("secret"))
 
 	server.Use(middleware.CheckAsset)
-	server.Use(middleware.SetAccepts())
 	server.Use(sessions.Sessions("alpinetime", store))
 
 	server.GET("/", routes.LoginPage)
@@ -22,10 +21,16 @@ func Create() *gin.Engine {
 	authorized := server.Group("/", middleware.CheckLogin())
 
 	authorized.GET("/logout", routes.Logout)
-	authorized.GET("/app/customers", routes.Customers)
-	authorized.GET("/app/customer/:customerID", routes.Customer)
-	authorized.GET("/app/projects", routes.Projects)
-	authorized.GET("/app/project/:projectID", routes.Project)
+
+	authorized.GET("/app/customers", routes.ProtectedArea)
+	authorized.GET("/app/customer/:customerID", routes.ProtectedArea)
+	authorized.GET("/app/projects", routes.ProtectedArea)
+	authorized.GET("/app/project/:projectID", routes.ProtectedArea)
+
+	authorized.GET("/api/customers", routes.Customers)
+	authorized.GET("/api/customer/:customerID", routes.Customer)
+	authorized.GET("/api/projects", routes.Projects)
+	authorized.GET("/api/project/:projectID", routes.Project)
 
 	return server
 }

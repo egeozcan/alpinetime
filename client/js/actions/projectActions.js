@@ -29,7 +29,7 @@ export default {
     }
     stateActions.numInProgress.inc();
     request
-      .get("/app/project/" + id)
+      .get("/api/project/" + id)
       .end(function (err, res) {
         stateActions.numInProgress.dec();
         if (!!err) {
@@ -53,7 +53,7 @@ export default {
       return;
     }
     stateActions.numInProgress.inc();
-    request.get("/app/projects")
+    request.get("/api/projects")
       .end(function(err, res) {
         projectStore.edit(JSON.parse(res.text));
         stateActions.numInProgress.dec();
