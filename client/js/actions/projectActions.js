@@ -17,7 +17,7 @@ export default {
   load(id) {
     var project = loadProject(id).get();
     if (project !== undefined) {
-      if (project._detailsLoaded) {
+      if (project._detailsLoaded || project._isLoading) {
         return;
       }
     } else {
@@ -25,6 +25,7 @@ export default {
         ID: id,
         _isLoading: true
       });
+      stateTree.commit();
     }
     stateActions.numInProgress.inc();
     request
