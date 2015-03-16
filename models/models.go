@@ -81,6 +81,13 @@ type TechnicalStatus struct {
 	Description string `sql:"size:255"`
 }
 
+type Lookup struct {
+	Record
+	Type  string `sql:"size:255"`
+	Name  string `sql:"size:255"`
+	Value string `sql:"size:255"`
+}
+
 type Package struct {
 	Record
 	ProjectID   int64  `json:",string"`
@@ -142,6 +149,7 @@ func migrate() {
 	Db.AutoMigrate(
 		&User{},
 		&Project{},
+		&Lookup{},
 		&Category{},
 		&ProjectCategory{},
 		&ConceptStatus{},

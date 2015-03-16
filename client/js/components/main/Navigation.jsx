@@ -11,7 +11,7 @@ export default React.createClass({
       <Navbar fluid inverse brand="Alpinetime">
         <Nav>
           <NavItemLink eventKey={1} to="projects">Projects</NavItemLink>
-          <NavItemLink eventKey={1} query={{showAge: true}} to="customers">Customers</NavItemLink>
+          <NavItemLink eventKey={1} to="customers">Customers</NavItemLink>
         </Nav>
       </Navbar>
     )

@@ -22,6 +22,8 @@ func Create() *gin.Engine {
 	authorized := server.Group("/", middleware.CheckLogin())
 
 	authorized.GET("/logout", routes.Logout)
+	authorized.GET("/app/customers", routes.Customers)
+	authorized.GET("/app/customer/:customerID", routes.Customer)
 	authorized.GET("/app/projects", routes.Projects)
 	authorized.GET("/app/project/:projectID", routes.Project)
 
