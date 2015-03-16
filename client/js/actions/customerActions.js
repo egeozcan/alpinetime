@@ -29,7 +29,7 @@ export default {
     }
     stateActions.numInProgress.inc();
     request
-      .get("/app/customer/" + id)
+      .get("/api/customer/" + id)
       .end(function (err, res) {
         stateActions.numInProgress.dec();
         if (!!err) {
@@ -53,7 +53,7 @@ export default {
       return;
     }
     stateActions.numInProgress.inc();
-    request.get("/app/customers")
+    request.get("/api/customers")
       .end(function(err, res) {
         customerStore.edit(JSON.parse(res.text));
         stateActions.numInProgress.dec();

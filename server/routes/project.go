@@ -7,10 +7,6 @@ import (
 )
 
 func Projects(c *gin.Context) {
-	if accepts, err := c.Get("accepts"); accepts == "html" && err == nil {
-		ProtectedArea(c)
-		return
-	}
 	projects := &[]models.Project{}
 	models.Db.
 		Preload("Customer").
@@ -21,10 +17,6 @@ func Projects(c *gin.Context) {
 }
 
 func Project(c *gin.Context) {
-	if accepts, err := c.Get("accepts"); accepts == "html" && err == nil {
-		ProtectedArea(c)
-		return
-	}
 	id, err := strconv.ParseInt(c.Params.ByName("projectID"), 10, 64)
 	if err != nil {
 		c.Error(err, "Id is required")
