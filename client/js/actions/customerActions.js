@@ -17,7 +17,7 @@ export default {
   load(id) {
     var customer = loadCustomer(id).get();
     if (customer !== undefined) {
-      if (customer._detailsLoaded) {
+      if (customer._detailsLoaded || customer._isLoading) {
         return;
       }
     } else {
@@ -25,6 +25,7 @@ export default {
         ID: id,
         _isLoading: true
       });
+      stateTree.commit();
     }
     stateActions.numInProgress.inc();
     request
