@@ -11,7 +11,11 @@ var ProjectListItem = React.createClass({
             {project.Name}
           </Link>
         </td>
-        <td>{project.Customer.Name}</td>
+        <td>
+          <Link to="customer" params={project.Customer}>
+            {project.Customer.Name}
+          </Link>
+        </td>
         <td>{project.Manager.Name}</td>
         <td>{project.Description}</td>
       </tr>
