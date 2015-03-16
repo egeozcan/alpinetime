@@ -1,0 +1,32 @@
+Client side:
+  ☐ Create generic list .\client\js\components\main\GenericList.jsx @started
+  ☐ Load all the visible stuff and dump it on pouch.db
+    ☐ include pouch.db in the solution
+    ☐ attach to document onload, load all the entities required, show loading bar
+    ☐ when finished, render react-router
+  ☐ Show packages under projects
+    Do they need their own page too? I suppose not.
+  ☐ Show tasks under packages
+  ☐ Show categories and statuses from lookups
+  ☐ Show projects under customers
+  ☐ Create a test.html
+
+Server-side:
+  ☐ Write tests @high
+  ☐ Create an API for
+    ☐ CurrentUser
+    ☐ Package
+    ☐ Task
+    ☐ Estimation
+  ☐ Change Category, ProjectCategory, ConceptStatus and TechnicalStatus with Lookup
+  ☐ Add VisibleTo
+  ☐ Add CanBeEditedBy
+  ☐ Restrict Access based on VisibleTo and CanBeEditedBy
+    This may be a bad idea. I still need to think about the permission system
+  ☐ Create form submission handling to models.
+    I can use the forms helper of the gin framework with my existing models
+
+Research:
+ ☐ How to handle forms
+   ☐ I need to create some sort of validation from the models. "go run generateValidationsModels.go"?
+   ☐ I could also parse golang with javascript and then things would get fancy. @badidea
