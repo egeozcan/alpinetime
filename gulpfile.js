@@ -50,7 +50,7 @@ gulp.task('clean-css', function(done) {
   del(['public/css/*.*'], done);
 });
 gulp.task('clean-html', function(done) {
-  del(['public/*.*'], done);
+  del(['public/*.html'], done);
 });
 gulp.task('clean-js', function(done) {
   del(['public/js/*.*'], done);
@@ -64,6 +64,11 @@ gulp.task('css', ['clean-css'], function() {
     .pipe(gulp.dest('./public/css'))
     .pipe(browserSync.reload({stream:true}));
 });
+
+gulp.task('static', function () {
+  return gulp.src(['client/static/**/*.*'])
+    .pipe(gulp.dest('./public/'));
+})
 
 gulp.task('html', ['clean-html'], function () {
     nunjucksRender.nunjucks.configure(['client/views/']);
@@ -82,7 +87,7 @@ gulp.task('bs-reload', function () {
 
 gulp.task('run-server', buildAndRunServer);
 
-gulp.task('watch', ['css', 'js', 'html'], function() {
+gulp.task('watch', ['static', 'css', 'js', 'html'], function() {
   gulp.watch(['./client/css/**/*.less'], ['css']);
   gulp.watch(['./client/views/**/*.html'], ['html']);
   gulp.watch(['./**/*.go', '!./data/**/*.go'], ['run-server']);
