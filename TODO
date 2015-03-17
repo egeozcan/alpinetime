@@ -1,12 +1,14 @@
 Client side:
-  ☐ Create generic list .\client\js\components\main\GenericList.jsx @started
+  ✔ Create generic list .\client\js\components\main\GenericList.jsx @started(15-03-17 09:42) @high @done (15-03-17 22:57) @lasted(13:15)
   ☐ Load all the visible stuff and dump it on pouch.db
     ☐ include pouch.db in the solution
     ☐ attach to document onload, load all the entities required, show loading bar
     ☐ when finished, render react-router
-  ☐ Show packages under projects
+  ☐ Show
+    ☐ packages under projects
     Do they need their own page too? I suppose not.
-  ☐ Show tasks under packages
+    ☐ Show tasks under packages
+    ☐ Sub-task support? Maybe blockedBy?
   ☐ Show categories and statuses from lookups
   ☐ Show projects under customers
   ☐ Create a test.html
