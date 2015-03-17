@@ -13,6 +13,11 @@ var LoadingScreen = require("./components/main/LoadingScreen.jsx");
 
 window.stateTree = require("./stateTree.js");
 
+var initializationActions = require("./actions/initializationActions.js");
+initializationActions.subscribeToQuery();
+initializationActions.loadProjects();
+initializationActions.loadCustomers();
+
 var App = React.createClass({
   render() {
     return (
