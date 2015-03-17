@@ -22,6 +22,8 @@ func Create() *gin.Engine {
 
 	authorized.GET("/logout", routes.Logout)
 
+	authorized.GET("/test/*catchAll", routes.RunTests)
+
 	authorized.GET("/app/customers", routes.ProtectedArea)
 	authorized.GET("/app/customer/:customerID", routes.ProtectedArea)
 	authorized.GET("/app/projects", routes.ProtectedArea)

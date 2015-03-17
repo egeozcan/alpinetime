@@ -24,26 +24,29 @@ var autoprefix = new autoprefixPlugin({
  
 var paths = {
   appCSS: ['./client/css/*.less'],
-  appJS: ['./client/js/app.jsx']
+  appJS: ['./client/js/app.jsx', './client/js/tests.jsx']
 };
- 
-var bundler = watchify(browserify(paths.appJS, watchify.args));
-bundler.transform(babelify.configure({
-    experimental: true
-}));
-bundler.transform('brfs');
-bundler.on('update', bundle);
-bundler.on('update', gutil.log.bind(gutil, "Updated js files"));
-bundler.on('bytes', browserSync.reload);
 
-function bundle() {
-  return bundler.bundle()
-    .on('error', gutil.log.bind(gutil, 'Browserify Error'))
-    .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./public/js'));
+function buildJS(path, output) {
+  var bundler = watchify(browserify(path, watchify.args));
+  bundler.transform(babelify.configure({
+      experimental: true
+  }));
+  bundler.transform('brfs');
+  bundler.on('update', bundle);
+  bundler.on('update', gutil.log.bind(gutil, "Updated js files"));
+  bundler.on('bytes', browserSync.reload);
+
+  function bundle() {
+    bundler.bundle()
+      .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+      .pipe(source(output))
+      .pipe(buffer())
+      .pipe(sourcemaps.init({loadMaps: true}))
+      .pipe(sourcemaps.write('./'))
+      .pipe(gulp.dest('./public/js'));
+  }
+  return bundle;
 }
 
 gulp.task('clean-css', function(done) {
@@ -78,7 +81,8 @@ gulp.task('html', ['clean-html'], function () {
         .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('js', ['clean-js'], bundle);
+gulp.task('js', buildJS(['./client/js/app.jsx'], 'bundle.js'));
+gulp.task('js-test', buildJS(['./client/js/tests.jsx'], 'tests.js'));
 
 gulp.task('bs-reload', function () {
   browserSync.reload();
@@ -87,7 +91,7 @@ gulp.task('bs-reload', function () {
 
 gulp.task('run-server', buildAndRunServer);
 
-gulp.task('watch', ['static', 'css', 'js', 'html'], function() {
+gulp.task('watch', ['static', 'css', 'js', 'js-test', 'html'], function() {
   gulp.watch(['./client/css/**/*.less'], ['css']);
   gulp.watch(['./client/views/**/*.html'], ['html']);
   gulp.watch(['./**/*.go', '!./data/**/*.go'], ['run-server']);
