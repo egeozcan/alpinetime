@@ -13,50 +13,12 @@ const pageSize = 10;
 
 export default {
   add(project) {
+    //noop for now
   },
-  load(id) {
-    var project = loadProject(id).get();
-    if (project !== undefined) {
-      if (project._detailsLoaded || project._isLoading) {
-        return;
-      }
-    } else {
-      projectStore.push({
-        ID: id,
-        _isLoading: true
-      });
-      stateTree.commit();
-    }
-    stateActions.numInProgress.inc();
-    request
-      .get("/api/project/" + id)
-      .end(function (err, res) {
-        stateActions.numInProgress.dec();
-        if (!!err) {
-          loadProject(id).merge({
-            _isLoading: false,
-            _invalid: true,
-            _error: err
-          });
-          return;
-        }
-        var projectCursor = loadProject(id);
-        let loadedProject = JSON.parse(res.text); 
-        loadedProject._isLoading = false;
-        loadedProject._detailsLoaded = true;
-        projectCursor.merge(loadedProject);
-      });
+  load() {
+    //noop for now
   },
   loadList(params) {
-    let numProjects = projectStore.get().length;
-    if (numProjects > 1) {
-      return;
-    }
-    stateActions.numInProgress.inc();
-    request.get("/api/projects")
-      .end(function(err, res) {
-        projectStore.edit(JSON.parse(res.text));
-        stateActions.numInProgress.dec();
-      });
+    //noop for now
   }
 }
