@@ -17,6 +17,7 @@ var initializationActions = require("./actions/initializationActions.js");
 initializationActions.subscribeToQuery();
 initializationActions.loadProjects();
 initializationActions.loadCustomers();
+initializationActions.loadTasks();
 
 var App = React.createClass({
   render() {
