@@ -6,7 +6,7 @@ var Router = require('react-router');
 /** Components **/
 var Navigation = require("./components/main/Navigation.jsx");
 var LoadingScreen = require("./components/main/LoadingScreen.jsx");
-var GenericList = require("./components/main/GenericList.jsx");
+var GenericList = require("./components/main/GenericList/GenericList.jsx");
 
 var initializationActions = require("./actions/initializationActions.js");
 initializationActions.subscribeToQuery();
