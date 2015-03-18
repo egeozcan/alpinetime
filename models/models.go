@@ -3,7 +3,9 @@ package models
 import (
 	"database/sql"
 	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq"
 	_ "github.com/mattn/go-sqlite3"
+	"os"
 	"time"
 )
 
@@ -14,7 +16,13 @@ func init() {
 	if Db != nil {
 		return
 	}
-	db, err := gorm.Open("sqlite3", "./alpinetime.sqlite")
+	var err error
+	var db gorm.DB
+	if conStr := os.Getenv("ALPCONN"); conStr != "" {
+		db, err = gorm.Open("postgres", conStr)
+	} else {
+		db, err = gorm.Open("sqlite3", "./alpinetime.sqlite")
+	}
 	if err != nil {
 		LastError = err
 		return
