@@ -5,7 +5,8 @@ export default React.createClass({
   mixins: [stateTree.mixin],
   cursor: ["state", "numInProgress"],
   render() {
-    if (this.cursor.get() > 0) {
+    let numInProgress = this.cursor.get();
+    if (numInProgress > 0) {
       return (<div id="loading-screen"><span className="message"></span></div>);
     }
     return (<div></div>);
