@@ -63,7 +63,7 @@ var GenericList = React.createClass({
   getData() {
     return this.cursors.stores.select(this.props.storeName).get().filter(d => !!d.ID)
   },
-  getListedData() {
+  getPageData() {
     let data = this.getData().slice((this.page() - 1) * this.props.itemsInPage, this.page() * this.props.itemsInPage);
     return data;
   },
@@ -88,7 +88,7 @@ var GenericList = React.createClass({
     let Container = this.props.containerElement;
     let titles = this.props.titles;
     return (
-      <Container data={this.getListedData()} titles={titles}>
+      <Container data={this.getPageData()} titles={titles}>
         <Pager>
           <PageItem onClick={this.decPage} disabled={this.page() === 1}>Previous</PageItem>
           <PageItem onClick={this.incPage} disabled={!this.hasNextPage()}>Next</PageItem>
