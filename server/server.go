@@ -33,6 +33,7 @@ func Create() *gin.Engine {
 	authorized.GET("/api/customer/:customerID", routes.Customer)
 	authorized.GET("/api/projects", routes.Projects)
 	authorized.GET("/api/project/:projectID", routes.Project)
+	authorized.GET("/api/tasks", routes.Tasks)
 
 	return server
 }
