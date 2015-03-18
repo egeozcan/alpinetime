@@ -4,7 +4,7 @@ var Router = require('react-router');
 var Tree = require("../../stateTree.js");
 var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
-var GenericList = require('../main/GenericList.jsx');
+var GenericList = require('../main/GenericList/GenericList.jsx');
 
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
