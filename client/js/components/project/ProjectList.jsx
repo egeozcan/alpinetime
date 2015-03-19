@@ -4,8 +4,6 @@ var GenericList = require('../main/GenericList/GenericList.jsx');
 var Customers   = require("../../stateTree.js").select(["stores", "customers"]);
 var Link        = require('react-router').Link;
 
-const itemsInPage = 20;
-
 var ProjectList = React.createClass({
   titles: [
     { 
