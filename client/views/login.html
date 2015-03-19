@@ -10,14 +10,16 @@
 {% endblock %}
 
 {% block main %}
+<h1 style="text-align: center">AlpineTime</h1>
 <form action="/login" method="POST" class="form-signin">
-  <h2 class="form-signin-heading">You should have these</h2>
+  <h3 class="form-signin-heading">Please sign in</h3>
+  <br/>
   <label for="username">Username</label>
   <input type="text" name="username" id="username" class="form-control" placeholder="Username" autofocus required>
   <label for="password">Password</label>
   <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
   <div id="false-login-message" class="alert alert-danger hide" role="alert">Your credentials didn't work.</div>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
 </form>
 {% endblock %}
 
