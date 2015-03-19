@@ -18,6 +18,7 @@ Client side:
   ☐ Show categories and statuses from lookups
   ☐ Show projects under customers
   ✔ Create a test.html @done (15-03-19 09:18)
+  ☐ Open web sockets to gather real-time data
 
 Server-side:
   ☐ Write tests @high
@@ -33,6 +34,10 @@ Server-side:
     This may be a bad idea. I still need to think about the permission system
   ☐ Create form submission handling to models.
     I can use the forms helper of the gin framework with my existing models
+  ☐ Handle changes on the database, create channel pools which will be sent data when the data changes
+  ☐ Handle web-socket connections /ws, I guess?
+    http://gary.burd.info/go-websocket-chat
+    http://www.gorillatoolkit.org/pkg/websocket
 
 Research:
  ☐ How to handle forms
