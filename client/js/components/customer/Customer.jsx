@@ -26,7 +26,7 @@ export default React.createClass({
         return (
             <div>
                 <PageHeader>{customer.Name}</PageHeader>
-                <GenericList titles={[{name: "Name"}, {name: "Description"}]} storeName="projects" filter={t => t.CustomerID === this.getParams().ID} />
+                <GenericList titles={[{name: "Name"}, {name: "Description"}]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
             </div>
         );
     }
