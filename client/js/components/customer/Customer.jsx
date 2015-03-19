@@ -5,6 +5,8 @@ var Router = require('react-router');
 var Tree = require("../../stateTree.js");
 var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
+var GenericList = require('../main/GenericList/GenericList.jsx');
+var Link        = require('react-router').Link;
 
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
@@ -24,6 +26,7 @@ export default React.createClass({
         return (
             <div>
                 <PageHeader>{customer.Name}</PageHeader>
+                <GenericList titles={[{name: "Name"}, {name: "Description"}]} storeName="projects" filter={t => t.CustomerID === this.getParams().ID} />
             </div>
         );
     }
