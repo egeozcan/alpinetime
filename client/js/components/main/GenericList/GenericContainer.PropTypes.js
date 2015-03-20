@@ -11,5 +11,6 @@ export default {
       ])
     }).isRequired
   ),
-  data: React.PropTypes.array
+  data: React.PropTypes.array,
+  preCalculateForPage: React.PropTypes.func
 }
