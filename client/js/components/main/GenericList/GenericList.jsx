@@ -3,7 +3,7 @@ var Router                = require('react-router');
 var Pager                 = require('react-bootstrap/lib/Pager');
 var PageItem              = require('react-bootstrap/lib/PageItem');
 var Tree                  = require("../../../stateTree.js");
-var GenericListPropTypes  = require('./DefaultContainer.PropTypes.js');
+var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
 
 var GenericList = React.createClass({

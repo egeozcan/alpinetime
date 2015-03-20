@@ -7,6 +7,7 @@ var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 var Link        = require('react-router').Link;
+var ProjectListTitles = require('../project/ProjectList.Titles.jsx')
 
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
@@ -18,15 +19,16 @@ export default React.createClass({
         customerActions.load(this.getParams().ID);
     },
     render() {
-        var customerCursor = this.cursors.customers.select(p => p.ID === this.getParams().ID);
-        var customer = customerCursor.get();
+        let customerCursor = this.cursors.customers.select(p => p.ID === this.getParams().ID);
+        let customer = customerCursor.get();
+        let projectListTitles = ProjectListTitles.filter(t => t.name !== "Customer");
         if (!customer || customer._isLoading === true) {
             return (<span>Loading...</span>);
         }
         return (
             <div>
                 <PageHeader>{customer.Name}</PageHeader>
-                <GenericList titles={[{name: "Name"}, {name: "Description"}]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
+                <GenericList titles={projectListTitles} storeName="projects" filter={p => p.CustomerID == customer.ID} />
             </div>
         );
     }
