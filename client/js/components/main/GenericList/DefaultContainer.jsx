@@ -7,9 +7,10 @@ var DefaultContainer = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: ContainerPropTypes,
   render() {
-    let Titles = this.props.titles.map(t => (<th key={t.name}>{t.title || t.name}</th>));
+    let titles = this.props.titles(this.props.data);
+    let TableTitles = titles.map(t => (<th key={t.name}>{t.title || t.name}</th>));
     let Rows = this.props.data.map((datarow, i) => {
-      let row = this.props.titles.map(t => (<td key={t.name}>{!!t.getter ? t.getter(datarow, i) : datarow[t.name]}</td>));
+      let row = titles.map(t => (<td key={t.name}>{!!t.getter ? t.getter(datarow, i) : datarow[t.name]}</td>));
       return (<tr key={i}>{row}</tr>);
     });
     return (
@@ -17,7 +18,7 @@ var DefaultContainer = React.createClass({
         <Table responsive hover>
           <thead>
             <tr>
-              {Titles}
+              {TableTitles}
             </tr>
           </thead>
           <tbody>
