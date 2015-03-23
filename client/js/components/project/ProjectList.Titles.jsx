@@ -5,6 +5,8 @@ var Tasks   = require("../../stateTree.js").select(["stores", "tasks"]);
 var Progressbar = require('react-bootstrap/lib/Progressbar');
 
 export default function (data) {
+  var ids = data.map(d => d.ID);
+  var tasks = Tasks.get().filter(t => ids.indexOf(t.ProjectID) >= 0);
   return [
     { 
       name: "Name",
@@ -24,7 +26,7 @@ export default function (data) {
     {
       name: "Tasks",
       getter(row) {
-        return ""
+        return tasks.filter(t => t.ProjectID === row.ID).length
       }
     },
     {

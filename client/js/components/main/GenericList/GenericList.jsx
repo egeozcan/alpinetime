@@ -49,13 +49,17 @@ var GenericList = React.createClass({
   render() {
     let Container = this.props.containerElement;
     let data = this.props.data || this.getPageData();
-    let titles = this.props.titles(data);
+    let pager = "";
+    if (data.length > 0 && (data.length > this.props.itemsInPage)) {
+      pager = (
+        <Pager>
+          <PageItem onClick={this.decPage} disabled={this.page() === 1}>Previous</PageItem>
+          <PageItem onClick={this.incPage} disabled={!this.hasNextPage()}>Next</PageItem>
+        </Pager>)
+    }
     return (
-      <Container data={data} titles={titles} preCalculateForPage={this.props.preCalculateForPage}>
-          <Pager className={data.length > 0 ? "" : "hidden"}>
-            <PageItem onClick={this.decPage} disabled={this.page() === 1}>Previous</PageItem>
-            <PageItem onClick={this.incPage} disabled={!this.hasNextPage()}>Next</PageItem>
-          </Pager>
+      <Container data={data} titles={this.props.titles} preCalculateForPage={this.props.preCalculateForPage}>
+          
       </Container>
     );
   }
