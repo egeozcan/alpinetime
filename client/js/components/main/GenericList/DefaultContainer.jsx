@@ -5,7 +5,7 @@ var Table                 = require('react-bootstrap/lib/table');
 var DefaultContainer = React.createClass({
   propTypes: ContainerPropTypes,
   render() {
-    let Titles = this.props.titles.map(t => (<td key={t.name}>{t.title || t.name}</td>));
+    let Titles = this.props.titles.map(t => (<th key={t.name}>{t.title || t.name}</th>));
     let Rows = this.props.data.map((datarow, i) => {
       let row = this.props.titles.map(t => (<td key={t.name}>{!!t.getter ? t.getter(datarow, t.name, i) : datarow[t.name]}</td>));
       return (<tr key={i}>{row}</tr>);
