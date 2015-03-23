@@ -16,8 +16,8 @@ var CustomerList = React.createClass({
     {name: "LegacyId"},
     {
       name: "Number of Projects",
-      getter(row, name, i) {
-        return i
+      getter(row, i) {
+        return row.ID
       }
     }
   ],
