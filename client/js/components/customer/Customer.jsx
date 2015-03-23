@@ -27,7 +27,7 @@ export default React.createClass({
         return (
             <div>
                 <PageHeader>{customer.Name}</PageHeader>
-                <GenericList titles={ProjectListTitles()} hidetitles={["Customer"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
+                <GenericList titles={ProjectListTitles} hidetitles={["Customer"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
             </div>
         );
     }

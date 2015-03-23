@@ -29,7 +29,7 @@ export default React.createClass({
             <div>
                 {header}
                 <h3>Tasks</h3>
-                <GenericList titles={this.taskTitles} storeName="tasks" filter={t => t.ProjectID === this.getParams().ID} />
+                <GenericList titles={this.taskTitles} itemsInPage={1000} storeName="tasks" filter={t => t.ProjectID === this.getParams().ID} />
             </div>
         );
     }
