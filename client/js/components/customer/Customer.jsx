@@ -21,14 +21,13 @@ export default React.createClass({
     render() {
         let customerCursor = this.cursors.customers.select(p => p.ID === this.getParams().ID);
         let customer = customerCursor.get();
-        let projectListTitles = ProjectListTitles.filter(t => t.name !== "Customer");
         if (!customer || customer._isLoading === true) {
             return (<span>Loading...</span>);
         }
         return (
             <div>
                 <PageHeader>{customer.Name}</PageHeader>
-                <GenericList titles={projectListTitles} storeName="projects" filter={p => p.CustomerID == customer.ID} />
+                <GenericList titles={ProjectListTitles()} hidetitles={["Customer"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
             </div>
         );
     }

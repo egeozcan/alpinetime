@@ -5,31 +5,31 @@ var Link        = require('react-router').Link;
 var ProjectStore = require('../../stateTree.js').select(["stores", "projects"]);
 
 var CustomerList = React.createClass({
-  titles: [
-    {
-      name: "Name",
-      getter(row) {
-        let params = {ID: row.ID};
-        return (<Link to="customer" params={params}>{row.Name}</Link>);
+  titles(data) {
+    let ids = data.map(pd => pd.ID);
+    var projects = ProjectStore.get().filter(p => ids.indexOf(p.CustomerID) >= 0);
+    return [
+      {
+        name: "Name",
+        getter(row) {
+          let params = {ID: row.ID};
+          return (<Link to="customer" params={params}>{row.Name}</Link>);
+        }
+      },
+      {name: "LegacyId"},
+      {
+        name: "Number of Projects",
+        getter(row, i) {
+          return projects.filter(p => p.CustomerID === row.ID).length;
+        }
       }
-    },
-    {name: "LegacyId"},
-    {
-      name: "Number of Projects",
-      getter(row, i, projects) {
-        return projects.filter(p => p.CustomerID === row.ID).length;
-      }
-    }
-  ],
+    ];
+  },
   render() {
-    let preCalculateForPage = pageData => {
-      let ids = pageData.map(pd => pd.ID);
-      return ProjectStore.get().filter(p => ids.indexOf(p.CustomerID) >= 0);
-    }
     return (
       <div>
         <PageHeader>Customers</PageHeader>
-        <GenericList titles={this.titles} preCalculateForPage={preCalculateForPage} storeName="customers" />
+        <GenericList titles={this.titles} storeName="customers" />
       </div>
     )
   }
