@@ -5,9 +5,10 @@ var PageItem              = require('react-bootstrap/lib/PageItem');
 var Tree                  = require("../../../stateTree.js");
 var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
+var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 var GenericList = React.createClass({
-  mixins: [Tree.mixin, Router.Navigation],
+  mixins: [Tree.mixin, Router.Navigation, PureRenderMixin],
   cursors: { stores: ['stores'], query: ['state', 'query'] },
   propTypes: GenericListPropTypes,
   getDefaultProps() {
@@ -50,7 +51,7 @@ var GenericList = React.createClass({
     let titles = this.props.titles;
     let data = this.props.data || this.getPageData();
     return (
-      <Container data={data} titles={titles}>
+      <Container data={data} titles={titles} preCalculateForPage={this.props.preCalculateForPage}>
           <Pager className={data.length > 0 ? "" : "hidden"}>
             <PageItem onClick={this.decPage} disabled={this.page() === 1}>Previous</PageItem>
             <PageItem onClick={this.incPage} disabled={!this.hasNextPage()}>Next</PageItem>
