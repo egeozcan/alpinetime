@@ -48,8 +48,8 @@ var GenericList = React.createClass({
   },
   render() {
     let Container = this.props.containerElement;
-    let titles = this.props.titles;
     let data = this.props.data || this.getPageData();
+    let titles = this.props.titles(data);
     return (
       <Container data={data} titles={titles} preCalculateForPage={this.props.preCalculateForPage}>
           <Pager className={data.length > 0 ? "" : "hidden"}>

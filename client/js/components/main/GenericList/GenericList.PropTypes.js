@@ -4,7 +4,6 @@ var React = require('react');
 export default {
   titles: ContainerPropTypes.titles,
   data: ContainerPropTypes.data,
-  preCalculateForPage: ContainerPropTypes.preCalculateForPage,
   containerElement: React.PropTypes.func,
   filter: React.PropTypes.func,
   sort: React.PropTypes.func,
