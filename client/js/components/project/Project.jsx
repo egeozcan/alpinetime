@@ -9,6 +9,9 @@ var GenericList = require('../main/GenericList/GenericList.jsx');
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
     cursors: { projects: ['stores', 'projects'] },
+    taskTitles() {
+      return [{name: "Name"}, {name: "Description"}];  
+    },
     componentWillMount() {
         projectActions.load(this.getParams().ID);
     },
@@ -22,17 +25,11 @@ export default React.createClass({
             return (<span>Loading...</span>);
         };
         var header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
-        var dimensions = [
-            {value:"Package.Name", title: "Package"}
-        ];
-        var reduce = (row, memo) => {
-            
-        }
         return (
             <div>
                 {header}
                 <h3>Tasks</h3>
-                <GenericList titles={[{name: "Name"}, {name: "Description"}]} storeName="tasks" filter={t => t.ProjectID === this.getParams().ID} />
+                <GenericList titles={this.taskTitles} storeName="tasks" filter={t => t.ProjectID === this.getParams().ID} />
             </div>
         );
     }
