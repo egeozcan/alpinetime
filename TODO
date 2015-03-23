@@ -1,24 +1,31 @@
+Concepts toimplement:
+ ☐ Project groups
+
 Client side:
   ✔ Create generic list .\client\js\components\main\GenericList.jsx @started(15-03-17 09:42) @high @done (15-03-17 22:57) @lasted(13:15)
+    ✔ Use generic list for the ProjectList @done (15-03-19 08:51)
+    ✔ Use generic list for the CustomerList @done (15-03-19 08:51)
   ☐ Load all the visible stuff and dump it on pouch.db
-    ☐ include pouch.db in the solution
+    ☐ include *pouch.db* or  in the solution
     ☐ attach to document onload, load all the entities required, show loading bar
     ☐ when finished, render react-router
   ☐ Show
     ☐ packages under projects
     Do they need their own page too? I suppose not.
+      ☐ Create a server-side handler for packages
     ☐ Show tasks under packages
     ☐ Sub-task support? Maybe blockedBy?
   ☐ Show categories and statuses from lookups
   ☐ Show projects under customers
-  ☐ Create a test.html
+  ✔ Create a test.html @done (15-03-19 09:18)
+  ☐ Open web sockets to gather real-time data
 
 Server-side:
   ☐ Write tests @high
   ☐ Create an API for
     ☐ CurrentUser
     ☐ Package
-    ☐ Task
+    ✔ Task @done (15-03-19 09:18)
     ☐ Estimation
   ☐ Change Category, ProjectCategory, ConceptStatus and TechnicalStatus with Lookup
   ☐ Add VisibleTo
@@ -27,6 +34,10 @@ Server-side:
     This may be a bad idea. I still need to think about the permission system
   ☐ Create form submission handling to models.
     I can use the forms helper of the gin framework with my existing models
+  ☐ Handle changes on the database, create channel pools which will be sent data when the data changes
+  ☐ Handle web-socket connections /ws, I guess?
+    http://gary.burd.info/go-websocket-chat
+    http://www.gorillatoolkit.org/pkg/websocket
 
 Research:
  ☐ How to handle forms
