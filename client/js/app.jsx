@@ -18,6 +18,7 @@ initializationActions.subscribeToQuery();
 initializationActions.loadProjects();
 initializationActions.loadCustomers();
 initializationActions.loadTasks();
+initializationActions.loadPackages();
 
 var App = React.createClass({
   render() {

@@ -24,7 +24,7 @@ Server-side:
   ☐ Write tests @high
   ☐ Create an API for
     ☐ CurrentUser
-    ☐ Package
+    ✔ Package @done (15-03-24 22:56)
     ✔ Task @done (15-03-19 09:18)
     ☐ Estimation
   ☐ Change Category, ProjectCategory, ConceptStatus and TechnicalStatus with Lookup
