@@ -7,12 +7,14 @@ var DefaultContainer = React.createClass({
   mixins: [PureRenderMixin],
   propTypes: ContainerPropTypes,
   render() {
-    let titles = this.props.titles(this.props.data);
+    let titles = this.props.titles(this.props.data)
+      .filter((title) => !this.props.hidetitles || this.props.hidetitles.indexOf(title.name) === -1);
     let TableTitles = titles.map(t => (<th key={t.name}>{t.title || t.name}</th>));
-    let Rows = this.props.data.map((datarow, i) => {
-      let row = titles.map(t => (<td key={t.name}>{!!t.getter ? t.getter(datarow, i) : datarow[t.name]}</td>));
-      return (<tr key={i}>{row}</tr>);
-    });
+    let Rows = this.props.data
+      .map((datarow, i) => {
+        let row = titles.map(t => (<td key={t.name}>{!!t.getter ? t.getter(datarow, i) : datarow[t.name]}</td>));
+        return (<tr key={i}>{row}</tr>);
+      });
     return (
       <div>
         <Table responsive hover>
