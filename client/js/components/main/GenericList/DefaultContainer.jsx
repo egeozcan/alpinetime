@@ -17,7 +17,7 @@ var DefaultContainer = React.createClass({
       });
     return (
       <div>
-        <Table responsive hover>
+        <Table responsive>
           <thead>
             <tr>
               {TableTitles}
