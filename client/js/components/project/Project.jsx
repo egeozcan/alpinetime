@@ -8,9 +8,20 @@ var GenericList = require('../main/GenericList/GenericList.jsx');
 
 export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
-    cursors: { projects: ['stores', 'projects'] },
+    cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
     taskTitles() {
-      return [{name: "Name"}, {name: "Description"}];  
+        return [{name: "Name"}, {name: "Description"}];  
+    },
+    packageTitles(data) {
+        let projectID = this.getParams().ID;
+        let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
+        return [
+            {name: "Name"},
+            {
+                name: "Tasks",
+                getter: row => <GenericList queryPrefix={"ptlist" + row.ID} titles={this.taskTitles} itemsInPage={5} storeName="tasks" data={tasks} filter={p => p.PackageID === row.ID} />
+            }
+        ]
     },
     componentWillMount() {
         projectActions.load(this.getParams().ID);
@@ -19,17 +30,18 @@ export default React.createClass({
         projectActions.load(this.getParams().ID);
     },
     render() {
-        var projectCursor = this.cursors.projects.select(p => p.ID === this.getParams().ID);
-        var project = projectCursor.get();
+        let projectCursor = this.cursors.projects.select(p => p.ID === this.getParams().ID);
+        let project = projectCursor.get();
         if (!project || project._isLoading === true) {
             return (<span>Loading...</span>);
         };
-        var header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
+        let header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
+        let projectID = this.getParams().ID;
         return (
             <div>
                 {header}
                 <h3>Tasks</h3>
-                <GenericList titles={this.taskTitles} itemsInPage={1000} storeName="tasks" filter={t => t.ProjectID === this.getParams().ID} />
+                <GenericList titles={this.packageTitles} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
             </div>
         );
     }
