@@ -10,7 +10,7 @@ export default React.createClass({
     mixins: [Router.Navigation, Router.State, Tree.mixin],
     cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
     taskTitles() {
-        return [{name: "Name"}, {name: "Description"}];  
+        return [{name: "ID"}, {name: "Name"}, {name: "Description"}];  
     },
     packageTitles(data) {
         let projectID = this.getParams().ID;
