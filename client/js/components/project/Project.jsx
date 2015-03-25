@@ -16,10 +16,13 @@ export default React.createClass({
         let projectID = this.getParams().ID;
         let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
         return [
-            {name: "Name"},
+            {
+                name: "Name",
+                getter: row => <div style={{maxWidth: 300, whiteSpace: "normal !important"}}><p>{row.Name}</p><p>{row.Description}</p></div>
+            },
             {
                 name: "Tasks",
-                getter: row => <GenericList queryPrefix={"ptlist" + row.ID} titles={this.taskTitles} itemsInPage={5} storeName="tasks" data={tasks} filter={p => p.PackageID === row.ID} />
+                getter: row => <GenericList queryPrefix={"ptlist" + row.ID} titles={this.taskTitles} itemsInPage={20} storeName="tasks" data={tasks} filter={p => p.PackageID === row.ID} />
             }
         ]
     },
