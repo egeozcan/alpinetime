@@ -4,6 +4,7 @@ package main
 
 import (
 	"alpinetime/models"
+	"alpinetime/models/connection"
 	"fmt"
 	"github.com/Pallinder/go-randomdata"
 	"github.com/jinzhu/gorm"
@@ -16,7 +17,7 @@ var (
 )
 
 func init() {
-	db = models.Db
+	db = connection.Db
 	//db.LogMode(true)
 	dbproject := db.First(&models.Project{}).Value.(*models.Project)
 	if dbproject.ID != 0 {
