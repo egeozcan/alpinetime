@@ -15,7 +15,7 @@ var GenericList = React.createClass({
     return {
       containerElement: DefaultContainer,
       filterUrlPrefix: "",
-      itemsInPage: 20
+      itemsInPage: 10
     }
   },
   getData() {
