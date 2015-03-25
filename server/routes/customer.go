@@ -2,13 +2,14 @@ package routes
 
 import (
 	"alpinetime/models"
+	"alpinetime/models/connection"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
 func Customers(c *gin.Context) {
 	customers := &[]models.Customer{}
-	models.Db.Find(customers)
+	connection.Db.Find(customers)
 	c.JSON(200, customers)
 }
 
@@ -19,7 +20,7 @@ func Customer(c *gin.Context) {
 		return
 	}
 	customer := &models.Customer{}
-	models.Db.Find(customer, id)
+	connection.Db.Find(customer, id)
 	c.JSON(200, customer)
 }
 
