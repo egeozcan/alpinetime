@@ -24,3 +24,4 @@ export var subscribeToQuery = () => {
 export var loadProjects = loadEntity.bind(null, "projects");
 export var loadCustomers = loadEntity.bind(null, "customers");
 export var loadTasks = loadEntity.bind(null, "tasks");
+export var loadPackages = loadEntity.bind(null, "packages");
