@@ -18,11 +18,24 @@ export default React.createClass({
         return [
             {
                 name: "Name",
-                getter: row => <div style={{maxWidth: 300, whiteSpace: "normal !important"}}><p>{row.Name}</p><p>{row.Description}</p></div>
+                getter: row => (
+                    <div style={{maxWidth: 300, whiteSpace: "normal !important"}}>
+                        <p>{row.Name}</p>
+                        <p>{row.Description}</p>
+                    </div>
+                )
             },
             {
                 name: "Tasks",
-                getter: row => <GenericList queryPrefix={"ptlist" + row.ID} titles={this.taskTitles} itemsInPage={20} storeName="tasks" data={tasks} filter={p => p.PackageID === row.ID} />
+                getter: row => (
+                    <GenericList 
+                        queryPrefix={"ptlist" + row.ID}
+                        titles={this.taskTitles}
+                        itemsInPage={20}
+                        storeName="tasks"
+                        data={tasks}
+                        filter={p => p.PackageID === row.ID} />
+                )
             }
         ]
     },
