@@ -31,6 +31,7 @@ export default React.createClass({
                     <GenericList 
                         queryPrefix={"ptlist" + row.ID}
                         titles={this.taskTitles}
+                        noHeader={true}
                         itemsInPage={20}
                         storeName="tasks"
                         data={tasks}
