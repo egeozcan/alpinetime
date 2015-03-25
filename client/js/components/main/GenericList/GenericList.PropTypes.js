@@ -9,5 +9,6 @@ export default {
   sort: React.PropTypes.func,
   filterUrlPrefix: React.PropTypes.string,
   storeName: React.PropTypes.string.isRequired,
-  itemsInPage: React.PropTypes.number
+  itemsInPage: React.PropTypes.number,
+  queryPrefix: React.PropTypes.string
 }
