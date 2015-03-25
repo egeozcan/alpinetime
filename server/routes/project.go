@@ -2,13 +2,14 @@ package routes
 
 import (
 	"alpinetime/models"
+	"alpinetime/models/connection"
 	"github.com/gin-gonic/gin"
 	"strconv"
 )
 
 func Projects(c *gin.Context) {
 	projects := &[]models.Project{}
-	models.Db.
+	connection.Db.
 		Preload("Customer").
 		Preload("Manager").
 		Preload("ProjectCategory").
@@ -23,7 +24,7 @@ func Project(c *gin.Context) {
 		return
 	}
 	project := &models.Project{}
-	models.Db.
+	connection.Db.
 		Preload("Customer").
 		Preload("Manager").
 		Preload("ProjectCategory").
