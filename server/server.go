@@ -8,7 +8,9 @@ import (
 )
 
 func Create() *gin.Engine {
+	gin.SetMode(gin.DebugMode)
 	server := gin.Default()
+	server.Use(gin.Recovery())
 	//secret := RandSeq(30)
 	store := sessions.NewCookieStore([]byte("secret"))
 
