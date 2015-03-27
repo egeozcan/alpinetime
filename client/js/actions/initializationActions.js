@@ -4,13 +4,25 @@ var request = require("superagent");
 var URI = require('URIjs');
 var Router = require('react-router');
 
-var loadEntity = function(entityName) {
+var loadEntity = (entityName) => {
   stateActions.numInProgress.inc();
   request.get("/api/" + entityName)
-    .end(function(err, res) {
+    .end((err, res) => {
       let store = stateTree.select("stores", entityName);
       store.edit(JSON.parse(res.text));
       stateActions.numInProgress.dec();
+    });
+}
+
+export var loadProjects = loadEntity.bind(null, "projects");
+export var loadCustomers = loadEntity.bind(null, "customers");
+export var loadTasks = loadEntity.bind(null, "tasks");
+export var loadPackages = loadEntity.bind(null, "packages");
+
+export var loadModelDefinitions = () => {
+  request.get('/api/models')
+    .end((err, res) => {
+      window.modelDefinitions = JSON.parse(res.text);
     });
 }
 
@@ -20,8 +32,3 @@ export var subscribeToQuery = () => {
   Router.HistoryLocation.addChangeListener(updateQuery);
   updateQuery();
 }
-
-export var loadProjects = loadEntity.bind(null, "projects");
-export var loadCustomers = loadEntity.bind(null, "customers");
-export var loadTasks = loadEntity.bind(null, "tasks");
-export var loadPackages = loadEntity.bind(null, "packages");

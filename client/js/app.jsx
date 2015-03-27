@@ -19,6 +19,7 @@ initializationActions.loadProjects();
 initializationActions.loadCustomers();
 initializationActions.loadTasks();
 initializationActions.loadPackages();
+initializationActions.loadModelDefinitions();
 
 var App = React.createClass({
   render() {
