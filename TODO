@@ -1,4 +1,4 @@
-Concepts toimplement:
+Concepts to implement:
  ☐ Project groups
 
 Client side:
@@ -6,13 +6,13 @@ Client side:
     ✔ Use generic list for the ProjectList @done (15-03-19 08:51)
     ✔ Use generic list for the CustomerList @done (15-03-19 08:51)
   ☐ Show
-    ☐ packages under projects
+    ✔ packages under projects @done (15-03-28 19:25)
     Do they need their own page too? I suppose not.
-      ☐ Create a server-side handler for packages
-    ☐ Show tasks under packages
+      ✔ Create a server-side handler for packages @done (15-03-28 19:25)
+    ✔ Show tasks under packages @done (15-03-28 19:25)
     ☐ Sub-task support? Maybe blockedBy?
   ☐ Show categories and statuses from lookups
-  ☐ Show projects under customers
+  ✔ Show projects under customers @done (15-03-28 19:25)
   ✔ Create a test.html @done (15-03-19 09:18)
   ☐ Open web sockets to gather real-time data
 --- ✄ -----------------------
@@ -29,11 +29,12 @@ Server-side:
     ✔ Task @done (15-03-19 09:18)
     ☐ Estimation
   ☐ Change Category, ProjectCategory, ConceptStatus and TechnicalStatus with Lookup
-  ☐ Add VisibleTo
-  ☐ Add CanBeEditedBy
-  ☐ Restrict Access based on VisibleTo and CanBeEditedBy
-    This may be a bad idea. I still need to think about the permission system
-  ☐ Create form submission handling to models.
+  ☐ Permission system
+    Following may be just bad ideas. I still need to think about the permission system
+    ☐ Add VisibleTo???
+    ☐ Add CanBeEditedBy???
+    ☐ Restrict Access based on VisibleTo and CanBeEditedBy
+  ✘ Create form submission handling to models. @cancelled (15-03-28 19:27)
     I can use the forms helper of the gin framework with my existing models
   ☐ Handle changes on the database, create channel pools which will be sent data when the data changes
   ☐ Handle web-socket connections /ws, I guess?
@@ -42,5 +43,12 @@ Server-side:
 
 Research:
  ☐ How to handle forms
-   ☐ I need to create some sort of validation from the models. "go run generateValidationsModels.go"?
-   ☐ I could also parse golang with javascript and then things would get fancy. @badidea
+   ✔ I need to create some sort of validation from the models. "go run generateValidationsModels.go"? @done (15-03-28 19:20)
+     Created an action which returns the list of the values in the validate tag.
+     That's called by the app.jsx and made available to the whole app
+   ✘ I could also parse golang with javascript and then things would get fancy. @badidea @cancelled (15-03-28 19:22)
+   ☐ Integrate the validation logic to the forms
+ ☐ TranslatableField?
+   For example, it can read/write with current user's selected language and users of different languages
+   see a flag signaling originating language next to the displayed value if there isn't already a
+   translation available to them. When they have edit rights, they could also add a translation
