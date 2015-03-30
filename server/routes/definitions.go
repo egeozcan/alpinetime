@@ -26,12 +26,13 @@ func getFields(model interface{}, res *map[string]interface{}) {
 	}
 }
 
-func Models(c *gin.Context) {
+func Definitions(c *gin.Context) {
 	res := make(map[string]map[string]interface{})
 	structs := []interface{}{
 		&models.Package{},
 		&models.Project{},
 		&models.Task{},
+		&models.User{},
 	}
 	for i := 0; i < len(structs); i++ {
 		name := reflect.TypeOf(structs[i]).Elem().Name()

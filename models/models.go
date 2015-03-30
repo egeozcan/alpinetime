@@ -16,84 +16,46 @@ type Record struct {
 
 type User struct {
 	Record
-	Domain    string     `sql:"size:255"`
-	Name      string     `sql:"size:255" form:"username" binding:"required"`
-	Email     string     `sql:"size:254" form:"email"`
-	Password  string     `sql:"-" form:"password"`
+	Domain    string     `sql:"size:255" form:"domain" binding:"required"`
+	Name      string     `sql:"size:255" form:"username" binding:"required" validation:"text,minLength(3)"`
+	Email     string     `sql:"size:254" form:"email" validation:"email"`
+	Password  string     `sql:"-" form:"password" binding:"required" validation:"password,minLength(3)"`
 	Projects  []*Project `gorm:"many2many:user_projects;"`
 	LastLogin time.Time  `json:"-"`
 }
 
 type Project struct {
 	Record
-	Name              string  `sql:"size:255" form:"Name"`
-	Description       string  `sql:"size:255" form:"Description"`
-	Manager           *User   `json:",omitempty"`
-	ManagerID         int64   `json:",string" form:"ManagerID"`
-	Users             []*User `gorm:"many2many:user_projects;"`
-	Customer          *Customer
-	CustomerID        int64 `json:",string" form:"CustomerID"`
-	Packages          []*Package
-	Tasks             []*Task
-	ProjectCategory   *ProjectCategory
-	ProjectCategoryID int64 `json:",string"`
-}
-
-type Category struct {
-	Record
-	Name        string `sql:"size:254"`
-	Description string `sql:"size:255"`
-}
-
-type ProjectCategory struct {
-	Record
-	Name        string `sql:"size:254" form:"Name"`
-	Description string `sql:"size:255"`
-}
-
-type ConceptStatus struct {
-	Record
-	Name        string `sql:"size:255"`
-	Description string `sql:"size:255"`
-}
-
-type TechnicalStatus struct {
-	Record
-	Name        string `sql:"size:255"`
-	Description string `sql:"size:255"`
-}
-
-type Lookup struct {
-	Record
-	Type  string `sql:"size:255"`
-	Name  string `sql:"size:255"`
-	Value string `sql:"size:255"`
+	Name        string  `sql:"size:255" form:"Name" validation:"text,minLength(3)"`
+	Description string  `sql:"size:2000" form:"Description" validation:"text"`
+	Manager     *User   `json:",omitempty"`
+	ManagerID   int64   `json:",string" form:"ManagerID" validation:"ref,ref(User)"`
+	Users       []*User `gorm:"many2many:user_projects;"`
+	Customer    *Customer
+	CustomerID  int64 `json:",string" form:"CustomerID" validation:"ref,ref(Customer)"`
+	Packages    []*Package
+	Tasks       []*Task
+	Category    Lookup
 }
 
 type Package struct {
 	Record
 	ProjectID   int64  `json:",string"`
 	Name        string `sql:"size:255"`
-	Description string `sql:"size:255"`
+	Description string `sql:"size:2000"`
 	StartsAt    time.Time
-	Category    *Category
-	CategoryID  int64
 	Tasks       []*Task
 }
 
 type Task struct {
 	Record
-	PackageID         int64  `json:",string"`
-	ProjectID         int64  `json:",string"`
-	Name              string `sql:"size:255"`
-	Description       string `sql:"size:255"`
-	AssignedTo        *User
-	AssignedToID      int64 `json:",string"`
-	Estimations       []*Estimation
-	TechnicalStatus   *TechnicalStatus
-	TechnicalStatusID int64 `json:",string"`
-	ConceptStatus     *ConceptStatus
-	ConceptStatusID   int64 `json:",string"`
+	PackageID    int64  `json:",string"`
+	ProjectID    int64  `json:",string"`
+	Name         string `sql:"size:255"`
+	Description  string `sql:"size:2000"`
+	AssignedTo   *User
+	AssignedToID int64 `json:",string"`
+	Estimations  []*Estimation
 }
 
 type Estimation struct {
