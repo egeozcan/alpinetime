@@ -29,6 +29,9 @@ Server-side:
     ✔ Task @done (15-03-19 09:18)
     ☐ Estimation
   ☐ Change Category, ProjectCategory, ConceptStatus and TechnicalStatus with Lookup
+    ✔ Delete the unused models @done (15-03-31 01:41)
+    ☐ Add LookupID as replacement
+    ☐ Create default lookups migration script (a JSON file, perhaps?)
   ☐ Permission system
     Following may be just bad ideas. I still need to think about the permission system
     ☐ Add VisibleTo???
