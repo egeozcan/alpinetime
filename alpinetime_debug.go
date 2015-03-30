@@ -36,44 +36,8 @@ func init() {
 		Projects: []*models.Project{},
 	}
 	db.Create(&user)
-	technicalStatuses := make([]interface{}, 5)
-	for i := 0; i < 5; i++ {
-		technicalStatus := models.TechnicalStatus{
-			Name:        randomdata.SillyName(),
-			Description: randomdata.Paragraph(),
-		}
-		db.Create(&technicalStatus)
-		technicalStatuses[i] = &technicalStatus
-	}
-	conceptStatuses := make([]interface{}, 5)
-	for i := 0; i < 5; i++ {
-		conceptStatus := models.ConceptStatus{
-			Name:        randomdata.SillyName(),
-			Description: randomdata.Paragraph(),
-		}
-		db.Create(&conceptStatus)
-		conceptStatuses[i] = &conceptStatus
-	}
-	projectCategories := make([]interface{}, 5)
-	for i := 0; i < 5; i++ {
-		projectCategory := models.ProjectCategory{
-			Name:        randomdata.SillyName(),
-			Description: randomdata.Paragraph(),
-		}
-		db.Create(&projectCategory)
-		projectCategories[i] = &projectCategory
-	}
-	categories := make([]interface{}, 5)
-	for i := 0; i < 5; i++ {
-		category := models.Category{
-			Name:        randomdata.SillyName(),
-			Description: randomdata.Paragraph(),
-		}
-		db.Create(&category)
-		categories[i] = &category
-	}
 	customers := make([]interface{}, 500)
-	for i := 0; i < 500; i++ {
+	for i := 0; i < 60; i++ {
 		customer := models.Customer{
 			Name:     randomdata.SillyName(),
 			LegacyId: fmt.Sprintf("LEGACY%v", randomdata.Number(1, 2000)),
@@ -83,13 +47,12 @@ func init() {
 	}
 	for i := 0; i < 100; i++ {
 		project := models.Project{
-			Name:            randomdata.SillyName(),
-			Description:     randomdata.Paragraph(),
-			Manager:         &user,
-			Users:           []*models.User{&user},
-			Customer:        randomFrom(customers).(*models.Customer),
-			ProjectCategory: randomFrom(projectCategories).(*models.ProjectCategory),
-			Tasks:           []*models.Task{},
+			Name:        randomdata.SillyName(),
+			Description: randomdata.Paragraph(),
+			Manager:     &user,
+			Users:       []*models.User{&user},
+			Customer:    randomFrom(customers).(*models.Customer),
+			Tasks:       []*models.Task{},
 		}
 		db.Create(&project)
 		fmt.Printf("Created project %v\n", project.ID)
@@ -98,12 +61,10 @@ func init() {
 			tasks := make([]*models.Task, taskAmount)
 			for z := 0; z < taskAmount; z++ {
 				task := models.Task{
-					Name:            fmt.Sprintf("Package %v", z),
-					Description:     randomdata.Paragraph(),
-					AssignedTo:      &user,
-					TechnicalStatus: randomFrom(technicalStatuses).(*models.TechnicalStatus),
-					ConceptStatus:   randomFrom(conceptStatuses).(*models.ConceptStatus),
-					ProjectID:       project.ID,
+					Name:        fmt.Sprintf("Task %v", z),
+					Description: randomdata.Paragraph(),
+					AssignedTo:  &user,
+					ProjectID:   project.ID,
 				}
 				tasks[z] = &task
 			}
@@ -111,7 +72,6 @@ func init() {
 				Name:        fmt.Sprintf("Package %v", y),
 				Description: randomdata.Paragraph(),
 				StartsAt:    time.Now(),
-				Category:    randomFrom(categories).(*models.Category),
 				Tasks:       tasks,
 			}
 			db.Create(&projectPackage)

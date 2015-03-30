@@ -33,15 +33,11 @@ func init() {
 
 func ResetDB() {
 	Db.Exec(`
-    DROP TABLE IF EXISTS categories;
-    DROP TABLE IF EXISTS concept_status;
     DROP TABLE IF EXISTS customers;
     DROP TABLE IF EXISTS estimations;
     DROP TABLE IF EXISTS packages;
-    DROP TABLE IF EXISTS project_categories;
     DROP TABLE IF EXISTS projects;
     DROP TABLE IF EXISTS tasks;
-    DROP TABLE IF EXISTS technical_status;
     DROP TABLE IF EXISTS user_projects;
     DROP TABLE IF EXISTS users;`)
 	migrate()
@@ -52,10 +48,6 @@ func migrate() {
 		&models.User{},
 		&models.Project{},
 		&models.Lookup{},
-		&models.Category{},
-		&models.ProjectCategory{},
-		&models.ConceptStatus{},
-		&models.TechnicalStatus{},
 		&models.Package{},
 		&models.Task{},
 		&models.Estimation{},
