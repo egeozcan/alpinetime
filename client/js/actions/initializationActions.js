@@ -20,10 +20,7 @@ export var loadTasks = loadEntity.bind(null, "tasks");
 export var loadPackages = loadEntity.bind(null, "packages");
 
 export var loadModelDefinitions = () => {
-  request.get('/api/models')
-    .end((err, res) => {
-      window.modelDefinitions = JSON.parse(res.text);
-    });
+  request.get('/api/models').end((err, res) => { window.modelDefinitions = JSON.parse(res.text); });
 }
 
 export var subscribeToQuery = () => {
