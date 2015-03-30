@@ -56,7 +56,7 @@ export default React.createClass({
         return (
             <div>
                 {header}
-                <h3>Tasks</h3>
+                <h3>Packages</h3>
                 <GenericList titles={this.packageTitles} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
             </div>
         );
