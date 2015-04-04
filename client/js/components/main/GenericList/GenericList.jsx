@@ -5,6 +5,7 @@ var PageItem              = require('react-bootstrap/lib/PageItem');
 var Tree                  = require("../../../stateTree.js");
 var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
+var FlexContainer      = require('./FlexContainer.jsx');
 var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 var GenericList = React.createClass({
@@ -13,7 +14,6 @@ var GenericList = React.createClass({
   propTypes: GenericListPropTypes,
   getDefaultProps() {
     return {
-      containerElement: DefaultContainer,
       filterUrlPrefix: "",
       itemsInPage: 10
     }
@@ -58,7 +58,7 @@ var GenericList = React.createClass({
     return this.page() * this.props.itemsInPage < this.getData().length;
   },
   render() {
-    let Container = this.props.containerElement;
+    let Container = this.props.containerElement == "flex" ? FlexContainer : DefaultContainer;
     let data = this.getPageData();
     let pager = "";
     if (data.hasPaging) {
@@ -69,7 +69,12 @@ var GenericList = React.createClass({
         </Pager>)
     }
     return (
-      <Container data={data.pageData} titles={this.props.titles} hidetitles={this.props.hidetitles} preCalculateForPage={this.props.preCalculateForPage}>
+      <Container 
+          data={data.pageData}
+          titles={this.props.titles}
+          removeAllTitles={this.props.removeAllTitles}
+          hidetitles={this.props.hidetitles}
+          preCalculateForPage={this.props.preCalculateForPage}>
         {pager}
       </Container>
     );

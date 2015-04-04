@@ -1,14 +1,14 @@
-var ContainerPropTypes = require('./GenericContainer.PropTypes.js');
 var React = require('react');
 
 export default {
-  titles: ContainerPropTypes.titles,
-  data: ContainerPropTypes.data,
-  containerElement: React.PropTypes.func,
+  titles: React.PropTypes.func,
+  data: React.PropTypes.array,
+  containerElement: React.PropTypes.string,
   filter: React.PropTypes.func,
   sort: React.PropTypes.func,
   filterUrlPrefix: React.PropTypes.string,
   storeName: React.PropTypes.string.isRequired,
   itemsInPage: React.PropTypes.number,
-  queryPrefix: React.PropTypes.string
+  queryPrefix: React.PropTypes.string,
+  removeAllTitles: React.PropTypes.bool
 }
