@@ -29,13 +29,14 @@ type Project struct {
 	Name        string  `sql:"size:255" form:"Name" validation:"text,minLength(3)"`
 	Description string  `sql:"size:2000" form:"Description" validation:"text"`
 	Manager     *User   `json:",omitempty"`
-	ManagerID   int64   `json:",string" form:"ManagerID" validation:"ref,ref(User)"`
+	ManagerID   int64   `json:",string" form:"ManagerID" validation:"ref(User)"`
 	Users       []*User `gorm:"many2many:user_projects;"`
 	Customer    *Customer
-	CustomerID  int64 `json:",string" form:"CustomerID" validation:"ref,ref(Customer)"`
+	CustomerID  int64 `json:",string" form:"CustomerID" validation:"ref(Customer)"`
 	Packages    []*Package
 	Tasks       []*Task
-	Category    Lookup
+	Category    Lookup `validation:"lookup(ProjectCategory)"`
+	CategoryID  int64  `json:",string" form:"CategoryID" validation:"ref(Lookup)"`
 }
 
 type Package struct {
@@ -69,6 +70,14 @@ type Estimation struct {
 
 type Customer struct {
 	Record
-	Name     string `sql:"size:255"`
-	LegacyId string `sql:"size:255"`
+	Name        string `sql:"size:255"`
+	Description string `sql:"size:2000"`
+	LegacyId    string `sql:"size:255"`
+}
+
+type Comment struct {
+	Author   *User
+	AuthorID int64 `json:",string" form:"AuthorID" validation:"ref(User)"`
+	Title    string
+	Content  string
 }

@@ -7,19 +7,19 @@ var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 
 export default React.createClass({
-    mixins: [Router.Navigation, Router.State, Tree.mixin],
+    mixins: [Router.State, Tree.mixin],
     cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
     taskTitles() {
-        return [{name: "ID"}, {name: "Name"}, {name: "Description"}];  
+        return [{name: "ID"}, {name: "Name", title: "Task Name"}, {name: "Description", style: {flexGrow: 4}}];  
     },
     packageTitles(data) {
-        let projectID = this.getParams().ID;
+        let projectID = this.context.router.getCurrentParams().ID;
         let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
         return [
             {
                 name: "Name",
                 getter: row => (
-                    <div style={{maxWidth: 300, whiteSpace: "normal !important"}}>
+                    <div style={{maxWidth: 600, minWidth: 240, whiteSpace: "normal !important"}}>
                         <p>{row.Name}</p>
                         <p>{row.Description}</p>
                     </div>
@@ -32,6 +32,7 @@ export default React.createClass({
                         queryPrefix={"ptlist" + row.ID}
                         titles={this.taskTitles}
                         itemsInPage={20}
+                        containerElement="flex"
                         storeName="tasks"
                         data={tasks}
                         filter={p => p.PackageID === row.ID} />
@@ -40,24 +41,24 @@ export default React.createClass({
         ]
     },
     componentWillMount() {
-        projectActions.load(this.getParams().ID);
+        projectActions.load(this.context.router.getCurrentParams().ID);
     },
     componentWillReceiveProps() {
-        projectActions.load(this.getParams().ID);
+        projectActions.load(this.context.router.getCurrentParams().ID);
     },
     render() {
-        let projectCursor = this.cursors.projects.select(p => p.ID === this.getParams().ID);
+        let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
         let project = projectCursor.get();
         if (!project || project._isLoading === true) {
             return (<span>Loading...</span>);
         };
         let header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
-        let projectID = this.getParams().ID;
+        let projectID = this.context.router.getCurrentParams().ID;
         return (
             <div>
                 {header}
                 <h3>Packages</h3>
-                <GenericList titles={this.packageTitles} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
+                <GenericList titles={this.packageTitles} removeAllTitles={true} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
             </div>
         );
     }

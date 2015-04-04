@@ -1,0 +1,28 @@
+.box-container {
+  .box-row, .box-title-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    
+    .box-col {
+      padding: 5px 20px;
+      flex-grow: 0;
+      margin: 0 10px 10px 0;
+      flex-grow: 1;
+      flex: 1;
+      word-wrap: break-word;
+           
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  
+  .box-row:hover {
+    background-color: #eee;
+  }
+  
+  .box-title-row {
+    font-weight: bold;
+  }
+}
