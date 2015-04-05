@@ -5,6 +5,8 @@ type Lookup struct {
 	Type         string `sql:"size:255"`
 	Key          string `sql:"size:255"`
 	Value        string `sql:"size:255"`
+	Stamps       string `sql:"size:255"`
+	Description  string `sql:"size:2000"`
 	NumericValue int
 	SortIndex    int
 	Color        string `sql:"size:6"`
