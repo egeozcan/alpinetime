@@ -3,8 +3,6 @@ package main
 import (
 	"alpinetime/server"
 	"fmt"
-	//"alpinetime/models"
-	//"github.com/jinzhu/gorm"
 )
 
 func main() {

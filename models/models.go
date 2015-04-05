@@ -46,6 +46,8 @@ type Package struct {
 	Description string `sql:"size:2000"`
 	StartsAt    time.Time
 	Tasks       []*Task
+	Category    Lookup `validation:"lookup(PackageCategory)"`
+	CategoryID  int64  `json:",string" form:"CategoryID" validation:"ref(Lookup)"`
 }
 
 type Task struct {
@@ -57,6 +59,8 @@ type Task struct {
 	AssignedTo   *User
 	AssignedToID int64 `json:",string"`
 	Estimations  []*Estimation
+	Category     Lookup `validation:"lookup(TaskCategory)"`
+	CategoryID   int64  `json:",string" form:"CategoryID" validation:"ref(Lookup)"`
 }
 
 type Estimation struct {
@@ -73,6 +77,8 @@ type Customer struct {
 	Name        string `sql:"size:255"`
 	Description string `sql:"size:2000"`
 	LegacyId    string `sql:"size:255"`
+	Category    Lookup `validation:"lookup(CustomerCategory)"`
+	CategoryID  int64  `json:",string" form:"CategoryID" validation:"ref(Lookup)"`
 }
 
 type Comment struct {

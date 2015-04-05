@@ -51,5 +51,6 @@ func migrate() {
 		&models.Package{},
 		&models.Task{},
 		&models.Estimation{},
-		&models.Customer{})
+		&models.Customer{},
+		&models.Lookup{})
 }
