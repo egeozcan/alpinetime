@@ -12,3 +12,7 @@ func Tasks(c *gin.Context) {
 		Find(tasks)
 	c.JSON(200, tasks)
 }
+
+func CreateTask(c *gin.Context) {
+
+}
