@@ -36,9 +36,9 @@ func init() {
 		return sortIndex
 	}
 	projectCategoryLookups := []*models.Lookup{
-		&models.Lookup{Type: "ProjectCategory", Key: "internal", Value: "Internal", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "ProjectCategory", Key: "customer", Value: "Customer", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "ProjectCategory", Key: "other", Value: "Other", NumericValue: 0, SortIndex: getSortIndex()},
+		&models.Lookup{Type: "ProjectCategory", Key: "customer", Value: "Customer", NumericValue: 0, SortIndex: getSortIndex(), Description: `A project for a customer - most projects are in this category`},
+		&models.Lookup{Type: "ProjectCategory", Key: "internal", Value: "Internal", NumericValue: 0, SortIndex: getSortIndex(), Description: `Internal project, i.e. the customer employs the project team`},
+		&models.Lookup{Type: "ProjectCategory", Key: "other", Value: "Other", NumericValue: 0, SortIndex: getSortIndex(), Description: `A project with a custom structure`, Stamps: "explain"},
 	}
 	for i := 0; i < len(projectCategoryLookups); i++ {
 		db.Create(projectCategoryLookups[i])
@@ -46,9 +46,9 @@ func init() {
 	sortIndex = 0
 
 	packageCategoryLookups := []*models.Lookup{
-		&models.Lookup{Type: "PackageCategory", Key: "order", Value: "Order", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageCategory", Key: "maintenance", Value: "Maintenance", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageCategory", Key: "ongoing", Value: "Ongoing", SortIndex: getSortIndex()},
+		&models.Lookup{Type: "PackageCategory", Key: "order", Value: "Order", SortIndex: getSortIndex(), Description: `Package is, or will be a one-time order`},
+		&models.Lookup{Type: "PackageCategory", Key: "maintenance", Value: "Maintenance", SortIndex: getSortIndex(), Description: `A maintenance package with incident-based tasks`},
+		&models.Lookup{Type: "PackageCategory", Key: "ongoing", Value: "Ongoing", SortIndex: getSortIndex(), Description: `Like employment and support contracts`},
 	}
 	for i := 0; i < len(packageCategoryLookups); i++ {
 		db.Create(packageCategoryLookups[i])
@@ -56,12 +56,12 @@ func init() {
 	sortIndex = 0
 
 	packageRiskCategoryLookups := []*models.Lookup{
-		&models.Lookup{Type: "PackageRiskCategory", Key: "low", Value: "Low", NumericValue: 10, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageRiskCategory", Key: "medium", Value: "Medium", NumericValue: 25, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageRiskCategory", Key: "high", Value: "High", NumericValue: 50, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageRiskCategory", Key: "unmatched", Value: "High", NumericValue: 100, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageRiskCategory", Key: "zero", Value: "Zero", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageRiskCategory", Key: "verylow", Value: "Very Low", NumericValue: 5, SortIndex: getSortIndex()},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "low", Value: "Low", NumericValue: 10, SortIndex: getSortIndex(), Description: `Regular business - package introduces no new concepts`},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "medium", Value: "Medium", NumericValue: 20, SortIndex: getSortIndex(), Description: `Regular business with tweaks - an altered flow or new concepts without a big impact`},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "high", Value: "High", NumericValue: 50, SortIndex: getSortIndex(), Description: `New business - specialization and/or customization`},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "unmatched", Value: "High", NumericValue: 100, SortIndex: getSortIndex(), Description: `Risky business - external factors can affect outcome`, Stamps: "explain"},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "zero", Value: "Zero", NumericValue: 0, SortIndex: getSortIndex(), Description: `Already working example - needs NO changes`},
+		&models.Lookup{Type: "PackageRiskCategory", Key: "verylow", Value: "Very Low", NumericValue: 5, SortIndex: getSortIndex(), Description: `Already working example - needs very small changes`},
 	}
 	for i := 0; i < len(packageRiskCategoryLookups); i++ {
 		db.Create(packageRiskCategoryLookups[i])
@@ -69,13 +69,30 @@ func init() {
 	sortIndex = 0
 
 	packageConceptStatusLookups := []*models.Lookup{
-		&models.Lookup{Type: "PackageConceptStatus", Key: "inprogress", Value: "In Progress", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageConceptStatus", Key: "offered", Value: "Offered", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageConceptStatus", Key: "accepted", Value: "Accepted", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "PackageConceptStatus", Key: "rejected", Value: "Rejected", NumericValue: 0, SortIndex: getSortIndex()},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "definition", Value: "Definition", NumericValue: 0, SortIndex: getSortIndex(), Description: `During definition, tasks will be created and estimated`},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "ready", Value: "Ready", NumericValue: 0, SortIndex: getSortIndex(), Description: `Definition is complete and package can be offered`},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "offered", Value: "Offered", NumericValue: 0, SortIndex: getSortIndex(), Description: `Offered to the customer`},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "accepted", Value: "Accepted", NumericValue: 0, SortIndex: getSortIndex(), Description: `Package is accepted, task activity can start`},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "rejected", Value: "Rejected", NumericValue: 0, SortIndex: getSortIndex(), Description: `Package is rejected, to be revised or archived`},
+		&models.Lookup{Type: "PackageConceptStatus", Key: "archived", Value: "Archived", NumericValue: 0, SortIndex: getSortIndex(), Description: `Package isn't active`},
 	}
 	for i := 0; i < len(packageConceptStatusLookups); i++ {
 		db.Create(packageConceptStatusLookups[i])
+	}
+	sortIndex = 0
+
+	taskStatusLookups := []*models.Lookup{
+		&models.Lookup{Type: "TaskStatus", Key: "definition", Value: "Definition", NumericValue: 0, SortIndex: getSortIndex(), Description: `The definition of the task can still change`},
+		&models.Lookup{Type: "TaskStatus", Key: "estimation", Value: "Estimation", NumericValue: 0, SortIndex: getSortIndex(), Description: `The estimation of the effort can change`},
+		&models.Lookup{Type: "TaskStatus", Key: "defined", Value: "Defined", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task definition and estimation are complete`},
+		&models.Lookup{Type: "TaskStatus", Key: "released", Value: "Released", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task activity can start`},
+		&models.Lookup{Type: "TaskStatus", Key: "inprogress", Value: "In Progress", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task activity has started`},
+		&models.Lookup{Type: "TaskStatus", Key: "complete", Value: "Complete", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task is delivered`},
+		&models.Lookup{Type: "TaskStatus", Key: "cancelled", Value: "Cancelled", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task is no more relevant`},
+		&models.Lookup{Type: "TaskStatus", Key: "failed", Value: "Failed", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task can't be delivered`},
+	}
+	for i := 0; i < len(taskStatusLookups); i++ {
+		db.Create(taskStatusLookups[i])
 	}
 	sortIndex = 0
 
@@ -102,25 +119,14 @@ func init() {
 	sortIndex = 0
 
 	taskPriorityLookups := []*models.Lookup{
-		&models.Lookup{Type: "TaskPriority", Key: "normal", Value: "Normal", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskPriority", Key: "critical", Value: "Critical", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskPriority", Key: "high", Value: "High", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskPriority", Key: "low", Value: "Low", SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskPriority", Key: "optional", Value: "Optional", SortIndex: getSortIndex()},
+		&models.Lookup{Type: "TaskPriority", Key: "normal", Value: "Normal", SortIndex: getSortIndex(), Description: `This task has standard impact and no significant dependant tasks`},
+		&models.Lookup{Type: "TaskPriority", Key: "critical", Value: "Critical", SortIndex: getSortIndex(), Description: `This task blocks other tasks and/or business operations`},
+		&models.Lookup{Type: "TaskPriority", Key: "high", Value: "High", SortIndex: getSortIndex(), Description: `Delivery of this task should be a high priority`},
+		&models.Lookup{Type: "TaskPriority", Key: "low", Value: "Low", SortIndex: getSortIndex(), Description: `Task is totally separate from other work and has minimal impact`},
+		&models.Lookup{Type: "TaskPriority", Key: "optional", Value: "Optional", SortIndex: getSortIndex(), Description: `There's no strict requirement to deliver this task`},
 	}
 	for i := 0; i < len(taskPriorityLookups); i++ {
 		db.Create(taskPriorityLookups[i])
-	}
-	sortIndex = 0
-
-	taskEstimationStatusLookups := []*models.Lookup{
-		&models.Lookup{Type: "TaskEstimationStatusLookups", Key: "inprogress", Value: "In Progress", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskEstimationStatusLookups", Key: "estimated", Value: "Estimated", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskEstimationStatusLookups", Key: "accepted", Value: "Accepted", NumericValue: 0, SortIndex: getSortIndex()},
-		&models.Lookup{Type: "TaskEstimationStatusLookups", Key: "needsreview", Value: "Needs Review", NumericValue: 0, SortIndex: getSortIndex()},
-	}
-	for i := 0; i < len(taskEstimationStatusLookups); i++ {
-		db.Create(taskEstimationStatusLookups[i])
 	}
 
 	user := models.User{
@@ -130,7 +136,7 @@ func init() {
 		Projects: []*models.Project{},
 	}
 	db.Create(&user)
-	customers := make([]interface{}, 10)
+	customers := make([]*models.Customer, 10)
 	for i := 0; i < len(customers); i++ {
 		customer := models.Customer{
 			Name:     randomdata.SillyName(),
@@ -149,7 +155,7 @@ func init() {
 			Description:     randomdata.Paragraph(),
 			Manager:         &user,
 			Users:           []*models.User{&user},
-			Customer:        randomFrom(customers).(*models.Customer),
+			Customer:        customers[rand.Intn(len(customers))],
 			Tasks:           []*models.Task{},
 			ProjectCategory: projectCategoryLookups[rand.Intn(len(projectCategoryLookups))],
 		}
@@ -168,6 +174,7 @@ func init() {
 					ProjectID:    project.ID,
 					TaskCategory: taskCategoryLookups[rand.Intn(len(taskCategoryLookups))],
 					TaskPriority: taskPriorityLookups[rand.Intn(len(taskPriorityLookups))],
+					TaskStatus:   taskStatusLookups[rand.Intn(len(taskStatusLookups))],
 				}
 				tasks[z] = &task
 			}
