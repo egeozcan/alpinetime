@@ -87,6 +87,7 @@ func init() {
 		&models.Lookup{Type: "TaskStatus", Key: "defined", Value: "Defined", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task definition and estimation are complete`},
 		&models.Lookup{Type: "TaskStatus", Key: "released", Value: "Released", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task activity can start`},
 		&models.Lookup{Type: "TaskStatus", Key: "inprogress", Value: "In Progress", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task activity has started`},
+		&models.Lookup{Type: "TaskStatus", Key: "paused", Value: "Paused", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task activity has paused`},
 		&models.Lookup{Type: "TaskStatus", Key: "complete", Value: "Complete", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task is delivered`},
 		&models.Lookup{Type: "TaskStatus", Key: "cancelled", Value: "Cancelled", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task is no more relevant`},
 		&models.Lookup{Type: "TaskStatus", Key: "failed", Value: "Failed", NumericValue: 0, SortIndex: getSortIndex(), Description: `Task can't be delivered`},
