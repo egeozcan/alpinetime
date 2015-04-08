@@ -1,6 +1,6 @@
 var path = require('path');
 
-var outputPath = path.resolve('./public/js');
+var outputPath = path.resolve(__dirname, '../public/js');
 console.log(outputPath);
 module.exports = {
   entry: "./client/js/main.js",

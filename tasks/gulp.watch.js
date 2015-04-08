@@ -1,4 +1,5 @@
 var builderFactory = require('./generic.build_server.js');
+var cp = require('child_process');
 
 module.exports = function (gulp, browserSync) {
   var serverRunning = false;
@@ -22,9 +23,18 @@ module.exports = function (gulp, browserSync) {
     gulp.watch(['./client/css/**/*.less', './client/js/**/*.less'], ['css']);
     gulp.watch(['./client/views/**/*.html'], ['html']);
     gulp.watch(['./public/**/*.js'], ['bs-reload']);
-    //gulp.watch(['./public/**/*.js'], ['bs-reload']);
-    gulp.watch(['./!(node_modules|data|public|client)/**/*.go', './*.go'], ['run-server']);
-    builder(serverLoaded);
+    var proc = cp.spawn('node ./tasks/webpack.watch.js');
+    proc.stdout.on('data', function (data) {
+      console.log(data.toString().replace(/\n+?$/m, ""));
+      if(!serverRunning) {
+        builder(function () {
+          serverLoaded();
+          gulp.watch(['./!(node_modules|data|public|client)/**/*.go', './*.go'], ['run-server']);
+        });
+      } else if(data.toString().indexOf('Success') >= 0) {
+        browserSync.reload();
+      }
+    });
     loadBrowserSync();
   });
 
