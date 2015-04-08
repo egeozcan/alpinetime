@@ -1,5 +1,7 @@
 var builderFactory = require('./generic.build_server.js');
 var cp = require('child_process');
+var path = require('path');
+var webpackWatcher = path.resolve(__dirname, './webpack.watch.js');
 
 module.exports = function (gulp, browserSync) {
   var serverRunning = false;
@@ -23,7 +25,7 @@ module.exports = function (gulp, browserSync) {
     gulp.watch(['./client/css/**/*.less', './client/js/**/*.less'], ['css']);
     gulp.watch(['./client/views/**/*.html'], ['html']);
     gulp.watch(['./public/**/*.js'], ['bs-reload']);
-    var proc = cp.spawn('node ./tasks/webpack.watch.js');
+    var proc = cp.spawn('node', [webpackWatcher]);
     proc.stdout.on('data', function (data) {
       console.log(data.toString().replace(/\n+?$/m, ""));
       if(!serverRunning) {
