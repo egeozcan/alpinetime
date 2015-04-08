@@ -1,6 +1,7 @@
 syntax: regexp
 node_modules/*
 ^public/*
+^dist/*
 syntax: glob
 alpinetime.exe
 data/bindata.go
