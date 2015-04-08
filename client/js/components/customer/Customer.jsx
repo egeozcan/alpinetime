@@ -9,7 +9,10 @@ var Link        = require('react-router').Link;
 var ProjectListTitles = require('../project/ProjectList.Titles.jsx')
 
 export default React.createClass({
-    mixins: [Router.Navigation, Router.State, Tree.mixin],
+    mixins: [Tree.mixin],
+    contextTypes: {
+        router: React.PropTypes.func
+    },
     cursors: { customers: ['stores', 'customers'] },
     componentWillMount() {
         customerActions.load(this.context.router.getCurrentParams().ID);

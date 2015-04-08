@@ -7,7 +7,10 @@ var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 
 export default React.createClass({
-    mixins: [Router.State, Tree.mixin],
+    mixins: [Tree.mixin],
+    contextTypes: {
+        router: React.PropTypes.func
+    },
     cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
     taskTitles() {
         return [{name: "ID"}, {name: "Name", title: "Task Name"}, {name: "Description", style: {flexGrow: 4}}];  
