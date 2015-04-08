@@ -3,9 +3,6 @@
 package routes
 
 import (
-	"alpinetime/data"
-	"alpinetime/helpers"
-	"fmt"
 	"github.com/gin-gonic/gin"
 )
 
