@@ -1,15 +1,17 @@
 var React                 = require('react');
-var Router                = require('react-router');
 var Pager                 = require('react-bootstrap/lib/Pager');
 var PageItem              = require('react-bootstrap/lib/PageItem');
 var Tree                  = require("../../../stateTree.js");
 var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
-var FlexContainer      = require('./FlexContainer.jsx');
+var FlexContainer         = require('./FlexContainer.jsx');
 var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 var GenericList = React.createClass({
-  mixins: [Tree.mixin, Router.Navigation, PureRenderMixin],
+  mixins: [Tree.mixin, PureRenderMixin],
+  contextTypes: {
+    router: React.PropTypes.func
+  },
   cursors: { stores: ['stores'], query: ['state', 'query'] },
   propTypes: GenericListPropTypes,
   getDefaultProps() {
@@ -42,7 +44,7 @@ var GenericList = React.createClass({
     e.preventDefault();
     if (this.hasNextPage()) {
       let newQuery = Object.assign(this.cursors.query.get(), {[this.getQueryPrefix("page")]: this.page() + 1});
-      this.transitionTo(location.pathname, null, newQuery);
+      this.context.router.transitionTo(location.pathname, null, newQuery);
     }
   },
   decPage(e) {
@@ -52,7 +54,7 @@ var GenericList = React.createClass({
       return;
     }
     let newQuery = Object.assign(this.cursors.query.get(), {[this.getQueryPrefix("page")]: page})
-    this.transitionTo(location.pathname, null, newQuery);
+    this.context.router.transitionTo(location.pathname, null, newQuery);
   },
   hasNextPage() {
     return this.page() * this.props.itemsInPage < this.getData().length;
