@@ -18,6 +18,9 @@ module.exports = function (gulp, browserSync) {
   
   gulp.task('run-server', function () {
     console.log("re-build");
+    if (browserSync.active) {
+      browserSync.notify("Server is being rebuilt.", 1000);
+    }
     builder(serverLoaded);
   });
   
