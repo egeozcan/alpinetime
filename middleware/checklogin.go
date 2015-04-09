@@ -18,5 +18,8 @@ func CheckLogin() func(c *gin.Context) {
 			return
 		}
 		c.Set("user", user)
+		c.Writer.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate")
+		c.Writer.Header().Set("Pragma", "no-cache")
+		c.Writer.Header().Set("Expires", "0")
 	}
 }
