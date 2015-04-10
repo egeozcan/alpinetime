@@ -18,6 +18,7 @@ export var loadProjects = loadEntity.bind(null, "projects");
 export var loadCustomers = loadEntity.bind(null, "customers");
 export var loadTasks = loadEntity.bind(null, "tasks");
 export var loadPackages = loadEntity.bind(null, "packages");
+export var loadLookups = loadEntity.bind(null, "lookups");
 
 export var loadModelDefinitions = () => {
   request.get('/api/definitions').end((err, res) => { window.modelDefinitions = JSON.parse(res.text); });
