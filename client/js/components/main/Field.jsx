@@ -1,7 +1,6 @@
 const Field = React.createClass({
   propTypes: {
     afterEdit: React.PropTypes.func.isRequired,
-    isEditable: React.PropTypes.bool,
     type: React.PropTypes.oneOf([
         'text', 'number', 'date',
         'file', 'image', 'time',
