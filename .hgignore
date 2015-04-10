@@ -8,3 +8,4 @@ data/bindata.go
 .idea/*
 alpinetime.sublime-workspace
 *.sqlite
+*.exe
