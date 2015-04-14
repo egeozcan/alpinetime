@@ -45,7 +45,6 @@ module.exports = function (gulp, browserSync) {
 
   function loadBrowserSync() {
     if (!serverRunning) {
-      console.log("server not loaded yet");
       setTimeout(loadBrowserSync, 100);
       return;
     };

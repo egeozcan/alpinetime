@@ -20,6 +20,7 @@ initializationActions.loadCustomers();
 initializationActions.loadTasks();
 initializationActions.loadPackages();
 initializationActions.loadModelDefinitions();
+initializationActions.loadLookups();
 
 var App = React.createClass({
   render() {
