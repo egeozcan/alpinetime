@@ -20,7 +20,7 @@ func Create() *gin.Engine {
 	server.GET("/", routes.LoginPage)
 	server.POST("/login", routes.Login("/app/projects"))
 
-	authorized := server.Group("/", middleware.CheckLogin())
+	authorized := server.Group("/", middleware.CheckLogin(), middleware.NoCache())
 
 	authorized.GET("/logout", routes.Logout)
 
