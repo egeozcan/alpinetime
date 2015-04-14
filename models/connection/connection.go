@@ -49,7 +49,10 @@ func migrate() {
 		&models.Project{},
 		&models.Lookup{},
 		&models.Package{},
+		&models.Comment{},
 		&models.Task{},
 		&models.Estimation{},
-		&models.Customer{})
+		&models.Customer{},
+		&models.Step{},
+		&models.History{})
 }

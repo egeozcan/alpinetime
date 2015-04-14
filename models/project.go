@@ -13,4 +13,5 @@ type Project struct {
 	Tasks             []*Task
 	ProjectCategory   *Lookup
 	ProjectCategoryID int64 `json:",string" validation:"ref(Lookup)"`
+	History           []*History
 }

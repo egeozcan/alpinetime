@@ -23,5 +23,6 @@ type Task struct {
 	SpentMinutes     int
 	StartedAt        time.Time
 	BlockedBy        *Task
-	BlockedByID      int64 `json:",string" form:"BlockedByID" validation:"ref(User)"`
+	BlockedByID      int64 `json:",string" form:"BlockedByID" validation:"ref(Task)"`
+	Steps            []*Step
 }

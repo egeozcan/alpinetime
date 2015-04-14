@@ -10,4 +10,5 @@ type Lookup struct {
 	NumericValue int
 	SortIndex    int
 	Color        string `sql:"size:6"`
+	LabelType    string `sql:"size:10"`
 }
