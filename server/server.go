@@ -38,6 +38,7 @@ func Create() *gin.Engine {
 	authorized.GET("/api/tasks", routes.Tasks)
 	authorized.GET("/api/packages", routes.Packages)
 	authorized.GET("/api/definitions", routes.Definitions)
+	authorized.GET("/api/lookups", routes.Lookups)
 
 	return server
 }
