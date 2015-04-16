@@ -31,12 +31,16 @@ module.exports = function (gulp, browserSync) {
   });
   
   gulp.task('css-components', function() {
-    return gulp.src(['./client/js/**/*.less'])
+    var build = gulp.src(['./client/js/**/*.less'])
       .pipe(plumber())
       .pipe(less({
         plugins: [autoprefix, cleancss]
       }))
       .pipe(concatCss('components.css'))
       .pipe(gulp.dest('./public/css/'));
+    if (!browserSync) {
+      return build;
+    }
+    return build.pipe(browserSync.reload({stream:true}));
   });
 }
