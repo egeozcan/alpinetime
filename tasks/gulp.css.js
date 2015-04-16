@@ -13,8 +13,12 @@ module.exports = function (gulp, browserSync) {
     del(['public/css/*.*'], done);
   });
   
-  gulp.task('css', ['clean-css'], function() {
-    var build = gulp.src(['./client/css/*.less', './client/js/**/*.less'])
+  gulp.task('clean-css', function(done) {
+    del(['public/css/*.*'], done);
+  });
+  
+  gulp.task('css', ['clean-css', 'css-components'], function() {
+    var build = gulp.src(['./client/css/*.less'])
       .pipe(plumber())
       .pipe(less({
         plugins: [autoprefix, cleancss]
@@ -24,5 +28,15 @@ module.exports = function (gulp, browserSync) {
       return build;
     }
     return build.pipe(browserSync.reload({stream:true}));
+  });
+  
+  gulp.task('css-components', function() {
+    return gulp.src(['./client/js/**/*.less'])
+      .pipe(plumber())
+      .pipe(less({
+        plugins: [autoprefix, cleancss]
+      }))
+      .pipe(concatCss('components.css'))
+      .pipe(gulp.dest('./public/css/'));
   });
 }
