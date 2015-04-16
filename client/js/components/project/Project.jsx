@@ -5,6 +5,7 @@ var Tree = require("../../stateTree.js");
 var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
+var TwoCols       = require('../main/Layout/TwoCols.jsx');
 
 export default React.createClass({
     mixins: [Tree.mixin],
@@ -57,12 +58,13 @@ export default React.createClass({
         };
         let header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
         let projectID = this.context.router.getCurrentParams().ID;
-        return (
+        let Content = (
             <div>
                 {header}
                 <h3>Packages</h3>
                 <GenericList titles={this.packageTitles} removeAllTitles={true} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
             </div>
         );
+        return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
     }
 });
