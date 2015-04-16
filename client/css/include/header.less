@@ -1,0 +1,49 @@
+#header {
+  background: @brand-primary;
+  padding: 0 0 0 0;
+  font-family: 'Lucida Grande', 'Lucida Sans Unicode', Arial, Helvetica, Verdana, sans-serif !important;
+
+  * {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .logo {
+    margin: 35px 20px 20px 20px;
+  }
+
+  .navbar-nav {
+    position: relative;
+    bottom: -1px;
+    &> li {
+      &> a {
+        padding: 3px 9px;
+        margin-right: 5px; 
+        background: #01bdff;
+        font-size: 0.85em;
+      }
+
+      &.active > a,
+      &:hover > a {
+        background-color: #5dd5ff;
+      }
+    }
+  }
+
+  .dropdown-menu {
+    background: #5dd5ff;
+    color: #fff;
+    margin-top: 0;
+    margin-right: 5px;
+  }
+
+  .dropdown-menu>li:hover>a {
+    background: lighten(#5dd5ff, 10%);
+  }
+}
+
+@media (min-width: 768px) {
+  #header {
+    padding: 0 15px 0 0;
+  }
+}

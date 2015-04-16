@@ -2,6 +2,7 @@ require("babel/polyfill");
 
 var React = require('react');
 var Router = require('react-router');
+var Route = Router.Route;
 
 /** Components **/
 var CustomerListComponent = require("./components/customer/CustomerList.jsx");
@@ -27,7 +28,9 @@ var App = React.createClass({
     return (
       <div>
         <LoadingScreen />
-        <Navigation/>
+        <div id="header">
+          <Navigation/>
+        </div>
         <Router.RouteHandler/>
       </div>
     )
@@ -35,16 +38,16 @@ var App = React.createClass({
 });
 
 var routes = (
-  <Router.Route name="app" path="/app" handler={App}>
-    <Router.Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
-    <Router.Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
-    <Router.Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
-    <Router.Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
-  </Router.Route>
+  <Route name="app" path="/app" handler={App}>
+    <Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
+    <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
+    <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
+    <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
+  </Route>
 )
 
 Router.run(
   routes,
   Router.HistoryLocation,
-  Handler => React.render(<Handler/>, document.getElementById("main"))
+  Handler => React.render(<Handler/>, document.body)
 );

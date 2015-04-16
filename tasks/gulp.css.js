@@ -19,7 +19,6 @@ module.exports = function (gulp, browserSync) {
       .pipe(less({
         plugins: [autoprefix, cleancss]
       }))
-      .pipe(concatCss('app.css'))
       .pipe(gulp.dest('./public/css'));
     if (!browserSync) {
       return build;
