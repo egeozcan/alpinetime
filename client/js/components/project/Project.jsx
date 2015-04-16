@@ -56,15 +56,12 @@ export default React.createClass({
         if (!project || project._isLoading === true) {
             return (<span>Loading...</span>);
         };
-        let header = (<PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>);
         let projectID = this.context.router.getCurrentParams().ID;
-        let Content = (
-            <div>
-                {header}
-                <h3>Packages</h3>
-                <GenericList titles={this.packageTitles} removeAllTitles={true} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
-            </div>
-        );
+        let Content = [
+            <PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>,
+            <h3>Packages</h3>,
+            <GenericList titles={this.packageTitles} removeAllTitles={true} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
+        ];
         return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
     }
 });

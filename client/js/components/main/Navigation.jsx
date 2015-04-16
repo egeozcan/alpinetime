@@ -10,20 +10,17 @@ var Router = require('react-router');
 export default React.createClass({
   render() {
     return (
-      <div>
-        <img src="/public/logo.png" className="logo" alt="Alpinetime"/>
-        <Navbar fluid inverse>
-          <Nav>
-            <NavItemLink eventKey={1} to="projects">Projects</NavItemLink>
-            <NavItemLink eventKey={1} to="customers">Customers</NavItemLink>
-          </Nav>
-          <Nav right>
-            <DropdownButton eventKey={3} title="User">
-              <MenuItem eventKey="1" href="/logout">Logout</MenuItem>
-            </DropdownButton>
-          </Nav>
-        </Navbar>
-      </div>
+      <Navbar fluid inverse>
+        <Nav>
+          <NavItemLink eventKey={1} to="projects">Projects</NavItemLink>
+          <NavItemLink eventKey={1} to="customers">Customers</NavItemLink>
+        </Nav>
+        <Nav right>
+          <DropdownButton eventKey={3} title="User">
+            <MenuItem eventKey="1" href="/logout">Logout</MenuItem>
+          </DropdownButton>
+        </Nav>
+      </Navbar>
     )
   }
 });
