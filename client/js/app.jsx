@@ -10,6 +10,7 @@ var CustomerComponent = require("./components/customer/Customer.jsx");
 var ProjectListComponent = require("./components/project/ProjectList.jsx");
 var ProjectComponent = require("./components/project/Project.jsx");
 var Navigation = require("./components/main/Navigation.jsx");
+var Logo = require("./components/main/Logo.jsx");
 var LoadingScreen = require("./components/main/LoadingScreen.jsx");
 
 window.stateTree = require("./stateTree.js");
@@ -28,10 +29,13 @@ var App = React.createClass({
     return (
       <div>
         <LoadingScreen />
-        <div id="header">
+        <header id="header">
+          <Logo/>
           <Navigation/>
-        </div>
-        <Router.RouteHandler/>
+        </header>
+        <main>
+          <Router.RouteHandler/>
+        </main>
       </div>
     )
   }

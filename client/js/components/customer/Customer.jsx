@@ -27,12 +27,10 @@ export default React.createClass({
         if (!customer || customer._isLoading === true) {
             return (<span>Loading...</span>);
         }
-        let Content = (
-            <div>
-                <PageHeader>{customer.Name}</PageHeader>
-                <GenericList titles={ProjectListTitles} hidetitles={["Customer", "Progress"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
-            </div>
-        );
+        let Content = [
+            <PageHeader>{customer.Name}</PageHeader>,
+            <GenericList titles={ProjectListTitles} hidetitles={["Customer", "Progress"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
+        ];
         return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
     }
 });
