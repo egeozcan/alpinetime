@@ -27,12 +27,10 @@ var CustomerList = React.createClass({
     ];
   },
   render() {
-    let Content = (
-      <div>
-        <PageHeader>Customers</PageHeader>
+    let Content = [
+        <PageHeader>Customers</PageHeader>,
         <GenericList titles={this.titles} storeName="customers" />
-      </div>
-    )
+    ]
     return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
   }
 });
