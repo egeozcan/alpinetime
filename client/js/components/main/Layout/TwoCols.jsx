@@ -1,18 +1,21 @@
 var React = require('react');
+var Grid = require('react-bootstrap/lib/Grid');
+var Col = require('react-bootstrap/lib/Col');
+var Row = require('react-bootstrap/lib/Row');
 
 export default React.createClass({
 	render() {
 		return (
-			<div className="container-fluid application" role="main">
-				<div className="row">
-					<div id="main" className="col-md-8 content">
+			<Grid fluid role="main">
+				<Row>
+					<Col md={8} className="content">
 						{this.props.Content}
-					</div>
-					<div className="col-md-4 content">
+					</Col>
+					<Col md={4} className="content">
 						{this.props.Sidebar}
-					</div>
-				</div>
-			</div>
+					</Col>
+				</Row>
+			</Grid>
 		)
 	}
 });
