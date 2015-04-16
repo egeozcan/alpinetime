@@ -3,7 +3,6 @@ package models
 type Lookup struct {
 	Record
 	Type         string `sql:"size:255"`
-	Key          string `sql:"size:255"`
 	Value        string `sql:"size:255"`
 	Stamps       string `sql:"size:255"`
 	Description  string `sql:"size:2000"`

@@ -1,5 +1,7 @@
 var React = require('react');
 var Label = require('react-bootstrap/lib/Label');
+var Tooltip = require('react-bootstrap/lib/Tooltip');
+var OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
 var stateTree = require("../../stateTree.js");
 
 const Lookup = React.createClass({
@@ -8,19 +10,26 @@ const Lookup = React.createClass({
   	lookups: ["stores", "lookups"]
   },
   propTypes: {
-    editable: React.propTypes.bool
+    editable: React.propTypes.bool,
+    lookupID: React.propTypes.string.required,
+    type: React.propTypes.string
   },
   getDefaultProps() {
     return {
-      LabelType: "default"
+      editable: false
     }
   },
   render() {
-  	var lookup = this.cursors.lookups.get(function(lookup) {
-	  return lookup.ID === "4" || lookup.ID === "5"
-	})
-  	<Label bsStyle={lookup.LabelType || "default"}>lookup.Value</Label>
+  	var lookup = this.cursors.lookups.get(l => l.ID === this.props.lookupID);
+    var tooltip = (
+      <Tooltip>{lookup.description}</Tooltip>
+    );
+  	return (
+      <OverlayTrigger placement="top" overlay={tooltip}>
+        <Label bsStyle={lookup.LabelType || "default"}>lookup.Value</Label>
+      </OverlayTrigger>
+    )
   }
 });
 
-export default Field;
+export default Lookup;
