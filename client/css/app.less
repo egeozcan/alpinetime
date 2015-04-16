@@ -53,56 +53,21 @@
 //@import "../../node_modules/bootstrap/less/bootstrap.less";
 @import "./vendor/bootswatch.less";
 
+@import "./include/loading-screen.less";
+@import "./include/header.less";
+@import "./include/layout.less";
+
 body {
-  padding-top: 15px;
   padding-bottom: 30px;
+  background: #e5e5e5
 }
 
-.navbar-inverse .navbar-brand {
-  color: #EEEEEE !important;
-}
-
-/*
-nav.navbar.navbar-default.navbar-inverse:after {
-  content: " ";
-  display: block;
-  width: calc(~"41% + 2px");
-  height: 4px;
-  position: absolute;
-  top: -1px;
-  background: rgba(173, 255, 47, 0.6);
-  left: -1px;
-  border-radius: 10px;
-}
-*/
-
-#loading-screen {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999999;
-  
-  .message {
-    width: 30px;
-    height: 30px;
-    background-color: #00d8ff;
-    margin: 100px auto;
-    animation: rotateplane 1s infinite ease-in-out;
+.content {
+  &> * {
+    background: #fff;
+    padding: 5px 20px;
+    display: block;
   }
-}
-
-@keyframes rotateplane {
-  0%   { transform: perspective(120px) rotateX(0deg) rotateY(0deg); }
-  50%  { transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg); }
-  100% { transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg); }
-  
-  50.1%  { background-color: #333; }
 }
 
 .pager li>a, .pager li>span {

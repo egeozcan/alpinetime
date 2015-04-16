@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {% include "partials/favicon.html" %}
+    {% include "partials/manifest.html" %}
     <title>{% block title %}{% endblock %} - Alpinetime</title>
     <link href="/public/css/app.css" rel="stylesheet">
     {% block head %}
@@ -14,14 +14,8 @@
 <body role="document">
 
 <div class="container-fluid application" role="main">
-
-    <div class="row">
-        <div id="main" class="col-xs-12">
-            {% block main %}
-            {% endblock %}
-        </div>
-    </div>
-
+{% block main %}
+{% endblock %}
 </div>
 
 {% block scripts %}

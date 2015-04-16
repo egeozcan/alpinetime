@@ -1,8 +1,9 @@
-var React      = require('react');
-var PageHeader = require('react-bootstrap/lib/PageHeader');
-var GenericList = require('../main/GenericList/GenericList.jsx');
-var Link        = require('react-router').Link;
-var ProjectStore = require('../../stateTree.js').select(["stores", "projects"]);
+var React         = require('react');
+var PageHeader    = require('react-bootstrap/lib/PageHeader');
+var GenericList   = require('../main/GenericList/GenericList.jsx');
+var TwoCols       = require('../main/Layout/TwoCols.jsx');
+var Link          = require('react-router').Link;
+var ProjectStore  = require('../../stateTree.js').select(["stores", "projects"]);
 
 var CustomerList = React.createClass({
   titles(data) {
@@ -26,12 +27,13 @@ var CustomerList = React.createClass({
     ];
   },
   render() {
-    return (
+    let Content = (
       <div>
         <PageHeader>Customers</PageHeader>
         <GenericList titles={this.titles} storeName="customers" />
       </div>
     )
+    return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
   }
 });
 
