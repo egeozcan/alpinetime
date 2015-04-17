@@ -5,7 +5,14 @@ var Tree                  = require("../../../stateTree.js");
 var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
 var FlexContainer         = require('./FlexContainer.jsx');
+var ListContainer         = require('./ListContainer.jsx');
 var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
+
+const containers = {
+  "flex": FlexContainer,
+  "table": DefaultContainer,
+  "list": ListContainer
+}
 
 var GenericList = React.createClass({
   mixins: [Tree.mixin, PureRenderMixin],
@@ -60,7 +67,7 @@ var GenericList = React.createClass({
     return this.page() * this.props.itemsInPage < this.getData().length;
   },
   render() {
-    let Container = this.props.containerElement == "flex" ? FlexContainer : DefaultContainer;
+    let Container = containers[this.props.containerElement] || DefaultContainer;
     let data = this.getPageData();
     let pager = "";
     if (data.hasPaging) {

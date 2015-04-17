@@ -6,6 +6,7 @@ var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 var TwoCols       = require('../main/Layout/TwoCols.jsx');
+var Lookup = require('../main/Lookup.jsx');
 
 export default React.createClass({
     mixins: [Tree.mixin],
@@ -14,7 +15,14 @@ export default React.createClass({
     },
     cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
     taskTitles() {
-        return [{name: "ID"}, {name: "Name", title: "Task Name"}, {name: "Description", style: {flexGrow: 4}}];  
+        return [
+            {name: "ID"},
+            {name: "Name", style: {flexGrow: 2}},
+            {name: "Status", getter(row) { return (<Lookup lookupID={row.TaskStatusID} />) }},
+            {name: "Category", getter(row) { return (<Lookup lookupID={row.TaskCategoryID} />) }},
+            {name: "Priority", getter(row) { return (<Lookup lookupID={row.TaskPriorityID} />) }},
+            {name: "Description"}
+        ];  
     },
     packageTitles(data) {
         let projectID = this.context.router.getCurrentParams().ID;
@@ -23,7 +31,7 @@ export default React.createClass({
             {
                 name: "Name",
                 getter: row => (
-                    <div style={{maxWidth: 600, minWidth: 240, whiteSpace: "normal !important"}}>
+                    <div style={{maxWidth: 600, minWidth: 150, whiteSpace: "normal !important"}}>
                         <p>{row.Name}</p>
                         <p>{row.Description}</p>
                     </div>
@@ -32,11 +40,10 @@ export default React.createClass({
             {
                 name: "Tasks",
                 getter: row => (
-                    <GenericList 
+                    <GenericList
                         queryPrefix={"ptlist" + row.ID}
                         titles={this.taskTitles}
                         itemsInPage={20}
-                        containerElement="flex"
                         storeName="tasks"
                         data={tasks}
                         filter={p => p.PackageID === row.ID} />
@@ -54,7 +61,7 @@ export default React.createClass({
         let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
         let project = projectCursor.get();
         if (!project || project._isLoading === true) {
-            return (<span>Loading...</span>);
+            return false;
         };
         let projectID = this.context.router.getCurrentParams().ID;
         let Content = [

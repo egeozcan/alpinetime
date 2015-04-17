@@ -28,7 +28,7 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        <LoadingScreen />
+        {/*<LoadingScreen />*/}
         <header id="header">
           <Logo/>
           <Navigation/>
