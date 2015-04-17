@@ -3,6 +3,7 @@ var Link = require('react-router').Link;
 var Customers   = require("../../stateTree.js").select(["stores", "customers"]);
 var Tasks   = require("../../stateTree.js").select(["stores", "tasks"]);
 var Progressbar = require('react-bootstrap/lib/Progressbar');
+var Lookup = require('../main/Lookup.jsx');
 
 export default function (data) {
   var ids = data.map(d => d.ID);
@@ -33,6 +34,12 @@ export default function (data) {
       name: "Progress",
       getter() {
         return (<Progressbar now={Math.random() * 100} label="%(percent)s%" />);
+      }
+    },
+    {
+      name: "Project Category",
+      getter(row) {
+        return (<Lookup lookupID={row.ProjectCategoryID} type="ProjectCategoryID" />)
       }
     },
     { name: "Description" }
