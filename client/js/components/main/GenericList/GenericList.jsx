@@ -6,7 +6,6 @@ var GenericListPropTypes  = require('./GenericList.PropTypes.js');
 var DefaultContainer      = require('./DefaultContainer.jsx');
 var FlexContainer         = require('./FlexContainer.jsx');
 var ListContainer         = require('./ListContainer.jsx');
-var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 const containers = {
   "flex": FlexContainer,
@@ -15,7 +14,7 @@ const containers = {
 }
 
 var GenericList = React.createClass({
-  mixins: [Tree.mixin, PureRenderMixin],
+  mixins: [Tree.mixin],
   contextTypes: {
     router: React.PropTypes.func
   },
@@ -27,6 +26,17 @@ var GenericList = React.createClass({
       itemsInPage: 10
     }
   },
+  componentWillMount() {
+    this.location = window.location.toString();
+  },
+  /* This doesn't consider nested GenericLists - not really usable
+  shouldComponentUpdate(nextProps, nextState) {
+    let storeName = this.props.storeName;
+    let shouldUpdate = this.state.cursors.stores[storeName] !== nextState.cursors.stores[storeName];
+    shouldUpdate = shouldUpdate || this.state.cursors.query !== nextState.cursors.query;
+    return shouldUpdate;
+  },
+  */
   getQueryPrefix(prop) {
     return (this.props.queryPrefix || "") + prop;
   },
@@ -69,6 +79,9 @@ var GenericList = React.createClass({
   render() {
     let Container = containers[this.props.containerElement] || DefaultContainer;
     let data = this.getPageData();
+    if (data.pageData.length === 0) {
+      return null;
+    }
     let pager = "";
     if (data.hasPaging) {
       pager = (

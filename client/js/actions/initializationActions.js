@@ -24,9 +24,21 @@ export var loadModelDefinitions = () => {
   request.get('/api/definitions').end((err, res) => { window.modelDefinitions = JSON.parse(res.text); });
 }
 
+let lastUri = "";
+let sanitize = s => s.replace("?page=1", "");
 export var subscribeToQuery = () => {
   let queryCursor = stateTree.select(["state", "query"]);
-  let updateQuery = (uri) => queryCursor.edit(URI.parseQuery(location.search));
+  let updateQuery = (uri) => {
+    if (!!uri) {
+      if (sanitize(uri.path) == sanitize(lastUri)) { 
+        return;
+      }
+      lastUri = uri.path;
+    } else {
+      return;
+    }
+    queryCursor.edit(URI.parseQuery(location.search));
+  };
   Router.HistoryLocation.addChangeListener(updateQuery);
   updateQuery();
 }

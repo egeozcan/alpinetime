@@ -10,16 +10,18 @@ const Lookup = React.createClass({
   	lookups: ["stores", "lookups"]
   },
   propTypes: {
-    editable: React.PropTypes.bool,
     lookupID: React.PropTypes.string.isRequired
   },
-  getDefaultProps() {
-    return {
-      editable: false
-    }
+  shouldComponentUpdate(nextProps) {
+    return this.needsUpdate || this.props.lookupID !== nextProps.lookupID;
   },
   render() {
-  	var lookup = this.cursors.lookups.get(l => l.ID === this.props.lookupID) || {};
+  	var lookup = this.cursors.lookups.get(l => l.ID === this.props.lookupID);
+    if (!lookup) {
+      this.needsUpdate = true;
+      return null;
+    }
+    this.needsUpdate = false;
     var style = lookup.Color ? { 
       display: "inline-block",
       borderBottom: "1px dotted " + lookup.Color,
