@@ -12,6 +12,9 @@ var stateTree = new Baobab({
     query: {},
     numInProgress: 0,
   }
+},
+{
+  shiftReferences: true
 });
 
 module.exports = stateTree;
