@@ -1,5 +1,5 @@
 .content {
-  //box-shadow: 1px 1px 2px 1px #c9c7c9;
+  margin-bottom: 10px;
   
   &> * {
     background: #fff;
@@ -32,8 +32,12 @@
     }
     h1 {
       margin-top: 13px;
-      small {
+      small, a {
         color: #eee
+      }
+      a, a:hover {
+        border-bottom: 1px dotted #eee;
+        text-decoration: none;
       }
     }
   }

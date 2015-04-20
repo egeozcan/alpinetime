@@ -1,8 +1,5 @@
 var React       = require('react');
 var PageHeader  = require('react-bootstrap/lib/PageHeader');
-var Glyphicon  = require('react-bootstrap/lib/Glyphicon');
-var Button  = require('react-bootstrap/lib/Button');
-var SidebarActions = require('../main/SidebarActions.jsx');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 var Titles      = require('./ProjectList.Titles.jsx');
 var PureRenderMixin = require('react/addons').addons.PureRenderMixin;
@@ -17,10 +14,7 @@ var ProjectList = React.createClass({
       <GenericList titles={Titles} storeName="projects" />
     ];
     let Sidebar = [
-      <SidebarActions>
-        <Button href="#" block><Glyphicon glyph='plus'/> Add a package</Button>
-        <Button href="#" block><Glyphicon glyph='plus'/> Add a package</Button>
-      </SidebarActions>
+      /* Filters will come here */
     ]
     return (<TwoCols Content={Content} Sidebar={Sidebar} />)
   }
