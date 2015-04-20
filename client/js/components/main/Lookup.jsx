@@ -25,6 +25,7 @@ const Lookup = React.createClass({
       borderBottom: "1px dotted " + lookup.Color,
       padding: "1px 2px"
     } : {};
+    style.whiteSpace = "nowrap";
     var label = lookup.LabelType
       ? (<Label bsStyle={lookup.LabelType || "default"}>{lookup.Value || "-"}</Label>)
       : (<span style={style} className="lookup">{lookup.Value}</span>);

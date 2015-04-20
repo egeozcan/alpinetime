@@ -9,7 +9,7 @@ function ensureKeys(el) {
 		return el;
 	}
 	return el.map(_el => {
-		if(!!_el.key) return _el;
+		if(!_el || !!_el.key) return _el;
 		if (!!_el._isReactElement) return React.cloneElement(_el, { key: index++ });
 		return (<div key={index++}>{_el}</div>);
 	});
@@ -20,11 +20,11 @@ export default React.createClass({
 		return (
 			<Grid fluid role="main">
 				<Row>
-					<Col md={8} className="content">
-						{ensureKeys(this.props.Content)}
-					</Col>
-					<Col md={4} className="content">
+					<Col sm={4} smPush={8} className="content">
 						{ensureKeys(this.props.Sidebar)}
+					</Col>
+					<Col sm={8} smPull={4} className="content">
+						{ensureKeys(this.props.Content)}
 					</Col>
 				</Row>
 			</Grid>

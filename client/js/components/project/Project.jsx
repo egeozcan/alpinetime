@@ -7,42 +7,48 @@ var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 var TwoCols       = require('../main/Layout/TwoCols.jsx');
 var Lookup = require('../main/Lookup.jsx');
+var Button  = require('react-bootstrap/lib/Button');
+var SidebarActions = require('../main/SidebarActions.jsx');
+var Glyphicon  = require('react-bootstrap/lib/Glyphicon');
+var Modal  = require('react-bootstrap/lib/Modal');
+var Input  = require('react-bootstrap/lib/Input');
+var Button  = require('react-bootstrap/lib/Button');
 
 export default React.createClass({
     mixins: [Tree.mixin],
     contextTypes: {
         router: React.PropTypes.func
     },
-    cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
-    taskTitles() {
-        return [
-            {name: "ID"},
-            {name: "Name", style: {flexGrow: 2}},
-            {name: "Status", getter(row) { return (<Lookup lookupID={row.TaskStatusID} />) }},
-            {name: "Category", getter(row) { return (<Lookup lookupID={row.TaskCategoryID} />) }},
-            {name: "Priority", getter(row) { return (<Lookup lookupID={row.TaskPriorityID} />) }},
-            {name: "Description"}
-        ];  
+    getDefaultState() {
+        return {
+            dialogPackageCreateActive: false
+        }
     },
+    cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
+    taskTitles: [
+        {name: "Name"},
+        {name: "Status", getter(row) { return (<Lookup lookupID={row.TaskStatusID} />) }},
+        {name: "Category", getter(row) { return (<Lookup lookupID={row.TaskCategoryID} />) }},
+        {name: "Priority", getter(row) { return (<Lookup lookupID={row.TaskPriorityID} />) }},
+        {name: "Description"}
+    ],
     packageTitles(data) {
         let projectID = this.context.router.getCurrentParams().ID;
         let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
         return [
             {
                 name: "Name",
-                getter: row => (
-                    <div style={{maxWidth: 600, minWidth: 150, whiteSpace: "normal !important"}}>
-                        <p>{row.Name}</p>
-                        <p>{row.Description}</p>
-                    </div>
-                )
+                getter: row => [
+                    <h4 key="pname">{row.Name}</h4>,
+                    <p key="pdesc">{row.Description}</p>
+                ]
             },
             {
                 name: "Tasks",
                 getter: row => (
                     <GenericList
                         queryPrefix={"ptlist" + row.ID}
-                        titles={this.taskTitles}
+                        titles={() => this.taskTitles}
                         itemsInPage={20}
                         storeName="tasks"
                         data={tasks}
@@ -57,6 +63,17 @@ export default React.createClass({
     componentWillReceiveProps() {
         projectActions.load(this.context.router.getCurrentParams().ID);
     },
+    addPackage() {
+        let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
+        let project = projectCursor.get();
+        let name = this.refs["PackageName"].getValue();
+        let desc = this.refs["PackageDesc"].getValue();
+        if (!name) {
+            return;
+        }
+        projectActions.addPackage(project, name, desc);
+        this.setState({dialogPackageCreateActive: false});
+    },
     render() {
         let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
         let project = projectCursor.get();
@@ -65,10 +82,42 @@ export default React.createClass({
         };
         let projectID = this.context.router.getCurrentParams().ID;
         let Content = [
-            <PageHeader>{project.Name} <small>for {!!project.Customer ? project.Customer.Name : "-"}</small></PageHeader>,
+            (
+                <PageHeader>
+                    {project.Name}
+                    <small> for <Router.Link to="customer" params={{ID: project.CustomerID}}>{!!project.Customer ? project.Customer.Name : "-"}</Router.Link></small>
+                </PageHeader>
+            ),
             <h3>Packages</h3>,
-            <GenericList titles={this.packageTitles} removeAllTitles={true} itemsInPage={1000} storeName="packages" filter={p => p.ProjectID === projectID} />
+            <GenericList 
+                titles={this.packageTitles}
+                containerElement="list"
+                removeAllTitles={true}
+                itemsInPage={1000}
+                storeName="packages"
+                filter={p => p.ProjectID === projectID} />,
+            this.state.dialogPackageCreateActive
+                ? (
+                    <Modal onRequestHide={() => this.setState({dialogPackageCreateActive: false})}>
+                        <div className="modal-body" action="#">
+                            <Input ref="PackageName" type="text" label="Name" />
+                            <Input ref="PackageDesc" type="textarea" label="Description" />
+                        </div>
+                        <div className="modal-footer">
+                            <Button onClick={this.addPackage} bsStyle="primary">Save</Button>
+                        </div>
+                    </Modal>
+                )
+                : false
         ];
-        return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
+        let Sidebar = [
+            <SidebarActions>
+                <Button href="#" block onClick={(e) => { e.preventDefault(); this.setState({dialogPackageCreateActive: true})}}>
+                    <Glyphicon glyph='plus'/> Add a package
+                </Button>
+                <Button href="#" block><Glyphicon glyph='star'/> Add project to favorites</Button>
+            </SidebarActions>
+        ];
+        return (<TwoCols Content={Content} Sidebar={Sidebar} />)
     }
 });
