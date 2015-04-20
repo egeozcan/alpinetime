@@ -1,12 +1,20 @@
 var request = require("superagent"); 
 var stateTree = require("../stateTree.js");
 var projectStore = stateTree.select("stores", "projects");
+var packageStore = stateTree.select("stores", "packages");
 var stateActions = require("./stateActions.js")
 
 
-function loadProject(id) {
-  id = id.toString();
-  return projectStore.select(p => p.ID === id);
+function getBaseEntity () {
+  var d = new Date();
+  return {
+    "ID": "temp" + Date.now(),
+    "createdAt": d.toJSON(),
+    "updatedAt": d.toJSON(),
+    "deletedAt": null,
+    "CreateUserID": "0",
+    "ModifyUserID": "0",
+  }
 }
 
 const pageSize = 10;
@@ -20,5 +28,12 @@ export default {
   },
   loadList(params) {
     //noop for now
+  },
+  addPackage(project, name, description) {
+    var pkg = getBaseEntity();
+    pkg.Name = name;
+    pkg.Description = description;
+    pkg.ProjectID = project.ID;
+    packageStore.push(pkg);
   }
 }

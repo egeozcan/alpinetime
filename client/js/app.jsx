@@ -28,14 +28,12 @@ var App = React.createClass({
   render() {
     return (
       <div>
-        {/*<LoadingScreen />*/}
+        <LoadingScreen />
         <header id="header">
           <Logo/>
           <Navigation/>
         </header>
-        <main>
-          <Router.RouteHandler/>
-        </main>
+        <Router.RouteHandler/>
       </div>
     )
   }
