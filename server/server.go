@@ -40,5 +40,7 @@ func Create() *gin.Engine {
 	authorized.GET("/api/definitions", routes.Definitions)
 	authorized.GET("/api/lookups", routes.Lookups)
 
+	authorized.POST("/api/packages", routes.AddPackage)
+
 	return server
 }
