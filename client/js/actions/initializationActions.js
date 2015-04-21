@@ -1,6 +1,6 @@
 var stateTree = require('../stateTree.js');
 var stateActions = require("./stateActions.js");
-var request = require("superagent"); 
+window.request = require("superagent"); 
 var URI = require('URIjs');
 var Router = require('react-router');
 
