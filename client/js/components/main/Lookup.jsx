@@ -22,12 +22,14 @@ const Lookup = React.createClass({
       return null;
     }
     this.needsUpdate = false;
-    var style = lookup.Color ? { 
+    var style = { 
       display: "inline-block",
-      borderBottom: "1px dotted " + lookup.Color,
-      padding: "1px 2px"
-    } : {};
-    style.whiteSpace = "nowrap";
+      padding: "0 3px",
+      fontSize: 11,
+      verticalAlign: "middle",
+      whiteSpace: "pre-line"
+    };
+    style.borderBottom = lookup.Color ? "1px dashed " + lookup.Color : undefined;
     var label = lookup.LabelType
       ? (<Label bsStyle={lookup.LabelType || "default"}>{lookup.Value || "-"}</Label>)
       : (<span style={style} className="lookup">{lookup.Value}</span>);
