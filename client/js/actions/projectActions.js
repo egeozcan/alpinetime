@@ -34,6 +34,9 @@ export default {
     pkg.Name = name;
     pkg.Description = description;
     pkg.ProjectID = project.ID;
-    packageStore.push(pkg);
+    let cursor = packageStore.push(pkg);
+    request.post("/api/packages", pkg).end(function(err,res) {
+      cursor.edit(JSON.parse(res.text));
+    });
   }
 }
