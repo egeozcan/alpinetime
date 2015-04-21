@@ -6,9 +6,9 @@ var React = require('react');
 var PageHeader = require('react-bootstrap/lib/PageHeader');
 var GenericList = require('../main/GenericList/GenericList.jsx');
 var TwoCols       = require('../main/Layout/TwoCols.jsx');
-var Lookup = require('../main/Lookup.jsx');
 var Button  = require('react-bootstrap/lib/Button');
 var SidebarActions = require('../main/SidebarActions.jsx');
+var TaskTitles = require('../task/Task.Titles.jsx');
 var Glyphicon  = require('react-bootstrap/lib/Glyphicon');
 var Modal  = require('react-bootstrap/lib/Modal');
 var Input  = require('react-bootstrap/lib/Input');
@@ -25,13 +25,6 @@ export default React.createClass({
         }
     },
     cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
-    taskTitles: [
-        {name: "Name"},
-        {name: "Status", getter(row) { return (<Lookup lookupID={row.TaskStatusID} />) }},
-        {name: "Category", getter(row) { return (<Lookup lookupID={row.TaskCategoryID} />) }},
-        {name: "Priority", getter(row) { return (<Lookup lookupID={row.TaskPriorityID} />) }},
-        {name: "Description"}
-    ],
     packageTitles(data) {
         let projectID = this.context.router.getCurrentParams().ID;
         let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
@@ -48,7 +41,7 @@ export default React.createClass({
                 getter: row => (
                     <GenericList
                         queryPrefix={"ptlist" + row.ID}
-                        titles={() => this.taskTitles}
+                        titles={TaskTitles}
                         itemsInPage={20}
                         storeName="tasks"
                         data={tasks}
