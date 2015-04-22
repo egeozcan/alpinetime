@@ -11,7 +11,8 @@ var stateTree = new Baobab({
   state: {
     query: {},
     numInProgress: 0,
-  }
+  },
+  definitions: {}
 },
 {
   shiftReferences: true

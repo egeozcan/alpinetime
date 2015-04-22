@@ -1,6 +1,7 @@
 var stateTree = require('../stateTree.js');
 var stateActions = require("./stateActions.js");
-window.request = require("superagent"); 
+var request = require("superagent");
+window.t = require('tcomb-form');
 var URI = require('URIjs');
 var Router = require('react-router');
 
@@ -21,9 +22,13 @@ export var loadPackages = loadEntity.bind(null, "packages");
 export var loadLookups = loadEntity.bind(null, "lookups");
 
 export var loadModelDefinitions = () => {
-  request.get('/api/definitions').end((err, res) => { window.modelDefinitions = JSON.parse(res.text); });
+  request.get('/api/definitions').end((err, res) => { 
+    stateTree.select("definitions").edit(JSON.parse(res.text));
+  });
 }
 
+/* subscribe to the url change event and
+  update state when a significant change occurs */
 let lastUri = "";
 let sanitize = s => s.replace("?page=1", "");
 export var subscribeToQuery = () => {
