@@ -1,7 +1,7 @@
-var stateTree = require("../../stateTree.js");
-var getBaseEntity = require("./getBaseEntity.js");
-var stores = stateTree.select("stores");
-var request = require("superagent"); 
+let stateTree = require("../../stateTree.js");
+let getBaseEntity = require("./getBaseEntity.js");
+let stores = stateTree.select("stores");
+let request = require("superagent"); 
 
 export function add(type, data, cb) {
   let entity = Object.assign({}, getBaseEntity(), data);
@@ -15,7 +15,7 @@ export function add(type, data, cb) {
       cb(err);
       return;
     }
-    var savedEntity = JSON.parse(res.text);
+    let savedEntity = JSON.parse(res.text);
     entityStore.select(e => e.ID === tempId).merge(savedEntity);
     cb(null, savedEntity);
   });
@@ -23,7 +23,7 @@ export function add(type, data, cb) {
 /*
 export function delete(type, id) {
   request.post(`/api/${type}s`, entity).end(function(err, res) {
-    var newPkg = JSON.parse(res.text);
+    let newPkg = JSON.parse(res.text);
     packageStore.select(p => p.ID === tempId).merge(newPkg);
   });
 }*/
