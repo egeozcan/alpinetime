@@ -2,7 +2,7 @@ package models
 
 type Project struct {
 	Record
-	Name              string  `sql:"size:255" form:"Name" validation:"text,minLength(3)"`
+	Name              string  `sql:"size:255" form:"Name" validation:"text,minLength(10)"`
 	Description       string  `sql:"size:2000" form:"Description" validation:"text"`
 	Manager           *User   `json:",omitempty"`
 	ManagerID         int64   `json:",string" form:"ManagerID" validation:"ref(User)"`
