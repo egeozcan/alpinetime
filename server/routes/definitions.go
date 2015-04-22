@@ -12,17 +12,27 @@ func getFields(model interface{}, res *map[string]interface{}) {
 	numFields := mytype.NumField()
 	for i := 0; i < numFields; i++ {
 		field := mytype.FieldByIndex([]int{i})
-		if field.Anonymous {
+		if field.Anonymous || field.Type.Name() == "" {
 			continue
 		}
 		if idreffield, _ := mytype.FieldByName(field.Name + "ID"); idreffield.Name != "" {
 			continue
 		}
 		name := strings.Split(field.Tag.Get("json"), ",")[0]
+		if name == "-" {
+			continue
+		}
 		if len(name) == 0 {
 			name = field.Name
 		}
-		(*res)[name] = strings.Split(field.Tag.Get("validation"), ",")
+		rules := strings.Split(field.Tag.Get("validation"), ",")
+		typeRule := "type(" + field.Type.Name() + ")"
+		if rules[0] == "" {
+			rules[0] = typeRule
+		} else {
+			rules = append(rules, typeRule)
+		}
+		(*res)[name] = rules
 	}
 }
 
