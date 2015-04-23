@@ -9,6 +9,7 @@ var CustomerListComponent = require("./components/customer/CustomerList.jsx");
 var CustomerComponent = require("./components/customer/Customer.jsx");
 var ProjectListComponent = require("./components/project/ProjectList.jsx");
 var ProjectComponent = require("./components/project/Project.jsx");
+var TestWidget = require("./lib/Form.Widget.jsx");
 var Navigation = require("./components/main/Navigation.jsx");
 var Logo = require("./components/main/Logo.jsx");
 var LoadingScreen = require("./components/main/LoadingScreen.jsx");
@@ -45,6 +46,7 @@ var routes = (
     <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
     <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
     <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
+    <Route name="test" path="/app/test" handler={TestWidget}/>
   </Route>
 )
 

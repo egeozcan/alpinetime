@@ -30,6 +30,7 @@ func Create() *gin.Engine {
 	authorized.GET("/app/customer/:customerID", routes.ProtectedArea)
 	authorized.GET("/app/projects", routes.ProtectedArea)
 	authorized.GET("/app/project/:projectID", routes.ProtectedArea)
+	authorized.GET("/app/test", routes.ProtectedArea)
 
 	authorized.GET("/api/customers", routes.Customers)
 	authorized.GET("/api/customer/:customerID", routes.Customer)

@@ -1,7 +1,6 @@
 var stateTree = require('../stateTree.js');
 var stateActions = require("./stateActions.js");
 var request = require("superagent");
-window.t = require('tcomb-form');
 var URI = require('URIjs');
 var Router = require('react-router');
 
