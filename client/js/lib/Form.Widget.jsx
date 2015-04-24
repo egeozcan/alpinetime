@@ -3,6 +3,10 @@ const stateTree = require("../stateTree.js");
 const TwoCols = require("../components/main/Layout/TwoCols.jsx");
 const lookups = stateTree.select("stores", "lookups");
 
+const typeMap = {
+	string: "text"
+}
+
 function getOptionsForLookupType(lookupType) {
 	return lookups
 		.get()
@@ -20,10 +24,12 @@ let EntityFormFields = React.createClass({
 			return null;
 		}
 		let fields = Object.keys(entityDef).map(prop => {
+			var def = entityDef[prop];
 			return (
 				<div key={prop}>
 					<h4>{prop}</h4>
-					<p>{JSON.stringify(entityDef[prop], null, 2)}</p>
+					
+					<pre>{JSON.stringify(def, null, 2)}</pre>
 				</div>
 			)
 		});
