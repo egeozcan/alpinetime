@@ -26,13 +26,15 @@ func getFields(model interface{}, res *map[string]interface{}) {
 			name = field.Name
 		}
 		rules := strings.Split(field.Tag.Get("validation"), ",")
-		typeRule := "type(" + field.Type.Name() + ")"
-		if rules[0] == "" {
-			rules[0] = typeRule
-		} else {
-			rules = append(rules, typeRule)
+		ruleMap := make(map[string]interface{})
+		ruleMap["type"] = field.Type.Name()
+		for i := 0; i < len(rules); i++ {
+			var rule = strings.Split(strings.TrimRight(rules[i], ")"), "(")
+			if len(rule) == 2 {
+				ruleMap[rule[0]] = rule[1]
+			}
 		}
-		(*res)[name] = rules
+		(*res)[name] = ruleMap
 	}
 }
 
