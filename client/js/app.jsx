@@ -28,32 +28,32 @@ initializationActions.loadModelDefinitions();
 initializationActions.loadLookups();
 
 var App = React.createClass({
-  render() {
-    return (
-      <div>
-        <LoadingScreen />
-        <header id="header">
-          <Logo/>
-          <Navigation/>
-        </header>
-        <Router.RouteHandler/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <div>
+                <LoadingScreen />
+                <header id="header">
+                    <Logo/>
+                    <Navigation/>
+                </header>
+                <Router.RouteHandler/>
+            </div>
+        );
+    }
 });
 
 var routes = (
-  <Route name="app" path="/app" handler={App}>
-    <Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
-    <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
-    <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
-    <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
-    <Route name="test" path="/app/test" handler={TestWidget}/>
-  </Route>
+    <Route name="app" path="/app" handler={App}>
+        <Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
+        <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
+        <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
+        <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
+        <Route name="test" path="/app/test" handler={TestWidget}/>
+    </Route>
 );
 
 Router.run(
-  routes,
-  Router.HistoryLocation,
-  Handler => React.render(<Handler/>, document.body)
+    routes,
+    Router.HistoryLocation,
+    Handler => React.render(<Handler/>, document.body)
 );
