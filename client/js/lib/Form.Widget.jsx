@@ -6,11 +6,8 @@ const stateTree = require("../stateTree.js");
 const TwoCols = require("../components/main/Layout/TwoCols.jsx");
 const lookups = stateTree.select("stores", "lookups");
 const DatePicker = require("react-date-picker");
-const DropdownButton = require("react-bootstrap/lib/DropdownButton");
-const MenuItem = require("react-bootstrap/lib/MenuItem");
-const Tooltip = require("react-bootstrap/lib/Tooltip");
-const OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
 const Input = require("react-bootstrap/lib/Input");
+const Modal = require("react-bootstrap/lib/Modal");
 
 const typeMap = {
     string: "text",
@@ -19,15 +16,18 @@ const typeMap = {
 };
 
 function getOptionsForLookupType(lookupType) {
-    return lookups
-        .get()
+    var loadedLookups = lookups.get();
+    if (!loadedLookups) {
+        return [];
+    }
+    return loadedLookups
         .filter(l => l.Type === lookupType)
-        .map(l => [l.ID, l.Value, l.Description]);
+        .map(l => {return {ID: l.ID, Value: l.Value, Description: l.Description}; });
 }
 
 let EntityFormFields = React.createClass({
     mixins: [stateTree.mixin],
-    cursors: { definitions: ["definitions"] },
+    cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] },
     propTypes: {
         initialValues: React.PropTypes.object
     },
@@ -37,14 +37,24 @@ let EntityFormFields = React.createClass({
     getInitialState() {
         return {vals: Object.assign({}, this.props.initialValues)};
     },
+    componentWillReceiveProps(nextProps) {
+        let vals = Object.assign({}, this.state.vals, nextProps.initialValues);
+        this.setState({ vals });
+    },
     componentWillUpdate(nextProps, nextState) {
         if (typeof this.props.onChange === "function") {
-            this.props.onChange(nextState);
+            this.props.onChange(nextState.vals);
         }
     },
     valueChanged(e, val, prop) {
-        e.preventDefault();
-        this.setState({[prop]: val || e.target.value});
+        let vals = Object.assign({}, this.state.vals);
+        if (e.preventDefault) {
+            e.preventDefault();
+            vals[prop] = val || e.target.value;
+        } else {
+            vals[prop] = e;
+        }
+        this.setState({ vals });
     },
     render() {
         let entity = this.props.entity;
@@ -55,40 +65,58 @@ let EntityFormFields = React.createClass({
         let fields = Object.keys(entityDef).map((prop, i) => {
             let input = "";
             let type = entityDef[prop].type;
-            let title = prop.replace(/ID$/, "");
+            let identifier = prop.replace(/ID$/, "");
+            let title = identifier.replace(/([A-Z])/g, " $1");
+            let currentValue = this.state.vals[prop];
             switch (type) {
                 case "string":
                 case "int":
+                    let inputType = typeMap[type];
+                    /*if (inputType === "text" && currentValue && currentValue.length > 70) {
+                        inputType = "textarea";
+                    }*/
                     input = (
                         <Input
                             autofocus={i === 0}
                             label={title}
                             key={i}
+                            value={currentValue}
                             onChange={e => this.valueChanged(e, null, prop)}
                             id={prop}
-                            type={typeMap[type]} />
+                            type={inputType} />
                     );
                     break;
                 case "Time":
-                    input = (<DatePicker key={i} />);
+                    input = (
+                        <div className="form-group">
+                            <label>
+                                <span>
+                                    {title}
+                                </span>
+                            </label>
+                            <DatePicker key={i} onChange={e => this.valueChanged(e, null, prop) } />
+                        </div>
+                    );
                     break;
                 default:
                     if (entityDef[prop].ref === "Lookup") {
-                        let lookups = getOptionsForLookupType(title);
+                        let lookups = getOptionsForLookupType(identifier);
                         let options = lookups.map((o, n) => {
                             return (
-                                <option key={n} value={o[0]}>
-                                    {o[1]}
+                                <option key={n} value={o.ID}>
+                                    {o.Value}
                                 </option>
                             );
                         });
-                        let selectedID = this.state[prop] || 0;
+                        let selectedID = currentValue || 0;
+                        let selectedValue = lookups.filter(l => l.ID === selectedID)[0];
                         input = (
                             <Input
                                 onChange={e => this.valueChanged(e, null, prop) }
                                 type="select"
-                                key="1"
-                                help={selectedID !== 0 && lookups ? lookups.filter(l => l[0] === selectedID)[0][2] : null}
+                                key={i}
+                                value={selectedValue ? selectedValue.ID : null}
+                                help={selectedValue ? selectedValue.Description : null}
                                 label={title}>
                                 <option value="">Please Select</option>
                                 {options}
@@ -108,8 +136,23 @@ let EntityFormFields = React.createClass({
 });
 
 export default React.createClass({
+    mixins: [stateTree.mixin],
+    cursors: { tasks: ["stores", "tasks"] },
     render() {
-        let content = <EntityFormFields onChange={(state) => console.log(state)} entity="Task"></EntityFormFields>;
-        return (<TwoCols Content={content}></TwoCols>);
+        let task = this.cursors.tasks.select([1]).get();
+        let content = (
+            <Modal onRequestHide={() => {}}>
+                <div className="modal-body" action="#">
+                    <EntityFormFields
+                        onChange={(state) => console.log("result:", JSON.stringify(state, null, 2))}
+                        entity="Task"
+                        initialValues={Object.assign({}, task)}
+                        />
+                </div>
+                <div className="modal-footer">
+                </div>
+            </Modal>
+        );
+        return (<TwoCols Sidebar={content} Content={Array(15).join("_").split("_").map((e, i) => <p key={i}>{i+1}</p>)}></TwoCols>);
     }
 });
