@@ -1,7 +1,9 @@
+"use strict";
+
 require("babel/polyfill");
 
-var React = require('react');
-var Router = require('react-router');
+var React = require("react");
+var Router = require("react-router");
 var Route = Router.Route;
 
 /** Components **/
@@ -36,7 +38,7 @@ var App = React.createClass({
         </header>
         <Router.RouteHandler/>
       </div>
-    )
+    );
   }
 });
 
@@ -48,7 +50,7 @@ var routes = (
     <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
     <Route name="test" path="/app/test" handler={TestWidget}/>
   </Route>
-)
+);
 
 Router.run(
   routes,
