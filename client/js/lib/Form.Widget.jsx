@@ -5,8 +5,10 @@ const stateTree = require("../stateTree.js");
 const TwoCols = require("../components/main/Layout/TwoCols.jsx");
 const lookups = stateTree.select("stores", "lookups");
 const DatePicker = require("react-date-picker");
-var DropdownButton = require("react-bootstrap/lib/DropdownButton");
-var MenuItem = require("react-bootstrap/lib/MenuItem");
+const DropdownButton = require("react-bootstrap/lib/DropdownButton");
+const MenuItem = require("react-bootstrap/lib/MenuItem");
+const Tooltip = require("react-bootstrap/lib/Tooltip");
+const OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
 
 const typeMap = {
     string: "text",
@@ -25,7 +27,7 @@ let EntityFormFields = React.createClass({
     mixins: [stateTree.mixin],
     cursors: { definitions: ["definitions"] },
     valueChanged(name, newVal) {
-
+        console.log(name, newVal);
     },
     render() {
         var entity = this.props.entity;
@@ -49,11 +51,13 @@ let EntityFormFields = React.createClass({
                     if (entityDef[prop].ref === "Lookup") {
                         let options = getOptionsForLookupType(title).map((o, n) => {
                             return (
-                                <MenuItem
-                                    eventkey={n}
-                                    key={n}>
-                                    {o[2]}
-                                </MenuItem>
+                                <OverlayTrigger overlay={<Tooltip>{o[2]}</Tooltip>}>
+                                    <MenuItem
+                                        eventkey={n}
+                                        key={n}>
+                                        {o[1]}
+                                    </MenuItem>
+                                </OverlayTrigger>
                             );
                         });
                         input = (
