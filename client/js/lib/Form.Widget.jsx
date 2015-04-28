@@ -76,27 +76,23 @@ let EntityFormFields = React.createClass({
                     if (entityDef[prop].ref === "Lookup") {
                         let lookups = getOptionsForLookupType(title);
                         let options = lookups.map((o, n) => {
-                            let menuItem = (
-                                    <MenuItem
-                                        onClick={e => this.valueChanged(e, o[0], prop) }
-                                        key={n}
-                                        eventkey={n}>
-                                        {o[1]}
-                                    </MenuItem>
+                            return (
+                                <option key={n} value={o[0]}>
+                                    {o[1]}
+                                </option>
                             );
-                            return o[2] ? (
-                                <OverlayTrigger key={n} overlay={<Tooltip>{o[2]}</Tooltip>}>
-                                    {menuItem}
-                                </OverlayTrigger>
-                            ) : menuItem;
                         });
                         let selectedID = this.state[prop] || 0;
                         input = (
-                            <DropdownButton
-                                bsStyle={"default"}
-                                title={selectedID !== 0 ? lookups.filter(l => l[0] === selectedID)[0][1] : title}>
+                            <Input
+                                onChange={e => this.valueChanged(e, null, prop) }
+                                type="select"
+                                key="1"
+                                help={selectedID !== 0 && lookups ? lookups.filter(l => l[0] === selectedID)[0][2] : null}
+                                label={title}>
+                                <option value="">Please Select</option>
                                 {options}
-                            </DropdownButton>
+                            </Input>
                         );
                     }
                     break;
