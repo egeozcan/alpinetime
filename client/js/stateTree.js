@@ -1,4 +1,6 @@
-var Baobab = require('baobab');
+"use strict";
+
+var Baobab = require("baobab");
 
 var stateTree = new Baobab({
   stores: {
@@ -10,7 +12,7 @@ var stateTree = new Baobab({
   },
   state: {
     query: {},
-    numInProgress: 0,
+    numInProgress: 0
   },
   definitions: {}
 },

@@ -1,9 +1,7 @@
 var React                 = require('react');
 var Table                 = require('react-bootstrap/lib/table');
-var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 var FlexContainer = React.createClass({
-  mixins: [PureRenderMixin],
   render() {
     let titles = this.props.titles(this.props.data)
       .filter((title) => !this.props.hidetitles || this.props.hidetitles.indexOf(title.name) === -1);

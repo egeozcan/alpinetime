@@ -1,16 +1,12 @@
 "use strict";
 
-var React = require("react");
+import React from "react";
+import {branch} from "baobab-react/higher-order";
 var Label = require("react-bootstrap/lib/Label");
 var Tooltip = require("react-bootstrap/lib/Tooltip");
 var OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
-var stateTree = require("../../stateTree.js");
 
 const Lookup = React.createClass({
-    mixins: [stateTree.mixin],
-    cursors: {
-        lookups: ["stores", "lookups"]
-    },
     propTypes: {
         lookupID: React.PropTypes.string.isRequired
     },
@@ -18,7 +14,7 @@ const Lookup = React.createClass({
         return this.needsUpdate || this.props.lookupID !== nextProps.lookupID;
     },
     render() {
-        var lookup = this.cursors.lookups.get(l => l.ID === this.props.lookupID);
+        var lookup = this.props.lookups.filter(l => l.ID === this.props.lookupID)[0];
         if (!lookup) {
             this.needsUpdate = true;
             return null;
@@ -47,4 +43,6 @@ const Lookup = React.createClass({
     }
 });
 
-export default Lookup;
+export default branch(Lookup, {
+    cursors: { lookups: ["stores", "lookups"] }
+});

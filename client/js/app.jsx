@@ -16,7 +16,7 @@ var Navigation = require("./components/main/Navigation.jsx");
 var Logo = require("./components/main/Logo.jsx");
 var LoadingScreen = require("./components/main/LoadingScreen.jsx");
 
-window.stateTree = require("./stateTree.js");
+let stateTree = window.stateTree = require("./stateTree.js");
 
 var initializationActions = require("./actions/initializationActions.js");
 initializationActions.subscribeToQuery();
@@ -52,8 +52,13 @@ var routes = (
     </Route>
 );
 
+import {root} from "baobab-react/higher-order";
+
 Router.run(
     routes,
     Router.HistoryLocation,
-    Handler => React.render(<Handler/>, document.body)
+    Handler => {
+        let ComposedHandler = root(Handler, stateTree);
+        React.render(<ComposedHandler/>, document.body);
+    }
 );

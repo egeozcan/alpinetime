@@ -5,6 +5,7 @@ let stateActions = require("./stateActions.js");
 let request = require("superagent");
 let URI = require("URIjs");
 let Router = require("react-router");
+window.URL = require("url");
 
 let loadEntity = (entityName) => {
     stateActions.numInProgress.inc();
@@ -15,7 +16,7 @@ let loadEntity = (entityName) => {
                 return;
             }
             let store = stateTree.select("stores", entityName);
-            store.edit(JSON.parse(res.text));
+            store.set(JSON.parse(res.text));
             stateActions.numInProgress.dec();
         });
 };
@@ -32,7 +33,7 @@ export let loadModelDefinitions = () => {
             console.log(`An error has occured: ${err}`);
             return;
         }
-        stateTree.select("definitions").edit(JSON.parse(res.text));
+        stateTree.select("definitions").set(JSON.parse(res.text));
     });
 };
 
@@ -48,10 +49,13 @@ export let subscribeToQuery = () => {
                 return;
             }
             lastUri = uri.path;
+            console.log("lastUri: ", lastUri);
         } else {
             return;
         }
-        queryCursor.edit(URI.parseQuery(location.search));
+        var parsedQuery = URI.parseQuery(location.search);
+        console.log("parsedQuery: ", parsedQuery);
+        queryCursor.set(parsedQuery);
     };
     Router.HistoryLocation.addChangeListener(updateQuery);
     updateQuery();
