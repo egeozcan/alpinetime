@@ -20,9 +20,9 @@ function getOptionsForLookupType(lookupType) {
     if (!loadedLookups) {
         return [];
     }
-    return loadedLookups
-        .filter(l => l.Type === lookupType)
-        .map(l => {return {ID: l.ID, Value: l.Value, Description: l.Description}; });
+    let res = loadedLookups.filter(l => l.Type === lookupType);
+    res.sort((a, b) => a.SortIndex - b.SortIndex);
+    return res;
 }
 
 let EntityFormFields = React.createClass({
@@ -62,24 +62,25 @@ let EntityFormFields = React.createClass({
         if (!entityDef) {
             return null;
         }
-        let fields = Object.keys(entityDef).map((prop, i) => {
-            let input = "";
+        let fields = Object.keys(entityDef).sort((a, b) => entityDef[a].index - entityDef[b].index).map((prop, i) => {
+            let input = false;
             let type = entityDef[prop].type;
             let identifier = prop.replace(/ID$/, "");
-            let title = identifier.replace(/([A-Z])/g, " $1");
+            let title = identifier.replace(/([A-Z])/g, " $1").trim();
             let currentValue = this.state.vals[prop];
             switch (type) {
                 case "string":
                 case "int":
                     let inputType = typeMap[type];
-                    /*if (inputType === "text" && currentValue && currentValue.length > 70) {
+                    if (inputType === "text" && title === "Description") {
                         inputType = "textarea";
-                    }*/
+                    }
                     input = (
                         <Input
                             autofocus={i === 0}
                             label={title}
                             key={i}
+                            rows={4}
                             value={currentValue}
                             onChange={e => this.valueChanged(e, null, prop)}
                             id={prop}
@@ -87,6 +88,7 @@ let EntityFormFields = React.createClass({
                     );
                     break;
                 case "Time":
+                    console.log("time : %s", currentValue);
                     input = (
                         <div className="form-group">
                             <label>
@@ -94,7 +96,10 @@ let EntityFormFields = React.createClass({
                                     {title}
                                 </span>
                             </label>
-                            <DatePicker key={i} onChange={e => this.valueChanged(e, null, prop) } />
+                            <DatePicker
+                                key={i}
+                                date={currentValue}
+                                onChange={e => this.valueChanged(e, null, prop) }/>
                         </div>
                     );
                     break;
@@ -125,28 +130,33 @@ let EntityFormFields = React.createClass({
                     }
                     break;
             }
-            return (
+            return input ? (
                 <div key={prop + "_field"}>
                     {input}
                 </div>
-            );
+            ) : null;
         });
-        return (<div>{fields}</div>);
+        return (
+            <div>
+                <h3>{this.state.vals.ID ? "Edit" : "Create"} {this.props.entity}</h3>
+                {fields}
+            </div>
+        );
     }
 });
 
 export default React.createClass({
     mixins: [stateTree.mixin],
-    cursors: { tasks: ["stores", "tasks"] },
+    cursors: { stores: ["stores"] },
     render() {
-        let task = this.cursors.tasks.select([1]).get();
+        let entity = this.cursors.stores.select("tasks").get(1);
         let content = (
             <Modal onRequestHide={() => {}}>
                 <div className="modal-body" action="#">
                     <EntityFormFields
                         onChange={(state) => console.log("result:", JSON.stringify(state, null, 2))}
                         entity="Task"
-                        initialValues={Object.assign({}, task)}
+                        initialValues={Object.assign({}, entity)}
                         />
                 </div>
                 <div className="modal-footer">
