@@ -34,6 +34,7 @@ func getFields(model interface{}, res *map[string]interface{}) {
 				ruleMap[rule[0]] = rule[1]
 			}
 		}
+		ruleMap["index"] = i
 		(*res)[name] = ruleMap
 	}
 }
