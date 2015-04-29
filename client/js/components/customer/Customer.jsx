@@ -1,20 +1,17 @@
-var customerActions = require("../../actions/customerActions.js");
-var stateActions = require("../../actions/stateActions.js");
-var Router = require('react-router');
-var Tree = require("../../stateTree.js");
-var React = require('react');
-var PageHeader = require('react-bootstrap/lib/PageHeader');
-var GenericList = require('../main/GenericList/GenericList.jsx');
-var Link        = require('react-router').Link;
-var ProjectListTitles = require('../project/ProjectList.Titles.jsx')
-var TwoCols       = require('../main/Layout/TwoCols.jsx');
+"use strict";
 
-export default React.createClass({
-    mixins: [Tree.mixin],
+import React from "react";
+import {branch} from "baobab-react/higher-order";
+import customerActions from "../../actions/customerActions.js";
+import PageHeader from "react-bootstrap/lib/PageHeader";
+import GenericList from "../main/GenericList/GenericList.jsx";
+import ProjectListTitles from "../project/ProjectList.Titles.jsx";
+import TwoCols from "../main/Layout/TwoCols.jsx";
+
+let Customer = React.createClass({
     contextTypes: {
         router: React.PropTypes.func
     },
-    cursors: { customers: ['stores', 'customers'] },
     componentWillMount() {
         customerActions.load(this.context.router.getCurrentParams().ID);
     },
@@ -22,15 +19,18 @@ export default React.createClass({
         customerActions.load(this.context.router.getCurrentParams().ID);
     },
     render() {
-        let customerCursor = this.cursors.customers.select(p => p.ID === this.context.router.getCurrentParams().ID);
-        let customer = customerCursor.get();
+        let customer = this.props.customers.filter(p => p.ID === this.context.router.getCurrentParams().ID)[0];
         if (!customer || customer._isLoading === true) {
             return (<span>Loading...</span>);
         }
         let Content = [
             <PageHeader>{customer.Name}</PageHeader>,
-            <GenericList titles={ProjectListTitles} hidetitles={["Customer", "Progress"]} storeName="projects" filter={p => p.CustomerID == customer.ID} />
+            <GenericList titles={ProjectListTitles} hidetitles={["Customer", "Progress"]} storeName="projects" filter={p => p.CustomerID === customer.ID} />
         ];
-        return (<TwoCols Content={Content} Sidebar={<p>Hello World</p>} />)
+        return (<TwoCols Content={Content} />);
     }
+});
+
+export default branch(Customer, {
+    cursors: { customers: ["stores", "customers"] }
 });

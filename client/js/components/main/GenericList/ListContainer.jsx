@@ -1,8 +1,6 @@
 var React                 = require('react');
-var PureRenderMixin       = require('react/addons').addons.PureRenderMixin;
 
 var ListContainer = React.createClass({
-  mixins: [PureRenderMixin],
   render() {
     let titles = this.props.titles(this.props.data)
       .filter((title) => !this.props.hidetitles || this.props.hidetitles.indexOf(title.name) === -1);
