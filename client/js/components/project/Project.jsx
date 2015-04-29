@@ -1,20 +1,22 @@
-var projectActions = require("../../actions/projectActions.js");
-var stateActions = require("../../actions/stateActions.js");
-var Router = require('react-router');
-var Tree = require("../../stateTree.js");
-var React = require('react');
-var PageHeader = require('react-bootstrap/lib/PageHeader');
-var GenericList = require('../main/GenericList/GenericList.jsx');
-var TwoCols       = require('../main/Layout/TwoCols.jsx');
-var Button  = require('react-bootstrap/lib/Button');
-var SidebarActions = require('../main/SidebarActions.jsx');
-var TaskTitles = require('../task/Task.Titles.jsx');
-var Glyphicon  = require('react-bootstrap/lib/Glyphicon');
-var Modal  = require('react-bootstrap/lib/Modal');
-var Input  = require('react-bootstrap/lib/Input');
-var Button  = require('react-bootstrap/lib/Button');
+"use strict";
 
-export default React.createClass({
+import React from "react";
+import {branch} from "baobab-react/higher-order";
+var projectActions = require("../../actions/projectActions.js");
+var Router = require("react-router");
+var Tree = require("../../stateTree.js");
+var PageHeader = require("react-bootstrap/lib/PageHeader");
+var GenericList = require("../main/GenericList/GenericList.jsx");
+var TwoCols = require("../main/Layout/TwoCols.jsx");
+var Button = require("react-bootstrap/lib/Button");
+var SidebarActions = require("../main/SidebarActions.jsx");
+var TaskTitles = require("../task/Task.Titles.jsx");
+var Glyphicon = require("react-bootstrap/lib/Glyphicon");
+var Modal = require("react-bootstrap/lib/Modal");
+var Input = require("react-bootstrap/lib/Input");
+var Button = require("react-bootstrap/lib/Button");
+
+let Project = React.createClass({
     mixins: [Tree.mixin],
     contextTypes: {
         router: React.PropTypes.func
@@ -22,12 +24,11 @@ export default React.createClass({
     getDefaultState() {
         return {
             dialogPackageCreateActive: false
-        }
+        };
     },
-    cursors: { projects: ['stores', 'projects'], tasks: ['stores', 'tasks'] },
-    packageTitles(data) {
+    packageTitles(/*data*/) {
         let projectID = this.context.router.getCurrentParams().ID;
-        let tasks = this.cursors.tasks.get().filter(t => t.ProjectID === projectID);
+        let tasks = this.props.tasks.filter(t => t.ProjectID === projectID);
         return [
             {
                 name: "Name",
@@ -48,7 +49,7 @@ export default React.createClass({
                         filter={p => p.PackageID === row.ID} />
                 )
             }
-        ]
+        ];
     },
     componentWillMount() {
         projectActions.load(this.context.router.getCurrentParams().ID);
@@ -57,10 +58,9 @@ export default React.createClass({
         projectActions.load(this.context.router.getCurrentParams().ID);
     },
     addPackage() {
-        let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
-        let project = projectCursor.get();
-        let name = this.refs["PackageName"].getValue();
-        let desc = this.refs["PackageDesc"].getValue();
+        let project = this.props.projects.filter(p => p.ID === this.context.router.getCurrentParams().ID)[0];
+        let name = this.refs.PackageName.getValue();
+        let desc = this.refs.PackageDesc.getValue();
         if (!name) {
             return;
         }
@@ -68,28 +68,27 @@ export default React.createClass({
         this.setState({dialogPackageCreateActive: false});
     },
     render() {
-        let projectCursor = this.cursors.projects.select(p => p.ID === this.context.router.getCurrentParams().ID);
-        let project = projectCursor.get();
+        let project = this.props.projects.filter(p => p.ID === this.context.router.getCurrentParams().ID)[0];
         if (!project || project._isLoading === true) {
             return false;
-        };
+        }
         let projectID = this.context.router.getCurrentParams().ID;
         let Content = [
             (
                 <PageHeader>
                     {project.Name}
-                    <small> for <Router.Link to="customer" params={{ID: project.CustomerID}}>{!!project.Customer ? project.Customer.Name : "-"}</Router.Link></small>
+                    <small> for <Router.Link to="customer" params={{ID: project.CustomerID}}>{project.Customer ? project.Customer.Name : "-"}</Router.Link></small>
                 </PageHeader>
             ),
             <h3>Packages</h3>,
-            <GenericList 
+            <GenericList
                 titles={this.packageTitles}
                 containerElement="list"
                 removeAllTitles={true}
                 itemsInPage={1000}
                 storeName="packages"
                 filter={p => p.ProjectID === projectID} />,
-            this.state.dialogPackageCreateActive
+            this.state && this.state.dialogPackageCreateActive
                 ? (
                     <Modal onRequestHide={() => this.setState({dialogPackageCreateActive: false})}>
                         <div className="modal-body" action="#">
@@ -105,12 +104,16 @@ export default React.createClass({
         ];
         let Sidebar = [
             <SidebarActions>
-                <Button href="#" block onClick={(e) => { e.preventDefault(); this.setState({dialogPackageCreateActive: true})}}>
-                    <Glyphicon glyph='plus'/> Add a package
+                <Button href="#" block onClick={(e) => { e.preventDefault(); this.setState({dialogPackageCreateActive: true}); }}>
+                    <Glyphicon glyph="plus"/> Add a package
                 </Button>
-                <Button href="#" block><Glyphicon glyph='star'/> Add project to favorites</Button>
+                <Button href="#" block><Glyphicon glyph="star"/> Add project to favorites</Button>
             </SidebarActions>
         ];
-        return (<TwoCols Content={Content} Sidebar={Sidebar} />)
+        return (<TwoCols Content={Content} Sidebar={Sidebar} />);
     }
+});
+
+export default branch(Project, {
+    cursors: { projects: ["stores", "projects"], tasks: ["stores", "tasks"] }
 });
