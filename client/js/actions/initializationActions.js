@@ -49,12 +49,10 @@ export let subscribeToQuery = () => {
                 return;
             }
             lastUri = uri.path;
-            console.log("lastUri: ", lastUri);
         } else {
             return;
         }
         var parsedQuery = URI.parseQuery(location.search);
-        console.log("parsedQuery: ", parsedQuery);
         queryCursor.set(parsedQuery);
     };
     Router.HistoryLocation.addChangeListener(updateQuery);
