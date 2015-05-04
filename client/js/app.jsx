@@ -2,23 +2,24 @@
 
 require("babel/polyfill");
 
-var React = require("react");
-var Router = require("react-router");
-var Route = Router.Route;
-
+import React from "react";
+import Router from "react-router";
+import PropTypes from "baobab-react/prop-types";
 /** Components **/
-var CustomerListComponent = require("./components/customer/CustomerList.jsx");
-var CustomerComponent = require("./components/customer/Customer.jsx");
-var ProjectListComponent = require("./components/project/ProjectList.jsx");
-var ProjectComponent = require("./components/project/Project.jsx");
-var TestWidget = require("./lib/Form.Widget.jsx");
-var Navigation = require("./components/main/Navigation.jsx");
-var Logo = require("./components/main/Logo.jsx");
-var LoadingScreen = require("./components/main/LoadingScreen.jsx");
+import CustomerListComponent from "./components/customer/CustomerList.jsx";
+import CustomerComponent from "./components/customer/Customer.jsx";
+import ProjectListComponent from "./components/project/ProjectList.jsx";
+import ProjectComponent from "./components/project/Project.jsx";
+import TestWidget from "./lib/Form.Widget.jsx";
+import Navigation from "./components/main/Navigation.jsx";
+import Logo from "./components/main/Logo.jsx";
+import LoadingScreen from "./components/main/LoadingScreen.jsx";
+/** Actions **/
+var initializationActions = require("./actions/initializationActions.js");
 
+var Route = Router.Route;
 let stateTree = window.stateTree = require("./stateTree.js");
 
-var initializationActions = require("./actions/initializationActions.js");
 initializationActions.subscribeToQuery();
 initializationActions.loadProjects();
 initializationActions.loadCustomers();
@@ -28,6 +29,14 @@ initializationActions.loadModelDefinitions();
 initializationActions.loadLookups();
 
 var App = React.createClass({
+    childContextTypes: {
+         tree: PropTypes.baobab
+    },
+    getChildContext() {
+        return {
+            tree: stateTree
+        };
+    },
     render() {
         return (
             <div>
@@ -52,13 +61,10 @@ var routes = (
     </Route>
 );
 
-import {root} from "baobab-react/higher-order";
-
 Router.run(
     routes,
     Router.HistoryLocation,
     Handler => {
-        let ComposedHandler = root(Handler, stateTree);
-        React.render(<ComposedHandler/>, document.body);
+        React.render(<Handler />, document.body);
     }
 );
