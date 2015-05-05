@@ -18,7 +18,7 @@ import LoadingScreen from "./components/main/LoadingScreen.jsx";
 var initializationActions = require("./actions/initializationActions.js");
 
 var Route = Router.Route;
-let stateTree = window.stateTree = require("./stateTree.js");
+let stateTree = global.stateTree = require("./stateTree.js");
 
 initializationActions.subscribeToQuery();
 initializationActions.loadProjects();
