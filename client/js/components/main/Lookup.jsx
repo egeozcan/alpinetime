@@ -14,6 +14,9 @@ const Lookup = React.createClass({
         return this.needsUpdate || this.props.lookupID !== nextProps.lookupID;
     },
     render() {
+        if (!this.props.lookups) {
+            return null;
+        }
         var lookup = this.props.lookups.filter(l => l.ID === this.props.lookupID)[0];
         if (!lookup) {
             this.needsUpdate = true;
