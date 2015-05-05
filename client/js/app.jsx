@@ -7,6 +7,7 @@ import Router from "react-router";
 import PropTypes from "baobab-react/prop-types";
 /** Components **/
 import CustomerListComponent from "./components/customer/CustomerList.jsx";
+import TimeEntryListComponent from "./components/timeentry/TimeEntryList.jsx";
 import CustomerComponent from "./components/customer/Customer.jsx";
 import ProjectListComponent from "./components/project/ProjectList.jsx";
 import ProjectComponent from "./components/project/Project.jsx";
@@ -22,7 +23,8 @@ import {
     loadTasks,
     loadPackages,
     loadModelDefinitions,
-    loadLookups
+    loadLookups,
+    loadTimeEntries
 } from "./actions/initializationActions.js";
 
 let Route = Router.Route;
@@ -35,6 +37,7 @@ loadTasks();
 loadPackages();
 loadModelDefinitions();
 loadLookups();
+loadTimeEntries();
 
 let App = React.createClass({
     childContextTypes: {
@@ -62,10 +65,10 @@ let App = React.createClass({
 let routes = (
     <Route name="app" path="/app" handler={App}>
         <Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
+        <Route name="timeentries" path="/app/timeentries" handler={TimeEntryListComponent}/>
         <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
         <Route name="projects" path="/app/projects" handler={ProjectListComponent}/>
         <Route name="project" path="/app/project/:ID" handler={ProjectComponent}/>
-        <Route name="test" path="/app/test" handler={TestWidget}/>
     </Route>
 );
 

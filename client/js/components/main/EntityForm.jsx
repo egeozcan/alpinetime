@@ -4,10 +4,8 @@ require("react-date-picker/index.css");
 import React from "react";
 import {branch} from "baobab-react/higher-order";
 import stateTree from "../stateTree.js";
-import TwoCols from "../components/main/Layout/TwoCols.jsx";
 import DatePicker from "react-date-picker";
 import Input from "react-bootstrap/lib/Input";
-import Modal from "react-bootstrap/lib/Modal";
 
 const lookups = stateTree.select("stores", "lookups");
 const typeMap = {
@@ -26,7 +24,7 @@ function getOptionsForLookupType(lookupType) {
     return res;
 }
 
-let EntityFormFields = React.createClass({
+let EntityForm = React.createClass({
     mixins: [stateTree.mixin],
     cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] },
     propTypes: {
@@ -146,36 +144,6 @@ let EntityFormFields = React.createClass({
     }
 });
 
-let EntityFormFieldsContainer = branch(EntityFormFields, {
+export default branch(EntityForm, {
     cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] }
-});
-
-let FormContainer = React.createClass({
-    mixins: [stateTree.mixin],
-    cursors: { stores: ["stores"] },
-    hideModal() {
-        this.setState({hideModal: true});
-    },
-    render() {
-        let entity = this.props.stores.tasks[1];
-        let content = (this.state || {}).hideModal ? false : (
-            <Modal onRequestHide={this.hideModal}>
-                <div className="modal-body" action="#">
-                    <EntityFormFieldsContainer
-                        onChange={(state) => console.log("result:", JSON.stringify(state, null, 2))}
-                        entity="Task"
-                        initialValues={Object.assign({}, entity)}
-                        //initialValues={{}}
-                        />
-                </div>
-                <div className="modal-footer">
-                </div>
-            </Modal>
-        );
-        return (<TwoCols Sidebar={content} Content={Array(15).join("_").split("_").map((e, i) => <p key={i}>{i+1}</p>)}></TwoCols>);
-    }
-});
-
-export default branch(FormContainer, {
-    cursors: { stores: ["stores"] }
 });

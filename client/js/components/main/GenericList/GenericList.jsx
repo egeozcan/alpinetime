@@ -29,19 +29,11 @@ var GenericList = React.createClass({
     componentWillMount() {
         this.location = window.location.toString();
     },
-    /* This doesn't consider nested GenericLists - not really usable
-    shouldComponentUpdate(nextProps, nextState) {
-        let storeName = this.props.storeName;
-        let shouldUpdate = this.state.cursors.stores[storeName] !== nextState.cursors.stores[storeName];
-        shouldUpdate = shouldUpdate || this.state.cursors.query !== nextState.cursors.query;
-        return shouldUpdate;
-    },
-    */
     getQueryPrefix(prop) {
         return (this.props.queryPrefix || "") + prop;
     },
     getData() {
-        let data = this.props.data || this.props.stores[this.props.storeName];
+        let data = this.props.data || this.props.stores[this.props.storeName] || [];
         if (this.props.filter) {
             return data.filter(this.props.filter);
         }
@@ -80,7 +72,12 @@ var GenericList = React.createClass({
         let Container = containers[this.props.containerElement] || DefaultContainer;
         let data = this.getPageData();
         if (data.pageData.length === 0) {
-            return null;
+            return (
+                <div>
+                    No data available.
+                    <p>&nbsp;</p>
+                </div>
+            );
         }
         let pager = "";
         if (data.hasPaging) {
