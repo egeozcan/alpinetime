@@ -13,6 +13,7 @@ type Task struct {
 	AssignedTo     *User
 	AssignedToID   int64 `json:",string"`
 	Estimations    []*Estimation
+	TimeEntries    []*TimeEntry
 	TaskStatus     *Lookup `json:"-"`
 	TaskStatusID   int64   `json:",string" validation:"ref(Lookup)"`
 	TaskCategory   *Lookup `json:"-"`
