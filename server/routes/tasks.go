@@ -8,8 +8,7 @@ import (
 
 func Tasks(c *gin.Context) {
 	tasks := &[]models.Task{}
-	connection.Db.
-		Find(tasks)
+	connection.Db.Find(tasks)
 	c.JSON(200, tasks)
 }
 
