@@ -54,5 +54,6 @@ func migrate() {
 		&models.Estimation{},
 		&models.Customer{},
 		&models.Step{},
+		&models.TimeEntry{},
 		&models.History{})
 }
