@@ -1,11 +1,11 @@
 {
-	"folders":
-	[
-		{
-			"follow_symlinks": true,
-			"path": ".",
-      "folder_exclude_patterns": ["public", "data"],
-      "file_exclude_patterns": []
-		}
-	]
+    "folders":
+    [
+        {
+            "follow_symlinks": true,
+            "path": ".",
+            "folder_exclude_patterns": ["public", "data", "node_modules"],
+            "file_exclude_patterns": []
+        }
+    ]
 }
