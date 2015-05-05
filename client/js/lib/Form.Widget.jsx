@@ -153,15 +153,19 @@ let EntityFormFieldsContainer = branch(EntityFormFields, {
 let FormContainer = React.createClass({
     mixins: [stateTree.mixin],
     cursors: { stores: ["stores"] },
+    hideModal() {
+        this.setState({hideModal: true});
+    },
     render() {
-        let entity = this.props.stores["tasks"][1];
-        let content = (
-            <Modal onRequestHide={() => {}}>
+        let entity = this.props.stores.tasks[1];
+        let content = (this.state || {}).hideModal ? false : (
+            <Modal onRequestHide={this.hideModal}>
                 <div className="modal-body" action="#">
                     <EntityFormFieldsContainer
                         onChange={(state) => console.log("result:", JSON.stringify(state, null, 2))}
                         entity="Task"
                         initialValues={Object.assign({}, entity)}
+                        //initialValues={{}}
                         />
                 </div>
                 <div className="modal-footer">
