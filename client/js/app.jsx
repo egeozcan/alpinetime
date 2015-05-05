@@ -15,20 +15,28 @@ import Navigation from "./components/main/Navigation.jsx";
 import Logo from "./components/main/Logo.jsx";
 import LoadingScreen from "./components/main/LoadingScreen.jsx";
 /** Actions **/
-import initializationActions from "./actions/initializationActions.js";
+import {
+    subscribeToQuery,
+    loadProjects,
+    loadCustomers,
+    loadTasks,
+    loadPackages,
+    loadModelDefinitions,
+    loadLookups
+} from "./actions/initializationActions.js";
 
-var Route = Router.Route;
+let Route = Router.Route;
 let stateTree = global.stateTree = require("./stateTree.js");
 
-initializationActions.subscribeToQuery();
-initializationActions.loadProjects();
-initializationActions.loadCustomers();
-initializationActions.loadTasks();
-initializationActions.loadPackages();
-initializationActions.loadModelDefinitions();
-initializationActions.loadLookups();
+subscribeToQuery();
+loadProjects();
+loadCustomers();
+loadTasks();
+loadPackages();
+loadModelDefinitions();
+loadLookups();
 
-var App = React.createClass({
+let App = React.createClass({
     childContextTypes: {
          tree: PropTypes.baobab
     },
@@ -51,7 +59,7 @@ var App = React.createClass({
     }
 });
 
-var routes = (
+let routes = (
     <Route name="app" path="/app" handler={App}>
         <Route name="customers" path="/app/customers" handler={CustomerListComponent}/>
         <Route name="customer" path="/app/customer/:ID" handler={CustomerComponent}/>
