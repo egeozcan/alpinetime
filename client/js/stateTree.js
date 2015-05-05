@@ -12,7 +12,8 @@ var stateTree = new Baobab({
   },
   state: {
     query: {},
-    numInProgress: 0
+    numInProgress: 0,
+    activeTimeEntryID: 0
   },
   definitions: {}
 },

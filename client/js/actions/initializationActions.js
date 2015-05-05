@@ -25,6 +25,7 @@ export let loadCustomers = loadEntity.bind(null, "customers");
 export let loadTasks = loadEntity.bind(null, "tasks");
 export let loadPackages = loadEntity.bind(null, "packages");
 export let loadLookups = loadEntity.bind(null, "lookups");
+export let loadTimeEntries = loadEntity.bind(null, "timeentries");
 
 export let loadModelDefinitions = () => {
     request.get("/api/definitions").end((err, res) => {

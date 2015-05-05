@@ -1,6 +1,6 @@
 "use strict";
 
-import RESTBase from "./lib/RESTBase.js";
+import {add} from "./lib/RESTBase.js";
 /*import stateTree from "../stateTree.js";
 var projectStore = stateTree.select("stores", "projects");
 var packageStore = stateTree.select("stores", "packages");
@@ -19,6 +19,6 @@ export default {
         //noop for now
     },
     addPackage(project, Name, Description) {
-        RESTBase.add("package", {Name, Description, ProjectID: project.ID});
+        add("package", {Name, Description, ProjectID: project.ID});
     }
 };

@@ -26,7 +26,7 @@ func RouteList() *[]*RouteDef {
 	res = append(res, &RouteDef{"GET", "/app/customer/:customerID", routes.ProtectedArea, 1})
 	res = append(res, &RouteDef{"GET", "/app/projects", routes.ProtectedArea, 1})
 	res = append(res, &RouteDef{"GET", "/app/project/:projectID", routes.ProtectedArea, 1})
-	res = append(res, &RouteDef{"GET", "/app/test", routes.ProtectedArea, 1})
+	res = append(res, &RouteDef{"GET", "/app/timeentries", routes.ProtectedArea, 1})
 
 	res = append(res, &RouteDef{"GET", "/api/customers", routes.Customers, 1})
 	res = append(res, &RouteDef{"GET", "/api/customer/:customerID", routes.Customer, 1})
@@ -36,6 +36,7 @@ func RouteList() *[]*RouteDef {
 	res = append(res, &RouteDef{"GET", "/api/packages", routes.Packages, 1})
 	res = append(res, &RouteDef{"GET", "/api/definitions", routes.Definitions, 1})
 	res = append(res, &RouteDef{"GET", "/api/lookups", routes.Lookups, 1})
+	res = append(res, &RouteDef{"GET", "/api/timeentries", routes.TimeEntries, 1})
 
 	res = append(res, &RouteDef{"POST", "/api/packages", routes.AddPackage, 1})
 
