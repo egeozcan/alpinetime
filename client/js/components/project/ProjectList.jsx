@@ -1,10 +1,10 @@
 "use strict";
 
-var React = require("react");
-var PageHeader = require("react-bootstrap/lib/PageHeader");
-var GenericList = require("../main/GenericList/GenericList.jsx");
-var Titles = require("./ProjectList.Titles.jsx");
-var TwoCols = require("../main/Layout/TwoCols.jsx");
+import React from "react";
+import PageHeader from "react-bootstrap/lib/PageHeader";
+import GenericList from "../main/GenericList/GenericList.jsx";
+import Titles from "./ProjectList.Titles.jsx";
+import TwoCols from "../main/Layout/TwoCols.jsx";
 
 var ProjectList = React.createClass({
     render() {

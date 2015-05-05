@@ -1,9 +1,9 @@
 "use strict";
 
-let stateTree = require("../../stateTree.js");
-let getBaseEntity = require("./getBaseEntity.js");
+import stateTree from "../../stateTree.js";
+import getBaseEntity from "./getBaseEntity.js";
 let stores = stateTree.select("stores");
-let request = require("superagent");
+import request from "superagent";
 
 export function add(type, data, cb) {
     let entity = Object.assign({}, getBaseEntity(), data);

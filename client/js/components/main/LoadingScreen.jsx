@@ -1,6 +1,6 @@
 "use strict";
 
-var React = require("react");
+import React from "react";
 import PropTypes from "baobab-react/prop-types";
 import {branch} from "baobab-react/higher-order";
 
