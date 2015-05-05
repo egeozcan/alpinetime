@@ -106,7 +106,7 @@ let Project = React.createClass({
                 <Button href="#" block onClick={(e) => { e.preventDefault(); this.setState({dialogPackageCreateActive: true}); }}>
                     <Glyphicon glyph="plus"/> Add a package
                 </Button>
-                <Button href="#" block><Glyphicon glyph="star"/> Add project to favorites</Button>
+                {/*<Button href="#" block><Glyphicon glyph="star"/> Add project to favorites</Button>*/}
             </SidebarActions>
         ];
         return (<TwoCols Content={Content} Sidebar={Sidebar} />);

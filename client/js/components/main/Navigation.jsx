@@ -13,12 +13,13 @@ export default React.createClass({
         return (
             <Navbar fluid inverse>
                 <Nav>
-                    <NavItemLink eventKey={1} to="projects">Projects</NavItemLink>
-                    <NavItemLink eventKey={1} to="customers">Customers</NavItemLink>
+                    <NavItemLink to="projects">Projects</NavItemLink>
+                    <NavItemLink to="customers">Customers</NavItemLink>
+                    <NavItemLink to="timeentries">Time Entries</NavItemLink>
                 </Nav>
                 <Nav right>
-                    <DropdownButton eventKey={3} title="User">
-                        <MenuItem eventKey="1" href="/logout">Logout</MenuItem>
+                    <DropdownButton title="User">
+                        <MenuItem href="/logout">Logout</MenuItem>
                     </DropdownButton>
                 </Nav>
             </Navbar>

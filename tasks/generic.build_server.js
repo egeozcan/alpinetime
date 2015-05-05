@@ -2,7 +2,7 @@
 
 var cp = require("child_process");
 
-const debugCommands = ["go-bindata -debug -pkg data -o ./data/bindata.go ./public/...", "go build -tags \"debug delayed\""];
+const debugCommands = ["go-bindata -debug -pkg data -o ./data/bindata.go ./public/...", "go build -tags \"debug\""];
 const releaseCommands = ["go-bindata -pkg data -o ./data/bindata.go ./public/...", "go build -o alpinetime_release.exe"];
 
 module.exports = function(isDebug, autorun) {
