@@ -1,7 +1,8 @@
 "use strict";
 
 require("react-date-picker/index.css");
-const React = require("react");
+import React from "react";
+import {branch} from "baobab-react/higher-order";
 const stateTree = require("../stateTree.js");
 const TwoCols = require("../components/main/Layout/TwoCols.jsx");
 const lookups = stateTree.select("stores", "lookups");
@@ -58,7 +59,7 @@ let EntityFormFields = React.createClass({
     },
     render() {
         let entity = this.props.entity;
-        let entityDef = this.cursors.definitions.get()[entity];
+        let entityDef = this.props.definitions[entity];
         if (!entityDef) {
             return null;
         }
@@ -145,15 +146,19 @@ let EntityFormFields = React.createClass({
     }
 });
 
-export default React.createClass({
+let EntityFormFieldsContainer = branch(EntityFormFields, {
+    cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] }
+});
+
+let FormContainer = React.createClass({
     mixins: [stateTree.mixin],
     cursors: { stores: ["stores"] },
     render() {
-        let entity = this.cursors.stores.select("tasks").get(1);
+        let entity = this.props.stores["tasks"][1];
         let content = (
             <Modal onRequestHide={() => {}}>
                 <div className="modal-body" action="#">
-                    <EntityFormFields
+                    <EntityFormFieldsContainer
                         onChange={(state) => console.log("result:", JSON.stringify(state, null, 2))}
                         entity="Task"
                         initialValues={Object.assign({}, entity)}
@@ -165,4 +170,8 @@ export default React.createClass({
         );
         return (<TwoCols Sidebar={content} Content={Array(15).join("_").split("_").map((e, i) => <p key={i}>{i+1}</p>)}></TwoCols>);
     }
+});
+
+export default branch(FormContainer, {
+    cursors: { stores: ["stores"] }
 });
