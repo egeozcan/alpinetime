@@ -3,13 +3,13 @@
 require("react-date-picker/index.css");
 import React from "react";
 import {branch} from "baobab-react/higher-order";
-const stateTree = require("../stateTree.js");
-const TwoCols = require("../components/main/Layout/TwoCols.jsx");
-const lookups = stateTree.select("stores", "lookups");
-const DatePicker = require("react-date-picker");
-const Input = require("react-bootstrap/lib/Input");
-const Modal = require("react-bootstrap/lib/Modal");
+import stateTree from "../stateTree.js";
+import TwoCols from "../components/main/Layout/TwoCols.jsx";
+import DatePicker from "react-date-picker";
+import Input from "react-bootstrap/lib/Input";
+import Modal from "react-bootstrap/lib/Modal";
 
+const lookups = stateTree.select("stores", "lookups");
 const typeMap = {
     string: "text",
     int32: "number",

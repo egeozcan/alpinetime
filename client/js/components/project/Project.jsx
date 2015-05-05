@@ -2,19 +2,18 @@
 
 import React from "react";
 import {branch} from "baobab-react/higher-order";
-var projectActions = require("../../actions/projectActions.js");
-var Router = require("react-router");
-var Tree = require("../../stateTree.js");
-var PageHeader = require("react-bootstrap/lib/PageHeader");
-var GenericList = require("../main/GenericList/GenericList.jsx");
-var TwoCols = require("../main/Layout/TwoCols.jsx");
-var Button = require("react-bootstrap/lib/Button");
-var SidebarActions = require("../main/SidebarActions.jsx");
-var TaskTitles = require("../task/Task.Titles.jsx");
-var Glyphicon = require("react-bootstrap/lib/Glyphicon");
-var Modal = require("react-bootstrap/lib/Modal");
-var Input = require("react-bootstrap/lib/Input");
-var Button = require("react-bootstrap/lib/Button");
+import projectActions from "../../actions/projectActions.js";
+import Router from "react-router";
+import Tree from "../../stateTree.js";
+import PageHeader from "react-bootstrap/lib/PageHeader";
+import GenericList from "../main/GenericList/GenericList.jsx";
+import TwoCols from "../main/Layout/TwoCols.jsx";
+import SidebarActions from "../main/SidebarActions.jsx";
+import TaskTitles from "../task/Task.Titles.jsx";
+import Glyphicon from "react-bootstrap/lib/Glyphicon";
+import Modal from "react-bootstrap/lib/Modal";
+import Input from "react-bootstrap/lib/Input";
+import Button from "react-bootstrap/lib/Button";
 
 let Project = React.createClass({
     mixins: [Tree.mixin],

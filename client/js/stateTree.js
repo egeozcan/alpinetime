@@ -1,6 +1,6 @@
 "use strict";
 
-var Baobab = require("baobab");
+import Baobab from "baobab";
 
 var stateTree = new Baobab({
   stores: {

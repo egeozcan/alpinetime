@@ -2,12 +2,12 @@
 
 import React from "react";
 import {branch} from "baobab-react/higher-order";
-var Pager = require("react-bootstrap/lib/Pager");
-var PageItem = require("react-bootstrap/lib/PageItem");
-var GenericListPropTypes = require("./GenericList.PropTypes.js");
-var DefaultContainer = require("./DefaultContainer.jsx");
-var FlexContainer = require("./FlexContainer.jsx");
-var ListContainer = require("./ListContainer.jsx");
+import Pager from "react-bootstrap/lib/Pager";
+import PageItem from "react-bootstrap/lib/PageItem";
+import GenericListPropTypes from "./GenericList.PropTypes.js";
+import DefaultContainer from "./DefaultContainer.jsx";
+import FlexContainer from "./FlexContainer.jsx";
+import ListContainer from "./ListContainer.jsx";
 
 const containers = {
     "flex": FlexContainer,
