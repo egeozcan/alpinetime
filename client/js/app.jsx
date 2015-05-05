@@ -15,7 +15,7 @@ import Navigation from "./components/main/Navigation.jsx";
 import Logo from "./components/main/Logo.jsx";
 import LoadingScreen from "./components/main/LoadingScreen.jsx";
 /** Actions **/
-var initializationActions = require("./actions/initializationActions.js");
+import initializationActions from "./actions/initializationActions.js";
 
 var Route = Router.Route;
 let stateTree = global.stateTree = require("./stateTree.js");

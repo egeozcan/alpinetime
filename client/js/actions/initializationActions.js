@@ -1,10 +1,10 @@
 "use strict";
 
-let stateTree = require("../stateTree.js");
-let stateActions = require("./stateActions.js");
-let request = require("superagent");
-let Router = require("react-router");
-let URL = require("url");
+import stateTree from "../stateTree.js";
+import stateActions from "./stateActions.js";
+import request from "superagent";
+import Router from "react-router";
+import URL from "url";
 
 let loadEntity = (entityName) => {
     stateActions.numInProgress.inc();

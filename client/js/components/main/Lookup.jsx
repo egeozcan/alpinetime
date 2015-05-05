@@ -2,9 +2,9 @@
 
 import React from "react";
 import {branch} from "baobab-react/higher-order";
-var Label = require("react-bootstrap/lib/Label");
-var Tooltip = require("react-bootstrap/lib/Tooltip");
-var OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
+import Label from "react-bootstrap/lib/Label";
+import Tooltip from "react-bootstrap/lib/Tooltip";
+import OverlayTrigger from "react-bootstrap/lib/OverlayTrigger";
 
 const Lookup = React.createClass({
     propTypes: {
@@ -15,6 +15,7 @@ const Lookup = React.createClass({
     },
     render() {
         if (!this.props.lookups) {
+            this.needsUpdate = true;
             return null;
         }
         var lookup = this.props.lookups.filter(l => l.ID === this.props.lookupID)[0];
@@ -26,7 +27,7 @@ const Lookup = React.createClass({
         var style = {
             display: "inline-block",
             padding: "0 3px",
-            fontSize: 11,
+            fontSize: "0.9em",
             verticalAlign: "middle",
             whiteSpace: "pre-line"
         };
