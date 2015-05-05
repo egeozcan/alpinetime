@@ -3,9 +3,8 @@
 let stateTree = require("../stateTree.js");
 let stateActions = require("./stateActions.js");
 let request = require("superagent");
-let URI = require("URIjs");
 let Router = require("react-router");
-window.URL = require("url");
+let URL = require("url");
 
 let loadEntity = (entityName) => {
     stateActions.numInProgress.inc();
@@ -52,7 +51,7 @@ export let subscribeToQuery = () => {
         } else {
             return;
         }
-        var parsedQuery = URI.parseQuery(location.search);
+        var parsedQuery = URL.parse(location.toString(), true).query;
         queryCursor.set(parsedQuery);
     };
     Router.HistoryLocation.addChangeListener(updateQuery);
