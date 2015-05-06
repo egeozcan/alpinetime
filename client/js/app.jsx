@@ -11,7 +11,6 @@ import TimeEntryListComponent from "./components/timeentry/TimeEntryList.jsx";
 import CustomerComponent from "./components/customer/Customer.jsx";
 import ProjectListComponent from "./components/project/ProjectList.jsx";
 import ProjectComponent from "./components/project/Project.jsx";
-import TestWidget from "./lib/Form.Widget.jsx";
 import Navigation from "./components/main/Navigation.jsx";
 import Logo from "./components/main/Logo.jsx";
 import LoadingScreen from "./components/main/LoadingScreen.jsx";
