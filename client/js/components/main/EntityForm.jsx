@@ -28,7 +28,8 @@ let EntityForm = React.createClass({
     mixins: [stateTree.mixin],
     cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] },
     propTypes: {
-        initialValues: React.PropTypes.object
+        initialValues: React.PropTypes.object,
+        onChange: React.PropTypes.function
     },
     getDefaultProps() {
         return { initialValues: {} };
