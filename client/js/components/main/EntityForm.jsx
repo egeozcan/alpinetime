@@ -3,7 +3,7 @@
 require("react-date-picker/index.css");
 import React from "react";
 import {branch} from "baobab-react/higher-order";
-import stateTree from "../stateTree.js";
+import stateTree from "../../stateTree.js";
 import DatePicker from "react-date-picker";
 import Input from "react-bootstrap/lib/Input";
 
@@ -29,7 +29,7 @@ let EntityForm = React.createClass({
     cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] },
     propTypes: {
         initialValues: React.PropTypes.object,
-        onChange: React.PropTypes.function
+        afterChange: React.PropTypes.function
     },
     getDefaultProps() {
         return { initialValues: {} };
@@ -42,8 +42,8 @@ let EntityForm = React.createClass({
         this.setState({ vals });
     },
     componentWillUpdate(nextProps, nextState) {
-        if (typeof this.props.onChange === "function") {
-            this.props.onChange(nextState.vals);
+        if (typeof this.props.afterChange === "function") {
+            this.props.afterChange(nextState.vals);
         }
     },
     valueChanged(e, val, prop) {
@@ -88,7 +88,6 @@ let EntityForm = React.createClass({
                     );
                     break;
                 case "Time":
-                    console.log("time : %s", currentValue);
                     input = (
                         <div className="form-group">
                             <label>
