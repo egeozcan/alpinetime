@@ -23,7 +23,8 @@ var GenericList = React.createClass({
     getDefaultProps() {
         return {
             filterUrlPrefix: "",
-            itemsInPage: 10
+            itemsInPage: 10,
+            pagingActive: true
         };
     },
     componentWillMount() {
@@ -80,7 +81,7 @@ var GenericList = React.createClass({
             );
         }
         let pager = "";
-        if (data.hasPaging) {
+        if (data.hasPaging && this.props.pagingActive) {
             pager = (
                 <Pager>
                     <PageItem onClick={this.decPage} disabled={this.page() === 1}>Previous</PageItem>
