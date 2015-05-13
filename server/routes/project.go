@@ -10,9 +10,6 @@ import (
 func Projects(c *gin.Context) {
 	projects := &[]models.Project{}
 	connection.Db.
-		Preload("Customer").
-		Preload("Manager").
-		Preload("ProjectCategory").
 		Find(projects)
 	c.JSON(200, projects)
 }
