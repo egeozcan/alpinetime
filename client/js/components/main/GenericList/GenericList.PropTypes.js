@@ -12,5 +12,6 @@ export default {
     storeName: React.PropTypes.string.isRequired,
     itemsInPage: React.PropTypes.number,
     queryPrefix: React.PropTypes.string,
-    removeAllTitles: React.PropTypes.bool
+    removeAllTitles: React.PropTypes.bool,
+    pagingActive: React.PropTypes.bool
 };
