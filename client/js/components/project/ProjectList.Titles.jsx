@@ -16,8 +16,7 @@ export default function (data) {
         {
             name: "Name",
             getter(row) {
-                let params = {ID: row.ID};
-                return (<strong><Link to="project" params={params}>{row.Name}</Link></strong>);
+                return (<strong><Link to="project" params={{ID: row.ID}}>{row.Name}</Link></strong>);
             }
         },
         {
