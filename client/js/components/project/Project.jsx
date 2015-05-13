@@ -12,8 +12,9 @@ import SidebarActions from "../main/SidebarActions.jsx";
 import TaskTitles from "../task/Task.Titles.jsx";
 import Glyphicon from "react-bootstrap/lib/Glyphicon";
 import Modal from "react-bootstrap/lib/Modal";
-import Input from "react-bootstrap/lib/Input";
+//import Input from "react-bootstrap/lib/Input";
 import Button from "react-bootstrap/lib/Button";
+import EntityForm from "../main/EntityForm.jsx";
 
 let Project = React.createClass({
     mixins: [Tree.mixin],
@@ -72,11 +73,17 @@ let Project = React.createClass({
             return false;
         }
         let projectID = this.context.router.getCurrentParams().ID;
+        let fn = function(vals) { this.vals = vals; }.bind(this);
         let Content = [
             (
                 <PageHeader>
                     {project.Name}
-                    <small> for <Router.Link to="customer" params={{ID: project.CustomerID}}>{project.Customer ? project.Customer.Name : "-"}</Router.Link></small>
+                    <small>
+                        {" for "}
+                        <Router.Link to="customer" params={{ID: project.CustomerID}}>
+                            {this.props.customers.filter(c => c.ID === project.CustomerID)[0].Name}
+                        </Router.Link>
+                    </small>
                 </PageHeader>
             ),
             <h3>Packages</h3>,
@@ -91,8 +98,7 @@ let Project = React.createClass({
                 ? (
                     <Modal onRequestHide={() => this.setState({dialogPackageCreateActive: false})}>
                         <div className="modal-body" action="#">
-                            <Input ref="PackageName" type="text" label="Name" />
-                            <Input ref="PackageDesc" type="textarea" label="Description" />
+                            <EntityForm entity="Package" afterChange={fn} />
                         </div>
                         <div className="modal-footer">
                             <Button onClick={this.addPackage} bsStyle="primary">Save</Button>
@@ -114,5 +120,9 @@ let Project = React.createClass({
 });
 
 export default branch(Project, {
-    cursors: { projects: ["stores", "projects"], tasks: ["stores", "tasks"] }
+    cursors: {
+        projects: ["stores", "projects"],
+        customers: ["stores", "customers"],
+        tasks: ["stores", "tasks"]
+    }
 });
