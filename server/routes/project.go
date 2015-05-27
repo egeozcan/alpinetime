@@ -17,7 +17,7 @@ func Projects(c *gin.Context) {
 func Project(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Params.ByName("projectID"), 10, 64)
 	if err != nil {
-		c.Error(err, "Id is required")
+		c.AbortWithError(500, err)
 		return
 	}
 	project := &models.Project{}

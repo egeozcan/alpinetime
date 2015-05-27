@@ -18,7 +18,7 @@ func Packages(c *gin.Context) {
 func Package(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Params.ByName("packageID"), 10, 64)
 	if err != nil {
-		c.Error(err, "Id is required")
+		c.AbortWithError(500, err)
 		return
 	}
 	pkg := &models.Package{}
@@ -31,7 +31,7 @@ func AddPackage(c *gin.Context) {
 	c.BindWith(&pkg, binding.JSON)
 	if pkg.Name == "" || pkg.ProjectID == 0 {
 		var err = errors.New("Package name and project ID are needed.")
-		c.Fail(500, err)
+		c.AbortWithError(500, err)
 		return
 	}
 	connection.Db.Save(&pkg)

@@ -25,9 +25,9 @@ func Create() *gin.Engine {
 	for i := range *routes {
 		route := (*routes)[i]
 		if route.AuthLevel == 0 {
-			server.Handle(route.Method, route.Path, []gin.HandlerFunc{route.Handler})
+			server.Handle(route.Method, route.Path, route.Handler)
 		} else {
-			authorized.Handle(route.Method, route.Path, []gin.HandlerFunc{route.Handler})
+			authorized.Handle(route.Method, route.Path, route.Handler)
 		}
 	}
 
