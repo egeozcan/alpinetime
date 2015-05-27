@@ -16,7 +16,7 @@ func Customers(c *gin.Context) {
 func Customer(c *gin.Context) {
 	id, err := strconv.ParseInt(c.Params.ByName("customerID"), 10, 64)
 	if err != nil {
-		c.Error(err, "Id is required")
+		c.AbortWithError(500, err)
 		return
 	}
 	customer := &models.Customer{}
