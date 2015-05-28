@@ -148,7 +148,7 @@ func init() {
 		time.Sleep(100)
 	}
 	fmt.Println("adding projects")
-	for i := 0; i < 15; i++ {
+	for i := 0; i < 100; i++ {
 		time.Sleep(10)
 		fmt.Printf("Creating project struct %v\n", i)
 		project := models.Project{
@@ -163,7 +163,7 @@ func init() {
 		fmt.Printf("Adding project %v\n", i)
 		db.Create(&project)
 		fmt.Printf("Created project %v\n", project.ID)
-		for y := 0; y < randomdata.Number(2, 5); y++ {
+		for y := 0; y < randomdata.Number(2, 20); y++ {
 			taskAmount := randomdata.Number(5, 10)
 			tasks := make([]*models.Task, taskAmount)
 			for z := 0; z < taskAmount; z++ {
@@ -194,7 +194,9 @@ func init() {
 			project.Tasks = append(project.Tasks, tasks...)
 		}
 		db.Save(&project)
+		fmt.Sprintf("saved project %v", i)
 	}
+	fmt.Printf("DONE")
 }
 
 // Returns a random part of a slice
