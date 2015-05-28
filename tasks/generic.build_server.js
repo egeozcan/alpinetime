@@ -6,11 +6,17 @@ const debugCommands = ["go-bindata -debug -pkg data -o ./data/bindata.go ./publi
 const releaseCommands = ["go-bindata -pkg data -o ./data/bindata.go ./public/...", "go build -o alpinetime_release.exe"];
 
 module.exports = function(isDebug, autorun) {
-    var proc;
+    var proc = null, inProgress = false;
     return function builder(callback) {
+        if (inProgress) {
+            console.log("Build in progress...");
+            setTimeout(builder.bind(null, callback), 1000);
+            return;
+        }
         if(proc) {
             proc.kill("SIGINT");
         }
+        inProgress = true;
         (isDebug ? debugCommands : releaseCommands).forEach(function (command) {
             console.log("running: ", command);
             cp.execSync(command, {cwd: process.cwd()});
@@ -19,12 +25,14 @@ module.exports = function(isDebug, autorun) {
             proc = cp.spawn("./alpinetime");
             proc.stdout.on("data", function (data) {
                 console.log(data.toString().replace(/\n+?$/m, ""));
-                if(!!callback && data.toString().indexOf("-- Started --") >= 0) {
-                    callback();
+                if(data.toString().indexOf("-- Started --") >= 0) {
+                    if(callback) callback();
+                    inProgress = false;
                 }
             });
-        } else if(callback) {
-            callback();
+        } else {
+            if(callback) callback();
+            inProgress = false;
         }
     };
 };
