@@ -16,7 +16,9 @@ func Login(redirectTo string) func(*gin.Context) {
 		var form forms.LoginForm
 		c.BindWith(&form, binding.Form)
 		session := sessions.Default(c)
-		if form.Password == "" || helpers.Auth(form.User, form.Password) != nil {
+		user := helpers.Auth(form.User, form.Password)
+		fmt.Printf("%v", user)
+		if form.Password == "" || user.ID == 0 {
 			c.Redirect(301, "/?guessWhat=passwordiswrong")
 			return
 		}
