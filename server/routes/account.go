@@ -4,7 +4,6 @@ import (
 	"alpinetime/data"
 	"alpinetime/forms"
 	"alpinetime/helpers"
-	//"alpinetime/models"
 	"fmt"
 	"github.com/gin-gonic/contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -19,17 +18,34 @@ func Login(redirectTo string) func(*gin.Context) {
 		user := helpers.Auth(form.User, form.Password)
 		fmt.Printf("%v", user)
 		if form.Password == "" || user.ID == 0 {
-			c.Redirect(301, "/?guessWhat=passwordiswrong")
+			c.Redirect(301, "/?error=badAuth")
 			return
 		}
-		/*user := models.User{
-			Domain:   "L-MOBILE",
-			Name:     form.User,
-			Email:    "",
-			Projects: []models.Project{},
+		session.Set("username", user.Name)
+		session.Set("userID", user.ID)
+		session.Save()
+		c.Redirect(301, redirectTo)
+		return
+	}
+}
+
+func Register(redirectTo string) func(*gin.Context) {
+	return func(c *gin.Context) {
+		var form forms.LoginForm
+		c.BindWith(&form, binding.Form)
+		session := sessions.Default(c)
+		err := helpers.Register(form.User, form.Password)
+		if err != nil {
+			c.Redirect(301, "/register?error")
+			return
 		}
-		models.Db.Save(&user)*/
-		session.Set("username", form.User)
+		user := helpers.Auth(form.User, form.Password)
+		if user.ID == 0 {
+			c.Redirect(301, "/?error=badAuth")
+			return
+		}
+		session.Set("username", user.Name)
+		session.Set("userID", user.ID)
 		session.Save()
 		c.Redirect(301, redirectTo)
 		return

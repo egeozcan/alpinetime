@@ -1,6 +1,6 @@
 {% extends "layouts/layout.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Register{% endblock %}
 {% block head %}
 <link href="/public/css/login.css" rel="stylesheet">
 {% endblock %}
@@ -13,24 +13,19 @@
 <div class="row">
   <div id="main" class="col-xs-12">
   <h1 class="login-title">Alpinetime</h1>
-  <form action="/login" method="POST" class="form-signin">
-    <h3 class="form-signin-heading">Please sign in</h3>
+  <form action="/register" method="POST" class="form-signin">
+    <h3 class="form-signin-heading">Create an Account</h3>
     <br/>
     <label for="username">Username</label>
     <input type="text" name="username" id="username" class="form-control" placeholder="Username" autofocus required>
     <label for="password">Password</label>
     <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-    <div id="false-login-message" class="alert alert-danger hide" role="alert">Your credentials didn't work.</div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
   </form>
   </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-  <script>
-    if(location.search.indexOf("badAuth") !== -1) {
-      document.getElementById("false-login-message").classList.remove("hide");
-    }
-  </script>
+  <script></script>
 {% endblock %}

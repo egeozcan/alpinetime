@@ -23,3 +23,13 @@ func LoginPage(c *gin.Context) {
 	}
 	c.Writer.Write(fileData)
 }
+
+func RegistrationPage(c *gin.Context) {
+	helpers.WriteHeader(c.Writer, 200, "text/html")
+	fileData, err := data.Asset("public/register.html")
+	if err != nil {
+		fmt.Errorf("error: %s", err)
+		return
+	}
+	c.Writer.Write(fileData)
+}

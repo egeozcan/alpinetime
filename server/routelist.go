@@ -17,6 +17,8 @@ func RouteList() *[]*RouteDef {
 
 	res = append(res, &RouteDef{"GET", "/", routes.LoginPage, 0})
 	res = append(res, &RouteDef{"POST", "/login", routes.Login("/app/projects"), 0})
+	res = append(res, &RouteDef{"GET", "/register", routes.RegistrationPage, 0})
+	res = append(res, &RouteDef{"POST", "/register", routes.Register("/app/projects"), 0})
 
 	res = append(res, &RouteDef{"GET", "/logout", routes.Logout, 1})
 
