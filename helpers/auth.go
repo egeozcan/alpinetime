@@ -1,30 +1,31 @@
-// +build !debug
-
 package helpers
 
 import (
-	"fmt"
-	"github.com/go-ldap/ldap"
 	"alpinetime/models"
 	"alpinetime/models/connection"
+	"encoding/base64"
+	"errors"
+	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
-var ldap_server string = "l-mobile.intern"
-var ldap_port uint16 = 389
-
-func Auth(username, password string) *models.User {
-	l, err := ldap.Dial("tcp", fmt.Sprintf("%s:%d", ldap_server, ldap_port))
+func Register(username, password string) error {
+	if len(username) == 0 || len(password) == 0 || len(password) > 64 || len(username) > 64 {
+		return errors.New("Nope")
+	}
+	usr := &models.User{
+		Name: username,
+	}
+	connection.Db.Select("ID").Where(usr).First(usr)
+	if usr.ID != 0 {
+		return errors.New("Username is taken")
+	}
+	hashedPwd, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		return err
 	}
-	defer l.Close()
-	if authErr := l.Bind(username, password); authErr == nil {
-		usr := &models.User{
-			Name: username,
-			Password: password,
-		}
-		connection.Db.Where(usr).First(usr)
-		return usr
-	}
+	fmt.Println(base64.StdEncoding.EncodeToString(hashedPwd))
+	usr.Password = base64.StdEncoding.EncodeToString(hashedPwd)
+	connection.Db.Save(usr)
 	return nil
 }

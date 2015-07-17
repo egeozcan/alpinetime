@@ -3,9 +3,11 @@
 package helpers
 
 import (
-	"fmt"
 	"alpinetime/models"
 	"alpinetime/models/connection"
+	"encoding/base64"
+	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func init() {
@@ -13,9 +15,14 @@ func init() {
 }
 
 func Auth(username, password string) *models.User {
+	hashedPwd, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil
+	}
+	fmt.Println(base64.StdEncoding.EncodeToString(hashedPwd))
 	usr := &models.User{
-		Name: username,
-		Password: password,
+		Name:     username,
+		Password: base64.StdEncoding.EncodeToString(hashedPwd),
 	}
 	connection.Db.Where(usr).First(usr)
 	return usr
