@@ -1,12 +1,8 @@
 "use strict";
 
 import React from "react";
-import Navbar from "react-bootstrap/lib/Navbar";
-import DropdownButton from "react-bootstrap/lib/DropdownButton";
-import MenuItem from "react-bootstrap/lib/MenuItem";
-import Nav from "react-bootstrap/lib/Nav";
-import ReactRouterBootstrap from "react-router-bootstrap";
-let NavItemLink = ReactRouterBootstrap.NavItemLink;
+import { DropdownButton, MenuItem, Nav, Navbar } from "react-bootstrap";
+import { NavItemLink } from "react-router-bootstrap";
 
 export default React.createClass({
     render() {

@@ -2,10 +2,10 @@
 
 require("react-date-picker/index.css");
 import React from "react";
-import {branch} from "baobab-react/higher-order";
+import { branch } from "baobab-react/higher-order";
 import stateTree from "../../stateTree.js";
 import DatePicker from "react-date-picker";
-import Input from "react-bootstrap/lib/Input";
+import { Input } from "react-bootstrap";
 
 const lookups = stateTree.select("stores", "lookups");
 const typeMap = {
