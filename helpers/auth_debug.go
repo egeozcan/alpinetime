@@ -17,6 +17,7 @@ func init() {
 func Auth(username, password string) *models.User {
 	hashedPwd, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
+		fmt.Println("something went wrong with pass gen")
 		return nil
 	}
 	fmt.Println(base64.StdEncoding.EncodeToString(hashedPwd))
@@ -25,5 +26,9 @@ func Auth(username, password string) *models.User {
 		Password: base64.StdEncoding.EncodeToString(hashedPwd),
 	}
 	connection.Db.Where(usr).First(usr)
+	if usr.ID == 0 {
+		usr.Name = "test-user"
+		usr.ID = 1
+	}
 	return usr
 }
