@@ -1,19 +1,15 @@
 "use strict";
 
 import React from "react";
-import {branch} from "baobab-react/higher-order";
+import { branch } from "baobab-react/higher-order";
 import projectActions from "../../actions/projectActions.js";
 import Router from "react-router";
 import Tree from "../../stateTree.js";
-import PageHeader from "react-bootstrap/lib/PageHeader";
 import GenericList from "../main/GenericList/GenericList.jsx";
 import TwoCols from "../main/Layout/TwoCols.jsx";
 import SidebarActions from "../main/SidebarActions.jsx";
 import TaskTitles from "../task/Task.Titles.jsx";
-import Glyphicon from "react-bootstrap/lib/Glyphicon";
-import Modal from "react-bootstrap/lib/Modal";
-//import Input from "react-bootstrap/lib/Input";
-import Button from "react-bootstrap/lib/Button";
+import { Modal, Button, Glyphicon, PageHeader } from "react-bootstrap";
 import EntityForm from "../main/EntityForm.jsx";
 
 let Project = React.createClass({
@@ -77,9 +73,9 @@ let Project = React.createClass({
         let Content = [
             (
                 <PageHeader>
-                    {project.Name}
-                    <small>
-                        {" for "}
+                    <em>{project.Name}</em>
+                    <small style={{marginLeft: 10}}>
+                        {" a project for "}
                         <Router.Link to="customer" params={{ID: project.CustomerID}}>
                             {this.props.customers.filter(c => c.ID === project.CustomerID)[0].Name}
                         </Router.Link>
@@ -96,14 +92,15 @@ let Project = React.createClass({
                 filter={p => p.ProjectID === projectID} />,
             this.state && this.state.dialogPackageCreateActive
                 ? (
-                    <Modal onRequestHide={() => this.setState({dialogPackageCreateActive: false})}>
-                        <div className="modal-body" action="#">
+                    <Modal.Dialog onHide={() => this.setState({dialogPackageCreateActive: false})}>
+                        <Modal.Body className="modal-body" action="#">
                             <EntityForm entity="Package" afterChange={fn} />
-                        </div>
-                        <div className="modal-footer">
+                        </Modal.Body>
+                        <Modal.Footer className="modal-footer">
+                            <Button onClick={() => this.setState({dialogPackageCreateActive: false})}>Cancel</Button>
                             <Button onClick={this.addPackage} bsStyle="primary">Save</Button>
-                        </div>
-                    </Modal>
+                        </Modal.Footer>
+                    </Modal.Dialog>
                 )
                 : false
         ];
