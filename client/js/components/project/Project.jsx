@@ -55,8 +55,8 @@ let Project = React.createClass({
     },
     addPackage() {
         let project = this.props.projects.filter(p => p.ID === this.context.router.getCurrentParams().ID)[0];
-        let name = this.refs.PackageName.getValue();
-        let desc = this.refs.PackageDesc.getValue();
+        let name = this.vals.Name;
+        let desc = this.vals.Description;
         if (!name) {
             return;
         }
