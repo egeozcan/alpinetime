@@ -31,6 +31,6 @@ let Customer = React.createClass({
     }
 });
 
-export default branch(Customer, {
+export default branch({
     cursors: { customers: ["stores", "customers"] }
-});
+}, Customer);

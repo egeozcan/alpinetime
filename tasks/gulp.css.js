@@ -9,12 +9,12 @@ module.exports = function (gulp, browserSync) {
   var cleancss = new cleancssPlugin({ advanced: true });
   var autoprefix = new autoprefixPlugin({ browsers: ["> 5%"] });
   
-  gulp.task('clean-css', function(done) {
-    del(['public/css/*.*'], done);
+  gulp.task('clean-css', function() {
+    return del(['public/css/*.*']);
   });
   
-  gulp.task('clean-css', function(done) {
-    del(['public/css/*.*'], done);
+  gulp.task('clean-css', function() {
+    return del(['public/css/*.*']);
   });
   
   gulp.task('css', ['clean-css', 'css-components'], function() {

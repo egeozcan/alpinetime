@@ -11,7 +11,7 @@ import SidebarActions from "../main/SidebarActions.jsx";
 import TaskTitles from "../task/Task.Titles.jsx";
 import { Modal, Button, Glyphicon, PageHeader } from "react-bootstrap";
 import EntityForm from "../main/EntityForm.jsx";
-
+window.Modal = Modal;
 let Project = React.createClass({
     mixins: [Tree.mixin],
     contextTypes: {
@@ -92,7 +92,7 @@ let Project = React.createClass({
                 filter={p => p.ProjectID === projectID} />,
             this.state && this.state.dialogPackageCreateActive
                 ? (
-                    <Modal.Dialog onHide={() => this.setState({dialogPackageCreateActive: false})}>
+                    <Modal animation={false} backdrop={true} onHide={() => this.setState({dialogPackageCreateActive: false})}>
                         <Modal.Body className="modal-body" action="#">
                             <EntityForm entity="Package" afterChange={fn} />
                         </Modal.Body>
@@ -100,7 +100,7 @@ let Project = React.createClass({
                             <Button onClick={() => this.setState({dialogPackageCreateActive: false})}>Cancel</Button>
                             <Button onClick={this.addPackage} bsStyle="primary">Save</Button>
                         </Modal.Footer>
-                    </Modal.Dialog>
+                    </Modal>
                 )
                 : false
         ];
@@ -116,10 +116,10 @@ let Project = React.createClass({
     }
 });
 
-export default branch(Project, {
+export default branch({
     cursors: {
         projects: ["stores", "projects"],
         customers: ["stores", "customers"],
         tasks: ["stores", "tasks"]
     }
-});
+}, Project);

@@ -47,6 +47,6 @@ const Lookup = React.createClass({
     }
 });
 
-export default branch(Lookup, {
+export default branch({
     cursors: { lookups: ["stores", "lookups"] }
-});
+}, Lookup);
