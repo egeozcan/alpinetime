@@ -1,17 +1,17 @@
 "use strict";
 
 import React from "react";
-import { DropdownButton, MenuItem, Nav, Navbar } from "react-bootstrap";
-import { NavItemLink } from "react-router-bootstrap";
+import { DropdownButton, MenuItem, Nav, Navbar, Button } from "react-bootstrap";
+import { LinkContainer } from "react-router-bootstrap";
 
 export default React.createClass({
     render() {
         return (
             <Navbar fluid inverse>
                 <Nav>
-                    <NavItemLink to="projects">Projects</NavItemLink>
-                    <NavItemLink to="customers">Customers</NavItemLink>
-                    <NavItemLink to="timeentries">Time Entries</NavItemLink>
+                    <LinkContainer to={{ pathname: "projects"}}><Button>Projects</Button></LinkContainer>
+                    <LinkContainer to={{ pathname: "customers"}}><Button>Customers</Button></LinkContainer>
+                    <LinkContainer to={{ pathname: "timeentries"}}><Button>Time Entries</Button></LinkContainer>
                 </Nav>
                 <Nav right>
                     <DropdownButton title="User">

@@ -3,8 +3,7 @@
 import stateTree from "../stateTree.js";
 import stateActions from "./stateActions.js";
 import request from "superagent";
-import Router from "react-router";
-import URL from "url";
+import { Router, Route, Link, browserHistory } from "react-router";
 
 let loadEntity = (entityName) => {
     stateActions.numInProgress.inc();
@@ -45,16 +44,17 @@ export let subscribeToQuery = () => {
     let queryCursor = stateTree.select(["state", "query"]);
     let updateQuery = (uri) => {
         if (uri) {
-            if (sanitize(uri.path) === sanitize(lastUri)) {
+            var path = uri.pathname + uri.search;
+            if (sanitize(path) === sanitize(lastUri)) {
                 return;
             }
-            lastUri = uri.path;
+            lastUri = path;
         } else {
             return;
         }
-        var parsedQuery = URL.parse(location.toString(), true).query;
+        var parsedQuery = uri.query;
         queryCursor.set(parsedQuery);
     };
-    Router.HistoryLocation.addChangeListener(updateQuery);
+    browserHistory.listen(updateQuery);
     updateQuery();
 };
