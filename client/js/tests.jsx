@@ -1,6 +1,6 @@
 "use strict";
 
-require("babelify/polyfill");
+require("babel-polyfill");
 
 import React from "react";
 import Router from "react-router";

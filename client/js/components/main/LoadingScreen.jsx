@@ -2,7 +2,7 @@
 
 import React from "react";
 import PropTypes from "baobab-react/prop-types";
-import {branch} from "baobab-react/higher-order";
+import { branch } from "baobab-react/higher-order";
 
 let LoadingScreen = React.createClass({
     static: {
@@ -20,10 +20,8 @@ let LoadingScreen = React.createClass({
     }
 });
 
-export default LoadingScreen;
-
-export default branch(LoadingScreen, {
+export default branch({
   cursors: {
     inProgress: ["state", "numInProgress"]
   }
-});
+}, LoadingScreen);

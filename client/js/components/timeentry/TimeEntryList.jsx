@@ -24,6 +24,6 @@ let TimeEntryList = React.createClass({
     }
 });
 
-export default branch(TimeEntryList, {
+export default branch({
     cursors: { timeentries: ["stores", "timeentries"] }
-});
+}, TimeEntryList);

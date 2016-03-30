@@ -144,6 +144,6 @@ let EntityForm = React.createClass({
     }
 });
 
-export default branch(EntityForm, {
+export default branch({
     cursors: { definitions: ["definitions"], lookups: ["stores", "lookups"] }
-});
+}, EntityForm);
