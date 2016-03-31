@@ -101,6 +101,4 @@ var GenericList = React.createClass({
     }
 });
 
-export default branch({
-    cursors: { stores: ["stores"], query: ["state", "query"] }
-}, GenericList);
+export default branch({ stores: ["stores"], query: ["state", "query"] }, GenericList);
